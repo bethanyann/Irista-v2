@@ -23,6 +23,6 @@ module.exports = gql`
 
     #create message in db
     type Mutation {
-        createMessage(nessageInput: MessageInput): Message!
+        createMessage(messageInput: MessageInput): Message!
     }
 `;

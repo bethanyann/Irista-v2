@@ -22,7 +22,7 @@ module.exports = {
             //return the graphQL result
             return {
                 id: result.id,
-                ...res._doc // spread out the rest of the items in the result - kinda a weird format but it works
+                ...result._doc // spread out the rest of the items in the result - kinda a weird format but it works
             };
         }
     },
