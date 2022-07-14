@@ -9,6 +9,13 @@ module.exports = gql`
         createdBy: String
     }
 
+    type User {
+        username: String
+        password: String
+        email: String
+        token: String
+    }
+
     #can also create input types
     #this will go into apolloserver just like a plain javascript object
     input MessageInput {
@@ -16,13 +23,29 @@ module.exports = gql`
         username: String
     }
 
+    #create an input type for when a user registers on the site
+    input RegisterInput {
+        username: String
+        email: String
+       # confirmPassword: String
+        password: String
+    }
+
+    #create an input type for when a user logs in
+    input LoginInput {
+        email: String
+        password: String 
+    }
+
     # get message by id query
     type Query {
         message(id: ID!): Message
+        user(id: ID!): User
     }
-
-    #create message in db
+    
     type Mutation {
         createMessage(messageInput: MessageInput): Message!
+        registerUser(registerInput: RegisterInput): User
+        loginUser(loginInput: LoginInput): User
     }
 `;
