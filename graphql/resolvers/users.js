@@ -1,6 +1,8 @@
 //get the users type object from the models 
 const User = require('../../models/User');
 const { ApolloError, UserInputError } = require('apollo-server-errors');
+//helpers
+const { validateRegisterInput, validateLoginInput } = require('../../utilities/userValidation');
 //key
 const { REACT_APP_JSON_WEB_TOKEN } = require('../../config');
 //password hashing
@@ -11,7 +13,8 @@ const jwt = require('jsonwebtoken');
 module.exports = {
     Mutation: {  
         //the structure of this is defined in typedefs
-        async registerUser(_, {userInput: {username, email, password, confirmPassword}} ){
+        async registerUser(_, { registerInput: {username, email, password, confirmPassword}} ){
+            console.log(username, email, password, confirmPassword);
 
             const {valid, errors} = validateRegisterInput(username, email, password, confirmPassword);
             console.log(errors, valid);
@@ -41,7 +44,7 @@ module.exports = {
                 username: username,
                 email: email.toLowerCase(),
                 password: encryptedPassword,
-                createdAt: new Date().toUTCString
+                createdAt: new Date().toISOString()
             });
 
             //save new user in mongodb
@@ -52,7 +55,6 @@ module.exports = {
             return {
                 id: result._id,
                 ...result._doc,
-                token
             }
         },
         async loginUser(_, {loginInput: {username, password}}) {
@@ -72,7 +74,8 @@ module.exports = {
             var correctPassword = await bcrypt.compare(password, user.password);
             if(user && correctPassword) {
                 //create new token
-                user.token = generateToken(user);
+                token = generateToken(user);
+                user.token = token;
 
                 return {
                     id: user._id,
@@ -87,7 +90,7 @@ module.exports = {
         }
     },
     Query: {
-        user: (_, { ID }) => User.findById(ID) //I think .findById is some mongoose stuff?
+        user: (_, { ID }) => User.findById(ID) //I think .findById is mongoose
     }
 }
 
@@ -98,17 +101,14 @@ function generateToken(user) {
     
     //.sign takes three arguments: payload (what data are we sending along with it), secret string that controls how the jwt is generated,
     //and options, which define the "expires in" for the token
-    const jwtToken = jwt.sign(
+    return jwt.sign(
         { 
-            user_id: user.id, 
+            id: user._id, 
             email: user.email,
             username: user.username
         }, 
         REACT_APP_JSON_WEB_TOKEN,
         {
             expiresIn: "12h"
-        }
-    );
-
-    return jwtToken;
+        });
 }

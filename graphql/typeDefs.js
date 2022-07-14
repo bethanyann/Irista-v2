@@ -10,12 +10,12 @@ module.exports = gql`
     }
 
     type User {
-        id: ID
-        username: String
-        password: String
-        email: String
-        createdAt: String
-        token: String
+        id: ID!
+        username: String!
+        password: String!
+        email: String!
+        createdAt: String!
+        token: String!
     }
 
     #can also create input types
@@ -27,10 +27,10 @@ module.exports = gql`
 
     #create an input type for when a user registers on the site
     input RegisterInput {
-        username: String
-        email: String
-        password: String
-        confirmPassword: String
+        username: String!
+        email: String!
+        password: String!
+        confirmPassword: String!
     }
 
     #create an input type for when a user logs in
@@ -47,7 +47,7 @@ module.exports = gql`
     
     type Mutation {
         createMessage(messageInput: MessageInput): Message!
-        registerUser(registerInput: RegisterInput): User
+        registerUser(registerInput: RegisterInput): User!
         loginUser(loginInput: LoginInput): User
     }
 `;

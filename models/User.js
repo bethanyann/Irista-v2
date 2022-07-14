@@ -1,13 +1,13 @@
 const { model, Schema } = require('mongoose');
 
-//define schema
+//MongoDB is schemaless but sometimes it is safer to make a schema anyway just to avoid data mismatches and errors
 const userSchema = new Schema({
-    username: {type: String, default: null, unique: true},
-    email: {type: String, unique: true}, //setting unique to true will throw errors if value is duplicated
-    createdAt: Date, 
+    username: String,
     password: String,
-    token: String 
+    email: String,
+    createdAt: Date,
+    token: String
 });
 
-//construct and export model
-model.exports = model('User', userSchema )
+//export the model with the name it has and the schema to pair it with
+module.exports = model('User', userSchema);
