@@ -10,9 +10,11 @@ module.exports = gql`
     }
 
     type User {
+        id: ID
         username: String
         password: String
         email: String
+        createdAt: String
         token: String
     }
 
@@ -27,13 +29,13 @@ module.exports = gql`
     input RegisterInput {
         username: String
         email: String
-       # confirmPassword: String
         password: String
+        confirmPassword: String
     }
 
     #create an input type for when a user logs in
     input LoginInput {
-        email: String
+        username: String
         password: String 
     }
 

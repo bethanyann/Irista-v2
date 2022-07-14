@@ -3,9 +3,8 @@ const { ApolloServer } = require('apollo-server');
 const mongoose = require('mongoose');
 const typeDefs = require('./graphql/typeDefs');
 const resolvers = require('./graphql/resolvers');
+const { MONGODB } = require('./config');
 
-//MongoDB connection string 
-const MONGODB = "mongodb+srv://dbUser:1234567890@irista.p00atpz.mongodb.net/?retryWrites=true&w=majority"
 
 //initilize the Apollo server - takes typedefs and resolvers
 const server = new ApolloServer({
