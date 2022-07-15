@@ -2,16 +2,24 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+//import apollo client 
+import client from './apolloClient';
+import { ApolloProvider } from '@apollo/react-hooks';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { AuthProvider } from './context/authContext';
+ 
+// React application needs access to:
+// Client (ApolloProvider), 
+// Authorization Context,
+// Browser Router
+
 
 ReactDOM.render(
-  <React.StrictMode>
-      <App />
-  </React.StrictMode>
+  <Router>
+    <ApolloProvider client={client}>
+      <App/>  
+    </ApolloProvider> 
+  </Router> 
   ,document.getElementById('root')
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
