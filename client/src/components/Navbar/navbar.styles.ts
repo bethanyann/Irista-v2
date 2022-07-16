@@ -67,20 +67,20 @@ export const NavLinks = styled.div`
     .nav-text:hover {
         color: var(--slate);
         border-bottom: 2px solid var(--red);
-        padding-bottom: 10px;
+        padding-bottom: 16px;
     }
 
     .nav-text:active {
         color: var(--slate);
         border-bottom: 3px solid var(--darkRed);
-        padding-bottom: 10px;
+        padding-bottom: 16px;
         font-weight: 410;
     }
 
     /* login and search icons section*/
     .nav-icons{
         border-left: 2px solid var(--fog);
-        padding-left: 10px; 
+        padding-left: 20px; 
     }
       
     img {
