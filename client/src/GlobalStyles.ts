@@ -2,25 +2,51 @@ import { createGlobalStyle } from 'styled-components';
 
 //css variables are denoted with --
 export const GlobalStyle = createGlobalStyle`
+
     :root {
-        --maxWidth: 1280px;
-        --white: #ffffff;
-        --lightGray: #eeeeee;
-        --medGray: #353535;
-        --darkGray: #1c1c1c;
-        --lightBlue: #01b4e4;
-        --lightGreen: #90cea1;
+        --maxWidthDesktop: 1920px;
+        --maxWidthLaptop: 1280px;
+        --maxWidthMobile: 768px;
+
+        //grays
+        --black: #141228;
+        --slate: #4B4F60;
+        --steel: #848c9e;
+        --silver: #b7bed0;
+        --smoke: #d4d9e8;
+        --fog: #e8e8f6;
+        --steam: #f3f4fa;
+        --snow: #fcfdff;
+        //reds
+        --darkRed: #CC0000;
+        --red: #FF4B44;
+        --lightRed: #ffa098;
+        //greens
+        --darkTeal: #21b58e;
+        --teal: #26cfa2;
+        --lightTeal: #70debf;
+        //yellows
+        --darkMarigold: #f89c0f;
+        --marigold: #ffaa1d;
+        --lightMarigold: #ffbe46;
+        //blues
+        --darkBlue: #002dab;
+        --blue: #002dab;
+        --lightBlue: #265ef8;
+        //fontsizes
         --fontBiggest: 3rem;
         --fontBigger: 2.5rem;
         --fontBig: 1.5rem;
         --fontMed: 1.2rem;
+        --fontSmedium: 1.1rem;
         --fontSmall: 1rem;
     }
 
     //resetting some stuff - targets whole application styles
     * {
         box-sizing: border-box;
-        font-family: 'Abel', sans-serif;
+        font-family: 'Gotham', sans-serif;
+        color: var(--medGray2);
     }
 
     body {
@@ -31,7 +57,7 @@ export const GlobalStyle = createGlobalStyle`
         h1 {
             font-size: 2rem;
             font-weight: 600;
-            color: var(--white);
+            color: var(--darkGray);
         }
 
         h3 {
@@ -41,7 +67,7 @@ export const GlobalStyle = createGlobalStyle`
 
         p {
             font-size: 1rem;
-            color: var(--white);
+            color: var(--darkGray);
         }
 
     }
