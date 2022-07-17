@@ -3,14 +3,14 @@ import { useMutation } from '@apollo/react-hooks';
 import { gql } from 'graphql-tag';
 import { useNavigate } from 'react-router-dom';
 //styles
-import { Wrapper } from './register.styles';
+import { Wrapper, Content, FormStyle } from './register.styles';
 //authContext
 import { AuthContext } from '../../context/authContext';
 //hooks
 import { useForm } from '../../utilities/formHook';
 
 
-const Register = (props:any) => {
+function Register(props:any) {
     //gives us access to anything in our context, like the login functions 
     const context = useContext(AuthContext);
     let navigate = useNavigate();
@@ -30,37 +30,48 @@ const Register = (props:any) => {
     const { onChange, onSubmit, values} = useForm(registerUserCallback, initialState);
 
     //set up the full register user mutation
-    const [ registerUser, { loading }] = useMutation(REGISTER_USER, {
-        //this will be triggered if the mutation is successfully executed
-        update(proxy, {data: { registerUser: userData }}) {
-            //define the update function here 
-            console.log(userData);
-            context.login(userData);
+    // const [ registerUser, { loading }] = useMutation(REGISTER_USER, {
+    //     //this will be triggered if the mutation is successfully executed
+    //     update(proxy, {data: { registerUser: userData }}) {
+    //         //define the update function here 
+    //         console.log(userData);
+    //         //context.login(userData);
 
-            //redirect to homepage after successful register and login
-            navigate('/', {replace:true});
-        }, 
-        onError(err:any) {
-            if(err.graphQLErrors.length > 0) {
-                setErrors(err.graphQLErrors[0].extensions.errors);
-            }
-        },
-        //attach the user input values here
-        variables: { registerInput : values}
-    }); 
+    //         //redirect to homepage after successful register and login
+    //         navigate('/', {replace:true});
+    //     }, 
+    //     onError(err:any) {
+    //         if(err.graphQLErrors.length > 0) {
+    //             setErrors(err.graphQLErrors[0].extensions.errors);
+    //         }
+    //     },
+    //     //attach the user input values here
+    //    // variables: { registerInput : values}
+    // }); 
 
     //because functions in javascript are hoisted, this function declaration is the workaround for the weirdness of the "using before its defined" issues with values and addUser
     function registerUserCallback() {
-        registerUser();
+       // registerUser();
     }
 
     //frontend form 
 
     return (
-        <></>
+        <Wrapper>
+            <Content>
+                <FormStyle>
+                    <h2> Register </h2>
+                    <input type='text' placeholder='Choose a username'/>
+                    <input type='email' placeholder='Email Address'/>
+                    <input type='password' placeholder='Password'/>
+                    <input type='password' placeholder='Confirm Password' />
+
+                    <button>Create Account</button>
+                </FormStyle>
+            </Content>
+        </Wrapper>
     );
 }
-
 
 //graphQL query: 
 
@@ -83,3 +94,6 @@ const REGISTER_USER = gql`
         }
     }
 `;
+
+
+export default Register;

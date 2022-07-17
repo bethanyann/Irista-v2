@@ -70,6 +70,20 @@ export const GlobalStyle = createGlobalStyle`
             color: var(--darkGray);
         }
 
+        input {
+            padding: 0 11px;
+            height: 35px;
+            border-radius: 4px;
+            border: 1px solid var(--silver); //#b5b3b3
+            font-size: medium;
+            color: var(--slate); //#545454
+            width: 300px;
+            margin: 10px 10px;
+        }
+
+        textarea:focus, input:focus{
+            outline: none;
+        }
     }
 
 `
