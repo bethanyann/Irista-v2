@@ -80,7 +80,11 @@ module.exports = {
              //see if user exists with that username
             const user = await User.findOne({ username });
             if(!user) {
-                throw new ApolloError(`User with username ${username} not found.`, 'BAD_USER_INPUT');
+                throw new UserInputError('USER_NOT_FOUND', {
+                    errors: {
+                        username: `User with username ${username} not found.`
+                    }
+                });
             }
 
             var correctPassword = await bcrypt.compare(password, user.password);
