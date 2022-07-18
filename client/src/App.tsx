@@ -7,6 +7,11 @@ import Home from './components/Home';
 import Navbar from './components/Navbar/navbar';
 import Register from './components/Register/register';
 import Login from './components/Login/login';
+import Album from './components/Album/album';
+import Photo from './components/Photo/photo';
+import Upload from './components/Upload/upload';
+
+import ProtectedRoute from './components/ProtectedRoute';
 
 export default function App() {
   return (
@@ -17,6 +22,9 @@ export default function App() {
             <Route path='/' element={<Home />} /> 
             <Route  path='login' element={<Login/>}/> 
             <Route path='/register' element={<Register />} /> 
+              <ProtectedRoute path='/photos' exact element={<Photo />}/>
+              <ProtectedRoute path='/albums' exact element={<Album />}/>
+              <ProtectedRoute path='/upload' exact element={<Upload />}/>
           </Routes>
           <GlobalStyle />
         </AuthProvider>
