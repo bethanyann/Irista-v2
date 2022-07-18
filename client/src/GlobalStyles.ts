@@ -78,7 +78,8 @@ export const GlobalStyle = createGlobalStyle`
             font-size: medium;
             color: var(--slate); //#545454
             width: 300px;
-            margin: 10px 10px;
+            margin: auto;
+            //margin: 10px 10px;
         }
 
         textarea:focus, input:focus{

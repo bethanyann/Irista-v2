@@ -82,8 +82,11 @@ export const FormStyle = styled.div`
     }
 
     label {
-        margin-left: 10px;
-        //font-weight: 500;
         font-size: medium;
+        margin: 10px 0 4px 0;
+
+        /* @media screen and (max-width: 700px){
+            margin: 10px 0 4px 0;
+        } */
     }
 `;
