@@ -17,7 +17,7 @@ module.exports = {
             console.log(username, email, password, confirmPassword);
 
             const {valid, errors} = validateRegisterInput(username, email, password, confirmPassword);
-            console.log(errors, valid);
+           // console.log(errors, valid);
 
             if(!valid){
                 throw new UserInputError('errors', {errors});
@@ -27,13 +27,25 @@ module.exports = {
             const oldUser = await User.findOne({ email });
             //throw error if user already exists
             if(oldUser) {
-                //throw apollo server error provided from imported package
-                throw new ApolloError(`A user with the email address ${email} already exists.`, 'USER_ALREADY_EXISTS');
+             
+                //use an apollo error here instead of just returning a generic error
+                //the payload will have an error message and an error object
+                throw new UserInputError('USER_ALREADY_EXISTS', {
+                    errors:{
+                        username: `A user with the email address ${email} already exists.`
+                    }
+                });
+                //throw new ApolloError(`A user with the email address ${email} already exists.`, 'USER_ALREADY_EXISTS');
             }
 
             const oldUsername = await User.findOne({ username });
             if(oldUsername) {
-                throw new ApolloError(`A user with the username ${username} already exists.`, 'USER_ALREADY_EXISTS');
+                throw new UserInputError('USER_ALREADY_EXISTS', {
+                    errors:{
+                        username: `A user with the username ${username} already exists.`
+                    }
+                });
+                //throw new ApolloError(`A user with the username ${username} already exists.`, 'USER_ALREADY_EXISTS');
             }
 
             //encrypt password
@@ -58,7 +70,7 @@ module.exports = {
             }
         },
         async loginUser(_, {loginInput: {username, password}}) {
-
+            console.log(username, password);
             //validate input
             const {valid, errors} = validateLoginInput(username, password);
             if(!valid){

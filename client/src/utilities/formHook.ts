@@ -1,16 +1,22 @@
-
 import React, { useState } from 'react';
 
-export const useForm = (callback: any, initialState = {}) => {
+interface IValues {
+    username: string,
+    email?: string,
+    password: string,
+    confirmPassword?: string
+}
+
+export const useForm = (callback: any, initialState: IValues) => {
 
     const [values, setValues] = useState(initialState);
 
-    const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const onChange = (event:any) => {
         setValues({...values, [event.target.name]: event.target.value});
         console.log(values);
     }
 
-    const onSubmit = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const onSubmit = (event:any) => {
         event.preventDefault();
         callback();
     }

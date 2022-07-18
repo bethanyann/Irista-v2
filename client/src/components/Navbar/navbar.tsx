@@ -1,5 +1,7 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext }from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+//context
+import { AuthContext } from '../../context/authContext';
 //images
 import CanonLogo from '../../images/Canon_wordmark_smaller.png';
 import loginIcon from '../../images/icons/login.png';
@@ -9,6 +11,16 @@ import { Wrapper, Content, LogoImg, RightNavigation, NavLinks } from './navbar.s
 
 
 const Navbar = () => {
+    let navigate = useNavigate();
+    //can pull the user and the logout function from the context
+    const { user, logout } = useContext(AuthContext);
+
+    const onLogout = () => {
+        logout();
+        navigate('/', {replace: true});
+    }
+
+    console.log(user); // object holding the user id, email, username and exp. of the token
 
     return (
         <Wrapper>
@@ -18,17 +30,19 @@ const Navbar = () => {
             </Link>
             <RightNavigation>
                 <NavLinks>
-                    <span className="nav-links">
-                        <Link to='/photos' className='nav-link-padding'>
-                            <span className='nav-text'>Photos</span>
-                        </Link>
-                        <Link to='/albums' className='nav-link-padding'>
-                            <span className='nav-text'>Albums</span>
-                        </Link>
-                        <Link to='/upload' className='nav-link-padding'>
-                            <span className='nav-text'>Upload</span>
-                        </Link>
-                    </span>
+                    {user ? 
+                        <span className="nav-links">
+                            <Link to='/photos' className='nav-link-padding'>
+                                <span className='nav-text'>Photos</span>
+                            </Link>
+                            <Link to='/albums' className='nav-link-padding'>
+                                <span className='nav-text'>Albums</span>
+                            </Link>
+                            <Link to='/upload' className='nav-link-padding'>
+                                <span className='nav-text'>Upload</span>
+                            </Link>
+                        </span>
+                    : null } 
                     <span className='nav-icons'>
                         <Link to='/search' style={{paddingRight: '10px'}}>
                             <img src={searchIcon} alt='search icon'/>
@@ -37,6 +51,7 @@ const Navbar = () => {
                             <img src={loginIcon} alt='login icon'/>
                         </Link>
                     </span>
+                    
                 </NavLinks>
             </RightNavigation>
             

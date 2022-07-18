@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
-import { useMutation } from '@apollo/react-hooks';
 import { gql } from 'graphql-tag';
 import { useNavigate } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
 //styles
 import { Wrapper, Content, FormStyle } from './register.styles';
 //authContext
@@ -10,90 +10,130 @@ import { AuthContext } from '../../context/authContext';
 import { useForm } from '../../utilities/formHook';
 
 
-function Register(props:any) {
-    //gives us access to anything in our context, like the login functions 
-    const context = useContext(AuthContext);
-    let navigate = useNavigate();
-    const [errors, setErrors] = useState([]);
-
-    //set default values
-    const initialState = {
-        username:'',
-        email:'',
-        password:'',
-        confirmPassword:'',
-    }
-
-    //extract values and methods from the useform hook
-    //give it the addUser function as the callback
-    //the problem with having this declaration here is we are trying to use addUser before its declared. 
-    const { onChange, onSubmit, values} = useForm(registerUserCallback, initialState);
-
-    //set up the full register user mutation
-    // const [ registerUser, { loading }] = useMutation(REGISTER_USER, {
-    //     //this will be triggered if the mutation is successfully executed
-    //     update(proxy, {data: { registerUser: userData }}) {
-    //         //define the update function here 
-    //         console.log(userData);
-    //         //context.login(userData);
-
-    //         //redirect to homepage after successful register and login
-    //         navigate('/', {replace:true});
-    //     }, 
-    //     onError(err:any) {
-    //         if(err.graphQLErrors.length > 0) {
-    //             setErrors(err.graphQLErrors[0].extensions.errors);
-    //         }
-    //     },
-    //     //attach the user input values here
-    //    // variables: { registerInput : values}
-    // }); 
-
-    //because functions in javascript are hoisted, this function declaration is the workaround for the weirdness of the "using before its defined" issues with values and addUser
-    function registerUserCallback() {
-       // registerUser();
-    }
-
-    //frontend form 
-
-    return (
-        <Wrapper>
-            <Content>
-                <FormStyle>
-                    <h2> Register </h2>
-                    <input type='text' placeholder='Choose a username'/>
-                    <input type='email' placeholder='Email Address'/>
-                    <input type='password' placeholder='Password'/>
-                    <input type='password' placeholder='Confirm Password' />
-
-                    <button>Create Account</button>
-                </FormStyle>
-            </Content>
-        </Wrapper>
-    );
-}
-
-//graphQL query: 
 
 const REGISTER_USER = gql`
-    mutation Mutation(
-        $registerInput: RegisterInput  
+    mutation register(
+        $registerInput: RegisterInput
     ) {
-        # this is calling the actual mutation here 
-        regusterUser(
-            # takes in the variable we passed in above: 
-            registerInput: $registerInput
-        )
+        registerUser(
+            registerInput: $registerInput)
         {
-            # returns this data: 
-            id
+            id 
             email
-            username
+            username 
             createdAt
             token
         }
     }
 `;
 
+//set default values
+const initialState = {
+    username:'',
+    email:'',
+    password:'',
+    confirmPassword:'',
+}
+
+
+
+const Register = ( props:any ) => {
+    //gives us access to anything in our context, like the login functions 
+    const context = useContext(AuthContext);
+    let navigate = useNavigate();
+    const [errors, setErrors] = useState([]);
+
+    //call useform hook and get the form values here to be submitted in the register user mutation
+    const { onChange, onSubmit, values } = useForm(registerUserCallback, initialState);
+
+    const [ registerUser, { error, loading } ] = useMutation(REGISTER_USER, {
+        update(proxy, {data: {registerUser: userData}}) {
+            // define the update function here 
+            //console.log(userData);
+            context.login(userData);
+
+            //redirect to homepage after successful register and login
+            navigate('/', {replace:true});
+        }, 
+        onError({ graphQLErrors }) {
+            debugger;
+            if(graphQLErrors.length > 0)
+            {
+                //TODO - see if its a frontend or backend error as the backend errors come back differently and are messing this up
+                //backend = graphQLErrors[0].message = "A user with that email already exists"
+                var backendError = error?.message;
+                var errors = graphQLErrors[0].extensions.errors as [];
+                setErrors(errors);
+                console.log(errors);
+            }
+        },
+        variables: { registerInput : values }
+    
+    });
+
+    function registerUserCallback() {
+        console.log("register user callback");
+        registerUser();
+    }
+    
+    //frontend form 
+    return (
+        <Wrapper>
+            <Content>
+                <FormStyle>
+                    {/* {
+                        errors ? errors.map((error:any, i) => (
+                            <p key={i}>{error.message}</p>
+                        )) : null
+                    } */}
+                    <h2> Register </h2>
+                    <label> Username </label>
+                        <input type='text' name='username' placeholder='Choose a username'  onChange={onChange} />
+                    <label> Email Address </label>
+                        <input type='email' name='email' placeholder='Email Address' onChange={onChange} />
+                    <label> Password </label>
+                        <input type='password' name='password' placeholder='Password' onChange={onChange} />
+                    <label> Confirm Password </label>
+                        <input type='password' name='confirmPassword' placeholder='Confirm Password'  onChange={onChange} />
+
+                    <button onClick={onSubmit}>Create Account</button>
+                    {Object.keys(errors).length > 0 && (
+                        <div className="">
+                            {Object.values(errors).map(value => (
+                                // <Alert key={value} variant="danger">{value}</Alert>
+                                <p key={value} style={{color: 'red'}}>{value}</p>
+                            ))}
+                        </div>
+                    )}
+                </FormStyle>
+            </Content>
+        </Wrapper>
+    );
+}
 
 export default Register;
+
+//graphQL query: 
+// const REGISTER_USER = gql`
+//     mutation Mutation(
+//         $registerInput: RegisterInput  
+//     ) {
+//         # this is calling the actual mutation here 
+//         regusterUser(
+//             # takes in the variable we passed in above: 
+//             registerInput: $registerInput
+//         )
+//         {
+//             # returns this data: 
+//             id
+//             email
+//             username
+//             createdAt
+//             token
+//         }
+//     }
+// `;
+
+
+
+

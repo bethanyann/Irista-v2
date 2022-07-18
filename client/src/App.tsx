@@ -6,19 +6,20 @@ import { GlobalStyle } from './GlobalStyles';
 import Home from './components/Home';
 import Navbar from './components/Navbar/navbar';
 import Register from './components/Register/register';
+import Login from './components/Login/login';
 
 export default function App() {
   return (
         <AuthProvider>
-          
           {/* <Navigation className="sticky-nav"/> */}
           <Navbar />
           <Routes>
-              <Route path='/' element={<Home />} /> 
-              {/* <Route  path='login' element={<Login/>}/> */}
-              <Route path='/register' element={<Register />} /> 
+            <Route path='/' element={<Home />} /> 
+            <Route  path='login' element={<Login/>}/> 
+            <Route path='/register' element={<Register />} /> 
           </Routes>
           <GlobalStyle />
         </AuthProvider>
   );
 }
+
