@@ -49,9 +49,15 @@ export const GlobalStyle = createGlobalStyle`
         color: var(--medGray2);
     }
 
+    html, html body {
+        height: 100%;
+        width: 100%;
+    }
+
     body {
         margin: 0;
         padding: 0;
+        height: 100%;
 
         //can nest things like this in styled-componenets
         h1 {

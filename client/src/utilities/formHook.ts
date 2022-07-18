@@ -13,7 +13,6 @@ export const useForm = (callback: any, initialState: IValues) => {
 
     const onChange = (event:any) => {
         setValues({...values, [event.target.name]: event.target.value});
-        console.log(values);
     }
 
     const onSubmit = (event:any) => {

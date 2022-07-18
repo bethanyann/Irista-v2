@@ -59,12 +59,8 @@ const Register = ( props:any ) => {
             debugger;
             if(graphQLErrors.length > 0)
             {
-                //TODO - see if its a frontend or backend error as the backend errors come back differently and are messing this up
-                //backend = graphQLErrors[0].message = "A user with that email already exists"
-                var backendError = error?.message;
                 var errors = graphQLErrors[0].extensions.errors as [];
                 setErrors(errors);
-                console.log(errors);
             }
         },
         variables: { registerInput : values }

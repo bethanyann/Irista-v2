@@ -14,10 +14,8 @@ module.exports = {
     Mutation: {  
         //the structure of this is defined in typedefs
         async registerUser(_, { registerInput: {username, email, password, confirmPassword}} ){
-            console.log(username, email, password, confirmPassword);
 
             const {valid, errors} = validateRegisterInput(username, email, password, confirmPassword);
-           // console.log(errors, valid);
 
             if(!valid){
                 throw new UserInputError('errors', {errors});
@@ -70,7 +68,6 @@ module.exports = {
             }
         },
         async loginUser(_, {loginInput: {username, password}}) {
-            console.log(username, password);
             //validate input
             const {valid, errors} = validateLoginInput(username, password);
             if(!valid){

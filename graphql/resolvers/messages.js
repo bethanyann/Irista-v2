@@ -17,7 +17,7 @@ module.exports = {
             //save to the database where our MongoDB connection string is pointing 
             //mutations are async so await this call
             const result = await newMessage.save();
-            console.log(result);
+      
 
             //return the graphQL result
             return {

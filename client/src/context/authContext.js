@@ -74,7 +74,7 @@ function AuthProvider(props){
     }
 
     const logout = () => {
-        localStorage.remove("token");
+        localStorage.clear();
         dispatch({
             type: 'LOGOUT'
         })
