@@ -1,5 +1,5 @@
-import React, { useContext }from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useContext }from 'react';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { isEmpty } from 'lodash';
 //context
 import { AuthContext } from '../../context/authContext';
@@ -35,15 +35,18 @@ const Navbar = () => {
                     <NavLinks>
                         {!isUserLoggedOut ?  
                             <span className="nav-links">
-                                <Link to='/photos' className='nav-link-padding'>
-                                    <span className='nav-text'>Photos</span>
-                                </Link>
-                                <Link to='/albums' className='nav-link-padding'>
-                                    <span className='nav-text'>Albums</span>
-                                </Link>
-                                <Link to='/upload' className='nav-link-padding'>
-                                    <span className='nav-text'>Upload</span>
-                                </Link>
+                                <NavLink to='/photos' className='nav-link'>
+                                    Photos
+                                </NavLink>
+                                <span style={{paddingLeft:'25px'}}></span>
+                                <NavLink to='/albums' className='nav-link'>
+                                    Albums
+                                </NavLink>
+                                <span style={{paddingLeft:'25px'}}></span>
+                                <NavLink to='/upload' className='nav-link'>
+                                    Upload
+                                </NavLink>
+                                <span style={{paddingRight:'10px'}}></span>
                             </span>
                         : null } 
                             <span className='nav-icons'>

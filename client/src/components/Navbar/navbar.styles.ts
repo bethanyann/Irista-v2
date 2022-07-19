@@ -51,26 +51,22 @@ export const NavLinks = styled.div`
     align-items: center;
 
     /* menu links section */
-    .nav-links{
+    .nav-links {
         padding: 0 15px;
     }
 
-    .nav-link-padding{
-        padding: 0 20px;
-    }
-
-    .nav-text{
+    .nav-link {
         font-size: var(--fontSmedium);
         font-weight: 400;
     }
 
-    .nav-text:hover {
+    .nav-link:hover {
         color: var(--slate);
-        border-bottom: 2px solid var(--red);
+        border-bottom: 2px solid var(--darkRed);
         padding-bottom: 16px;
     }
 
-    .nav-text:active {
+    .active {
         color: var(--slate);
         border-bottom: 3px solid var(--darkRed);
         padding-bottom: 16px;
