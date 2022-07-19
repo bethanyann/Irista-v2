@@ -26,7 +26,7 @@ export const FormStyle = styled.div`
     //text-align: center;
     border-radius: 5px;
     //height: 300px; // take off once i have data in here 
-    top:30%;
+    top:40%;
     left:50%;
     width:70%;//change accordingly or even not necessary to define
     //height:70%;//change accordingly or even not necessary to define
@@ -83,7 +83,7 @@ export const FormStyle = styled.div`
 
     label {
         font-size: medium;
-        margin: 10px 0 4px 0;
+        margin: 18px 0 7px 5px;
 
         /* @media screen and (max-width: 700px){
             margin: 10px 0 4px 0;

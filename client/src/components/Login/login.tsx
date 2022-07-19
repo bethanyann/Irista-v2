@@ -41,7 +41,7 @@ const Login = ( props:any ) => {
             context.login(userData);
 
             //redirect to homepage after successful login
-            navigate('/', {replace: true});
+            navigate('/dashboard', {replace: true});
         }, 
         onError({graphQLErrors}) {
             debugger;
@@ -74,7 +74,7 @@ const Login = ( props:any ) => {
                     <label> Password </label>
                         <input type='password' name='password' placeholder='Password' onChange={onChange}/>
                     <button onClick={onSubmit}>Log In</button>
-                    <p>No account yet?  Sign up for a new one <Link to='/register'>here</Link></p>
+                    <p>No account yet?  Sign up for a new one <Link to='/register'>here</Link>.</p>
                     {Object.keys(errors).length > 0 && (
                         <div className="">
                             {Object.values(errors).map(value => (

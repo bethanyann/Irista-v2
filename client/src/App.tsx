@@ -1,36 +1,32 @@
 import React, { useContext } from 'react';
-import { Routes, Route, Navigate} from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { AuthProvider, AuthContext } from  './context/authContext';
+import { isEmpty } from 'lodash';
 import { GlobalStyle } from './GlobalStyles';
+//route protection
+import RequireAuth from './context/requireAuth';
 //components
-import Home from './components/Home';
-import Navbar from './components/Navbar/navbar';
+import Dashboard from './components/Dashboard';
 import Register from './components/Register/register';
 import Login from './components/Login/login';
 import Album from './components/Album/album';
 import Photo from './components/Photo/photo';
 import Upload from './components/Upload/upload';
 import Landing from './components/Landing/landing';
-import WithNav from './components/Navbar/withNav';
-import WithoutNav from './components/Navbar/withoutNav';
+import { WithNav, WithoutNav } from './components/Navbar/navbarDisplay';
 
 export default function App() {
-
-  //get user here 
-  const { user } = useContext(AuthContext);
-
- 
   return (
         <AuthProvider>
-           
             <Routes>
               <Route element={<WithNav />} >
-                <Route path='/home' element={<Home />} /> 
+                {/* TODO: turn the home component into the dashboard component because I don't really need a 'home' component*/}
+                <Route path='/dashboard' element={ <RequireAuth><Dashboard/></RequireAuth>} />  
                 <Route path='/login' element={<Login/>}/> 
                 <Route path='/register' element={<Register />} /> 
-                <Route path='/photos' element={<Photo />}/>
-                <Route path='/albums' element={<Album />}/>
-                <Route path='/upload' element={<Upload />}/>
+                <Route path='/photos' element={<RequireAuth><Photo/></RequireAuth>}/>
+                <Route path='/albums' element={<RequireAuth><Album/></RequireAuth>}/>
+                <Route path='/upload' element={<RequireAuth><Upload/></RequireAuth>}/>
               </Route>  
               <Route element={<WithoutNav />}>
                 <Route path='/' element={<Landing />} />  
@@ -40,13 +36,3 @@ export default function App() {
         </AuthProvider>
   );
 }
-
-//  //if the user is logged in render, 
-//  if(user){
-//   return <Component {...rest} {...props} />
-// }
-// else {
-//   //redirect to public page if user is not logged in
-//  return <Navigate to={{pathname: "/" }}/>
-// }
-

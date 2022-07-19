@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { gql } from 'graphql-tag';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
+import { Link } from 'react-router-dom';
 //styles
 import { Wrapper, Content, FormStyle } from './register.styles';
 //authContext
@@ -53,7 +54,7 @@ const Register = ( props:any ) => {
             context.login(userData);
 
             //redirect to homepage after successful register and login
-            navigate('/', {replace:true});
+            navigate('/dashboard', {replace:true});
         }, 
         onError({ graphQLErrors }) {
             debugger;
@@ -93,6 +94,7 @@ const Register = ( props:any ) => {
                         <input type='password' name='confirmPassword' placeholder='Confirm Password'  onChange={onChange} />
 
                     <button onClick={onSubmit}>Create Account</button>
+                    <p>Already have an account? Sign in <Link to='/login'>here</Link>.</p>
                     {Object.keys(errors).length > 0 && (
                         <div className="">
                             {Object.values(errors).map(value => (

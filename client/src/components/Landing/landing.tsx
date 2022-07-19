@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { isEmpty } from 'lodash';
 //context
 import { AuthContext } from '../../context/authContext';
 import { User } from '../../models/types';
@@ -12,10 +13,12 @@ import CanonLogo from '../../images/Canon_wordmark_white.png';
 const Landing = () => {
     let navigate = useNavigate();
 
-    const { user, login } = useContext(AuthContext);
-    //cast user to User type until I can get context switched over to ts file
-    const loggedInUser: User | null = user ? user : null;
-    console.log(loggedInUser);
+    const { user } = useContext(AuthContext);
+
+    //if a logged in user tries to view the landing page, redirect to dashboard
+    if(!isEmpty(user)){
+        navigate('/dashboard');
+    }
 
     const redirectToRegister = () => {
         navigate('/register', {replace: true});
@@ -39,7 +42,7 @@ const Landing = () => {
                        
                     </Header>
                     <Text>
-                        <h1>Bring your Images together, effortlessly</h1>
+                        <h1>Bring your images together, effortlessly.</h1>
                         <h3>Manage, share, and print your collection of photos and videos with cloud storage, without compromising on quality.</h3>
                         <button onClick={redirectToRegister}> Start with 15GB Free</button>
                     </Text>
