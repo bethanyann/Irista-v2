@@ -1,5 +1,6 @@
 import React, { useContext }from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { isEmpty } from 'lodash';
 //context
 import { AuthContext } from '../../context/authContext';
 //types
@@ -17,51 +18,46 @@ const Navbar = () => {
     let navigate = useNavigate();
     //can pull the user and the logout function from the context
     const { user, logout } = useContext(AuthContext);
-    // const loggedInUser: User | {} = user ? user : {};
-
+    const isUserLoggedOut = isEmpty(user);
 
     const onLogout = () => {
         logout();
         navigate('/', {replace: true});
     }
-
-    //console.log(loggedInUser ? loggedInUser.token : null); // object holding the user id, email, username and exp. of the token
-
-        return (
-            <Wrapper>
-                <Content>          
-                    <Link to='/' >
-                        <LogoImg src={CanonLogo} /> <span style={{ fontFamily: 'Gotham', fontSize: '1.3rem', fontWeight: 420, paddingLeft: 10, color: 'black'}}> Irista </span>
-                    </Link>
-                    <RightNavigation>
-                        <NavLinks>
-                            {user.token ? 
-                                <span className="nav-links">
-                                    <Link to='/photos' className='nav-link-padding'>
-                                        <span className='nav-text'>Photos</span>
-                                    </Link>
-                                    <Link to='/albums' className='nav-link-padding'>
-                                        <span className='nav-text'>Albums</span>
-                                    </Link>
-                                    <Link to='/upload' className='nav-link-padding'>
-                                        <span className='nav-text'>Upload</span>
-                                    </Link>
-                                </span>
-                            : null } 
+    
+    return (
+        <Wrapper>
+            <Content>          
+                <Link to={isUserLoggedOut ? '/' : '/dashboard'} >
+                    <LogoImg src={CanonLogo} /> <span style={{ fontFamily: 'Gotham', fontSize: '1.3rem', fontWeight: 420, paddingLeft: 10, color: 'black'}}> Irista </span>
+                </Link>
+                <RightNavigation>
+                    <NavLinks>
+                        {!isUserLoggedOut ?  
+                            <span className="nav-links">
+                                <Link to='/photos' className='nav-link-padding'>
+                                    <span className='nav-text'>Photos</span>
+                                </Link>
+                                <Link to='/albums' className='nav-link-padding'>
+                                    <span className='nav-text'>Albums</span>
+                                </Link>
+                                <Link to='/upload' className='nav-link-padding'>
+                                    <span className='nav-text'>Upload</span>
+                                </Link>
+                            </span>
+                        : null } 
                             <span className='nav-icons'>
                                 <Link to='/search' style={{paddingRight: '10px'}}>
                                     <img src={searchIcon} alt='search icon'/>
                                 </Link>
                                 {
-                                    user.token ? 
-                                    <Link to="#">  
-                                        <img src={logoutIcon} alt='log out icon' onClick={logout} />
-                                    </Link>
-                                    :
+                                    isUserLoggedOut  ? 
                                     <Link to='/login'>  
                                         <img src={loginIcon} alt='login icon'/>
-                                    </Link> 
-                                
+                                    </Link> :
+                                    <Link to="#">  
+                                        <img src={logoutIcon} alt='log out icon' onClick={onLogout} />
+                                    </Link>
                                 }
                             </span>  
                         </NavLinks>

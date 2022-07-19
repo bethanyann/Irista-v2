@@ -12,4 +12,6 @@ const WithNav = () => {
   );
 };
 
-export default WithNav;
+const WithoutNav = () => <Outlet />
+
+export  {WithNav, WithoutNav };
