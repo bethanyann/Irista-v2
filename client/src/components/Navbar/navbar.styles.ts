@@ -42,10 +42,6 @@ export const LogoImg = styled.img`
     }
 `;
 
-export const RightNavigation = styled.div`
-
-`;
-
 export const NavLinks = styled.div`
     display: flex;
     align-items: center;

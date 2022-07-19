@@ -11,7 +11,7 @@ import loginIcon from '../../images/icons/login.png';
 import logoutIcon from '../../images/icons/logout.png';
 import searchIcon from '../../images/icons/search.png';
 //styles
-import { Wrapper, Content, LogoImg, RightNavigation, NavLinks } from './navbar.styles';
+import { Wrapper, Content, LogoImg, NavLinks } from './navbar.styles';
 
 
 const Navbar = () => {
@@ -31,40 +31,40 @@ const Navbar = () => {
                 <Link to={isUserLoggedOut ? '/' : '/dashboard'} >
                     <LogoImg src={CanonLogo} /> <span style={{ fontFamily: 'Gotham', fontSize: '1.3rem', fontWeight: 420, paddingLeft: 10, color: 'black'}}> Irista </span>
                 </Link>
-                <RightNavigation>
-                    <NavLinks>
-                        {!isUserLoggedOut ?  
-                            <span className="nav-links">
-                                <NavLink to='/photos' className='nav-link'>
-                                    Photos
-                                </NavLink>
-                                <span style={{paddingLeft:'25px'}}></span>
-                                <NavLink to='/albums' className='nav-link'>
-                                    Albums
-                                </NavLink>
-                                <span style={{paddingLeft:'25px'}}></span>
-                                <NavLink to='/upload' className='nav-link'>
-                                    Upload
-                                </NavLink>
-                                <span style={{paddingRight:'10px'}}></span>
-                            </span>
-                        : null } 
-                            <span className='nav-icons'>
-                                <Link to='/search' style={{paddingRight: '10px'}}>
-                                    <img src={searchIcon} alt='search icon'/>
+                <div>
+                <NavLinks>
+                    { !isUserLoggedOut ?  
+                        <span className="nav-links">
+                            <NavLink to='/photos' className='nav-link'>
+                                Photos
+                            </NavLink>
+                            <span style={{paddingLeft:'25px'}}></span>
+                            <NavLink to='/albums' className='nav-link'>
+                                Albums
+                            </NavLink>
+                            <span style={{paddingLeft:'25px'}}></span>
+                            <NavLink to='/upload' className='nav-link'>
+                                Upload
+                            </NavLink>
+                            <span style={{paddingRight:'10px'}}></span>
+                        </span>
+                    : null } 
+                        <span className='nav-icons'>
+                            <Link to='/search' style={{paddingRight: '10px'}}>
+                                <img src={searchIcon} alt='search icon'/>
+                            </Link>
+                            {
+                                isUserLoggedOut  ? 
+                                <Link to='/login'>  
+                                    <img src={loginIcon} alt='login icon'/>
+                                </Link> :
+                                <Link to="#">  
+                                    <img src={logoutIcon} alt='log out icon' onClick={onLogout} />
                                 </Link>
-                                {
-                                    isUserLoggedOut  ? 
-                                    <Link to='/login'>  
-                                        <img src={loginIcon} alt='login icon'/>
-                                    </Link> :
-                                    <Link to="#">  
-                                        <img src={logoutIcon} alt='log out icon' onClick={onLogout} />
-                                    </Link>
-                                }
-                            </span>  
-                        </NavLinks>
-                    </RightNavigation>
+                            }
+                        </span>  
+                    </NavLinks>
+                    </div>
                 </Content>
             </Wrapper>                           
         )
