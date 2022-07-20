@@ -10,7 +10,7 @@ import Dashboard from './components/Dashboard';
 import Register from './components/Register/register';
 import Login from './components/Login/login';
 import Album from './components/Album/album';
-import Photo from './components/Photo/photo';
+import Photos from './components/Photos/Photos';
 import Upload from './components/Upload/upload';
 import Landing from './components/Landing/landing';
 import { WithNav, WithoutNav } from './components/Navbar/navbarDisplay';
@@ -24,7 +24,7 @@ export default function App() {
                 <Route path='/dashboard' element={ <RequireAuth><Dashboard/></RequireAuth>} />  
                 <Route path='/login' element={<Login/>}/> 
                 <Route path='/register' element={<Register />} /> 
-                <Route path='/photos' element={<RequireAuth><Photo/></RequireAuth>}/>
+                <Route path='/photos' element={<RequireAuth><Photos/></RequireAuth>}/>
                 <Route path='/albums' element={<RequireAuth><Album/></RequireAuth>}/>
                 <Route path='/upload' element={<RequireAuth><Upload/></RequireAuth>}/>
               </Route>  

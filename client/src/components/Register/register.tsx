@@ -36,8 +36,6 @@ const initialState = {
     confirmPassword:'',
 }
 
-
-
 const Register = ( props:any ) => {
     //gives us access to anything in our context, like the login functions 
     const context = useContext(AuthContext);
@@ -54,7 +52,7 @@ const Register = ( props:any ) => {
             context.login(userData);
 
             //redirect to homepage after successful register and login
-            navigate('/dashboard', {replace:true});
+            navigate('/photos', {replace:true});
         }, 
         onError({ graphQLErrors }) {
             debugger;

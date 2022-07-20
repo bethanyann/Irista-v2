@@ -41,7 +41,7 @@ const Login = ( props:any ) => {
             context.login(userData);
 
             //redirect to homepage after successful login
-            navigate('/dashboard', {replace: true});
+            navigate('/photos', {replace: true});
         }, 
         onError({graphQLErrors}) {
             debugger;

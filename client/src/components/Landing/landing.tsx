@@ -33,7 +33,7 @@ const Landing = () => {
                 <Content>
                     <Header>
                         <div>
-                            <LogoImg src={CanonLogo} /> <span style={{ fontFamily: 'Gotham', fontSize: '2.5rem', paddingLeft: 20, letterSpacing: -0.5, color: 'whitesmoke'}}> Irista </span>
+                            <LogoImg src={CanonLogo} /> <span className='text'> Irista </span>
                         </div>
                         <div className='button-div'>
                             <button className='button-2' onClick={redirectToLogin}><span className='button-text'>Sign In</span></button>

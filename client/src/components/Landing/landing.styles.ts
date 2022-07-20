@@ -32,7 +32,7 @@ export const Text = styled.div`
     padding: 0 40px;
     display: block;
     max-width: 870px;
-    margin: 15% auto 42px;
+    margin: 6% auto 42px;
 
     h1 {
         font-size: 4.3rem;
@@ -74,7 +74,7 @@ export const Header = styled.div`
     align-items: center;  //vertically center 
     justify-content: space-between; //this will push one item to the left and one to the right
     max-width: var(--maxWidthDesktop);
-    padding: 10px 0;
+    padding: 0px 50px;
     margin: 0 auto; //center the content div itself
     margin-top: 50px;
 
@@ -123,21 +123,33 @@ export const Header = styled.div`
         
     }
 
+    .text {
+        font-family: 'Gotham', sans-serif;
+        padding-left: 20px;
+        font-size: 2.5rem;
+        letter-spacing: -0.5;
+        color: var('--snow');
+    }
+
+    @media screen and (max-width: 968px){
+        //main header mobile styles
+        padding: 0px 20px;
+
+        .text{
+            padding-left: 10px;
+            font-size: 1.5rem;
+        }
+    }
+
 
 `;
 
 export const LogoImg = styled.img`
     width: 170px;
 
-    .text {
-        font-family: 'Gotham', sans-serif;
-        padding-left: 20px;
-        font-size: 500;
-    }
-
     //when the screen size is less than 720px
-    @media screen and (max-width: 720px){
-        width: 120px;   
+    @media screen and (max-width: 968px){
+        width: 120px; 
     }
 `;
 
