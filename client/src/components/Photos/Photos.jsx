@@ -1,7 +1,12 @@
-import React, { useEffect, useState }from 'react';
+import React, { useEffect, useState, useContext }from 'react';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
 import EXIF from 'exif-js';
+import isEmpty from 'lodash';
+//context
+import { AuthContext } from '../../context/authContext';
+//api config
+import { ADMIN_API_URL, API_KEY, API_SECRET, CLOUD_NAME } from '../../config';
 //styles
 import { Wrapper, Content, UploadImage, ThumbsContainer } from './photos.styles';
 import uploadImage from '../../images/upload.png';
@@ -11,16 +16,18 @@ import uploadImage from '../../images/upload.png';
 //or it will display by default a timeline of all of their photos in chronological order, sorted by day
 const Photo = () => {
     const [files, setFiles] = useState([]);
+    const { user } = useContext(AuthContext); 
+    const isUserLoggedOut = isEmpty(user);  
 
     useEffect(() => {
         // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
         return () => files.forEach(file => URL.revokeObjectURL(file.preview));
-    }, [files]);
+    }, []);
 
     const handleDrop = (acceptedFiles) => {
         console.log(acceptedFiles);
-        debugger;
 
+        //figure out how to aggregate files instead of overwriting the previews anytime a new photo is added 
         setFiles(acceptedFiles.map(file => Object.assign(file, {
             preview: URL.createObjectURL(file)
         })));
@@ -32,8 +39,8 @@ const Photo = () => {
                   var exifData = EXIF.pretty(this);
                   if (exifData) {
                     console.log(exifData);
-                    console.log(EXIF.getTag(this, "GPSLatitude"));
-                    console.log(EXIF.getTag(this, "GPSLongitude"));
+                    // console.log(EXIF.getTag(this, "GPSLatitude"));
+                    // console.log(EXIF.getTag(this, "GPSLongitude"));
                   } else {
                     console.log("No EXIF data found in image '" + file.name + "'.");
                   }
@@ -51,9 +58,39 @@ const Photo = () => {
     const handlePhotoUpload = () => {
         //ok here we go
         //files should have all the images in it atm
+        debugger;
         const uploaders = files.map(file => {
+            //initial FormData
+            const formData = new FormData();
+            formData.append("file", file);
+            if(!user.isEmpty) //a logged out user shouldn't ever be able to do this but just to check
+            {
+                formData.append("tags", `${user.username}`);
+            }
+            formData.append("upload_preset", "canon_irista");
+            //if it doest work try this formData.append("api_key", `${API_KEY}`);
+            formData.append("timestamp", (Date.now()/1000) | 0);
             
-        })
+            //make ajax upload request using cloudinary api
+            return axios.post(`https://${API_KEY}:${API_SECRET}${ADMIN_API_URL}${CLOUD_NAME}/image/upload`, formData, {
+                headers: { "X-Requested-With": "XMLHttpRequest" },
+              })
+                .then( response => {
+                    debugger;
+                    const data = response.data;
+                    const fileUrl = data.secure_url;  //store this somewhere 
+                    console.log(data);
+                }).catch(reject => {
+                    console.log(reject);
+                });
+
+        });
+            
+        //once all files are uploaded then
+        axios.all(uploaders).then(() => {
+            //perform something after upload is successful
+            //display some sort of confirm that files were uploaded 
+        });
     }
 
     
