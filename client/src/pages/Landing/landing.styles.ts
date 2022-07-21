@@ -32,7 +32,7 @@ export const Text = styled.div`
     padding: 0 40px;
     display: block;
     max-width: 870px;
-    margin: 6% auto 42px;
+    margin: 15% auto 42px;
 
     h1 {
         font-size: 4.3rem;
@@ -74,7 +74,7 @@ export const Header = styled.div`
     align-items: center;  //vertically center 
     justify-content: space-between; //this will push one item to the left and one to the right
     max-width: var(--maxWidthDesktop);
-    padding: 0px 50px;
+    padding: 10px 0;
     margin: 0 auto; //center the content div itself
     margin-top: 50px;
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext }from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
 import EXIF from 'exif-js';
@@ -12,25 +12,29 @@ import { Wrapper, Content, UploadImage, ThumbsContainer } from './photos.styles'
 import uploadImage from '../../images/upload.png';
 
 
+
 //this will be the page that will display either the drag and drop upload with a message to start uploading photos to their new account
 //or it will display by default a timeline of all of their photos in chronological order, sorted by day
 const Photo = () => {
-    const [files, setFiles] = useState([]);
+    const [ files, setFiles ] = useState([]);
+  
     const { user } = useContext(AuthContext); 
     const isUserLoggedOut = isEmpty(user);  
 
     useEffect(() => {
         // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
         return () => files.forEach(file => URL.revokeObjectURL(file.preview));
-    }, []);
+    }, [files]);
 
     const handleDrop = (acceptedFiles) => {
-        console.log(acceptedFiles);
-
-        //figure out how to aggregate files instead of overwriting the previews anytime a new photo is added 
-        setFiles(acceptedFiles.map(file => Object.assign(file, {
+        
+        const newFiles = (acceptedFiles.map(file => Object.assign(file, {
             preview: URL.createObjectURL(file)
         })));
+
+        setFiles(prev => {
+            return [...prev, ...newFiles]
+        });
 
         //TODO - handle exif data in db once photo upload is working 
         acceptedFiles.forEach(function(file) {
@@ -70,6 +74,8 @@ const Photo = () => {
        //set up a progress bar for the upload - esp important on larger uploads
        //display a confirm modal when the upload is successful, or an error if it isn't
        //how to handle after photos are uploaded? have a 'upload more photos' or a 'see photos' that redirects to the photos page? 
+       //have a way for the user to select a folder to upload the images to?
+
         debugger;
         const uploaders = files.map(file => {
             //initial FormData
@@ -84,7 +90,7 @@ const Photo = () => {
             formData.append("upload_preset", "canon_irista");
             formData.append("timestamp", (Date.now()/1000) | 0);
             formData.append("public_id", fileName);
-            formData.append("folder", `${user.username}`);
+            formData.append("folder", `${user.username}`);  //idea for now is to just store all photos in an album under the users name, and any actual albums/subalbums under that one. 
             
             const config = {
                 onUploadProgress: progressEvent => console.log(progressEvent.loaded + " progress event "),
@@ -108,15 +114,14 @@ const Photo = () => {
             
         //once all files are uploaded then
         axios.all(uploaders).then(() => {
-            //perform something after upload is successful
-            //display some sort of confirm that files were uploaded 
-            //clean out the array
-            setFiles([]);
+           setFiles([]);
+           
         });
     }
 
     
     return (
+        <>
         <Wrapper>
             <Dropzone 
                 onDrop={acceptedFiles => handleDrop(acceptedFiles)} 
@@ -159,6 +164,7 @@ const Photo = () => {
             <button className='accept-button' onClick={handlePhotoUpload}> Upload Photos </button>
             </div>
         </Wrapper>
+        </>
     )
 }
 

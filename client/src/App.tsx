@@ -6,13 +6,13 @@ import { GlobalStyle } from './GlobalStyles';
 //route protection
 import RequireAuth from './context/requireAuth';
 //components
-import Dashboard from './components/Dashboard';
-import Register from './components/Register/register';
-import Login from './components/Login/login';
-import Album from './components/Album/album';
-import Photos from './components/Photos/Photos';
-import Upload from './components/Upload/upload';
-import Landing from './components/Landing/landing';
+import Dashboard from './pages/Dashboard';
+import Register from './pages/Register/register';
+import Login from './pages/Login/login';
+import Album from './pages/Album/album';
+import Photos from './pages/Photos/Photos';
+import Upload from './pages/Upload/upload';
+import Landing from './pages/Landing/landing';
 import { WithNav, WithoutNav } from './components/Navbar/navbarDisplay';
 
 export default function App() {

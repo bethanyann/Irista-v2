@@ -115,3 +115,5 @@ export const ThumbsContainer = styled.aside`
     }
 `;
 
+
+
