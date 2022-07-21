@@ -39,8 +39,16 @@ const Photo = () => {
                   var exifData = EXIF.pretty(this);
                   if (exifData) {
                     console.log(exifData);
-                    // console.log(EXIF.getTag(this, "GPSLatitude"));
-                    // console.log(EXIF.getTag(this, "GPSLongitude"));
+                    let gpsLat = EXIF.getTag(this, "GPSLatitude");
+                    let gpsLong = EXIF.getTag(this, "GPSLongitude");
+                    if(gpsLat & gpsLong)
+                    {
+                        //convert https://gis.stackexchange.com/questions/136925/how-to-parse-exif-gps-information-to-lat-lng-decimal-numbers
+                        const latDec = gpsLat[0] + gpsLat[1]/60 + gpsLat[2]/3600;
+                        const longDec = (gpsLong[0] + gpsLong[0]/60 + gpsLat[2]/3600) * -1;
+                        //use these like latDec.toFixed(6)  and longDec.toFixed(6)
+                    }
+                    //
                   } else {
                     console.log("No EXIF data found in image '" + file.name + "'.");
                   }
@@ -56,11 +64,17 @@ const Photo = () => {
     }
 
     const handlePhotoUpload = () => {
-        //ok here we go
-        //files should have all the images in it atm
+       //TODO
+       //DONE the upload is renaming the file and not keeping the original filename - fix
+       //I want to figure out how to store the username as contextual metadata as a key/value pair on an image - is this easy to query? 
+       //set up a progress bar for the upload - esp important on larger uploads
+       //display a confirm modal when the upload is successful, or an error if it isn't
+       //how to handle after photos are uploaded? have a 'upload more photos' or a 'see photos' that redirects to the photos page? 
         debugger;
         const uploaders = files.map(file => {
             //initial FormData
+            const fileName = file.name.substring(0, file.name.indexOf('.'));
+            debugger;
             const formData = new FormData();
             formData.append("file", file);
             if(!user.isEmpty) //a logged out user shouldn't ever be able to do this but just to check
@@ -68,12 +82,18 @@ const Photo = () => {
                 formData.append("tags", `${user.username}`);
             }
             formData.append("upload_preset", "canon_irista");
-            //if it doest work try this formData.append("api_key", `${API_KEY}`);
             formData.append("timestamp", (Date.now()/1000) | 0);
+            formData.append("public_id", fileName);
+            formData.append("folder", `${user.username}`);
             
+            const config = {
+                onUploadProgress: progressEvent => console.log(progressEvent.loaded + " progress event "),
+            }
+
             //make ajax upload request using cloudinary api
             return axios.post(`https://${API_KEY}:${API_SECRET}${ADMIN_API_URL}${CLOUD_NAME}/image/upload`, formData, {
                 headers: { "X-Requested-With": "XMLHttpRequest" },
+                config
               })
                 .then( response => {
                     debugger;
@@ -90,6 +110,8 @@ const Photo = () => {
         axios.all(uploaders).then(() => {
             //perform something after upload is successful
             //display some sort of confirm that files were uploaded 
+            //clean out the array
+            setFiles([]);
         });
     }
 
