@@ -123,21 +123,33 @@ export const Header = styled.div`
         
     }
 
+    .text {
+        font-family: 'Gotham', sans-serif;
+        padding-left: 20px;
+        font-size: 2.5rem;
+        letter-spacing: -0.5;
+        color: var('--snow');
+    }
+
+    @media screen and (max-width: 968px){
+        //main header mobile styles
+        padding: 0px 20px;
+
+        .text{
+            padding-left: 10px;
+            font-size: 1.5rem;
+        }
+    }
+
 
 `;
 
 export const LogoImg = styled.img`
     width: 170px;
 
-    .text {
-        font-family: 'Gotham', sans-serif;
-        padding-left: 20px;
-        font-size: 500;
-    }
-
     //when the screen size is less than 720px
-    @media screen and (max-width: 720px){
-        width: 120px;   
+    @media screen and (max-width: 968px){
+        width: 120px; 
     }
 `;
 
