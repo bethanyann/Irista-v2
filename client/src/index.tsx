@@ -6,7 +6,7 @@ import client from './apolloClient';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { AuthProvider } from './context/authContext';
-
+import 'antd/dist/antd.css'; 
  
 // React application needs access to:
 // Client (ApolloProvider), 

@@ -29,7 +29,7 @@ const Navbar = () => {
         <Wrapper>
             <Content>          
                 <Link to={isUserLoggedOut ? '/' : '/dashboard'} >
-                    <LogoImg src={CanonLogo} /> <span style={{ fontFamily: 'Gotham', fontSize: '1.3rem', fontWeight: 420, paddingLeft: 10, color: 'black'}}> Irista </span>
+                    <LogoImg src={CanonLogo} /> <span className="irista-text"> Irista </span>
                 </Link>
                 <div>
                 <NavLinks>

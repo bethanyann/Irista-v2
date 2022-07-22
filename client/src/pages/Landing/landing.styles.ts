@@ -6,8 +6,6 @@ export const Wrapper = styled.div`
     display:flex;
     justify-content: center;
     align-items:center;
-
-
 `;
 
 export const Content = styled.div`
@@ -24,6 +22,16 @@ export const Content = styled.div`
     top: 0;
     background-size: cover;
     flex: 1;
+
+    .irista-text {
+        font-family: 'Gotham';
+        font-size: 2.3rem;
+        font-weight: 420; 
+        padding-left: 20px;
+        color: white;
+        position: absolute !important;
+        top: 90px;
+    }
 `;
 
 export const Text = styled.div`
@@ -46,6 +54,7 @@ export const Text = styled.div`
         font-size: 1.3rem;
         font-weight: 400;
         line-height: 1.68;
+        color: var(--snow);
     }
 
     button {
@@ -74,9 +83,9 @@ export const Header = styled.div`
     align-items: center;  //vertically center 
     justify-content: space-between; //this will push one item to the left and one to the right
     max-width: var(--maxWidthDesktop);
-    padding: 10px 0;
+    padding: 10px 50px;
     margin: 0 auto; //center the content div itself
-    margin-top: 50px;
+    margin-top: 30px;
 
     .button-1 {
         padding: 12px;

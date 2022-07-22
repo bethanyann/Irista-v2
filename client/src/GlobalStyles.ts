@@ -91,6 +91,10 @@ export const GlobalStyle = createGlobalStyle`
         textarea:focus, input:focus{
             outline: none;
         }
+
+        a {
+            color: var(--slate);
+        }
     }
 
 `
