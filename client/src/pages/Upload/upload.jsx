@@ -204,7 +204,7 @@ const Upload = () => {
                      <button onClick={handleCancelModal}>Close</button>,
                      <button onClick={handleConfirmModal}>Go to Photos</button>
                 ]}>
-                <h3> {totalFiles > 1 ? totalFiles + " photos successfully uploaded.":" photo successfully uploaded."}</h3>
+                <h3> {totalFiles > 1 ? totalFiles + " photos successfully uploaded.": totalFiles + " photo successfully uploaded."}</h3>
             </Modal>
 
         </Wrapper>
