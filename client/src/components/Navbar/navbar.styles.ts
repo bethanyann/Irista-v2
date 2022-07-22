@@ -16,12 +16,26 @@ export const Content = styled.div`
     padding: 10px 0;
     margin: 0 auto; //center the content div itself
     color: black;
+
     a {
         text-decoration: none;
     }
+
+    .irista-text {
+        font-family: 'Gotham';
+        font-size: 1.3rem;
+        font-weight: 420; 
+        padding-left: 10px;
+        color: black;
+        position: absolute !important;
+        top: 15px;
+    }
+  
     @media screen and (max-width: 720px){
       padding: 10px 0;   //decrease size of header on smaller screens
     }
+
+
 `;
 
 export const LogoImg = styled.img`

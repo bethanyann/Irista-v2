@@ -8,7 +8,7 @@ import { Wrapper, Content, FormStyle } from './register.styles';
 //authContext
 import { AuthContext } from '../../context/authContext';
 //hooks
-import { useForm } from '../../utilities/formHook';
+import { useForm } from '../../hooks/formHook';
 
 
 

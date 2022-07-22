@@ -7,7 +7,7 @@ import { Wrapper, Content, FormStyle } from './login.styles';
 //authContext
 import { AuthContext } from '../../context/authContext';
 //hooks
-import { useForm } from '../../utilities/formHook';
+import { useForm } from '../../hooks/formHook';
 
 
 const LOGIN_USER = gql`

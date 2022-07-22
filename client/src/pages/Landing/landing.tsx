@@ -33,7 +33,7 @@ const Landing = () => {
                 <Content>
                     <Header>
                         <div>
-                            <LogoImg src={CanonLogo} /> <span className='text'> Irista </span>
+                            <LogoImg src={CanonLogo} /> <span className="irista-text"> Irista </span>
                         </div>
                         <div className='button-div'>
                             <button className='button-2' onClick={redirectToLogin}><span className='button-text'>Sign In</span></button>
