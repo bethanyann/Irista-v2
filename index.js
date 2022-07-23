@@ -4,13 +4,17 @@ const mongoose = require('mongoose');
 const typeDefs = require('./graphql/typeDefs');
 const resolvers = require('./graphql/resolvers');
 const { MONGODB } = require('./config');
-
+const cors = require('cors');
 
 //initilize the Apollo server - takes typedefs and resolvers
 const server = new ApolloServer({
     typeDefs,
-    resolvers
+    resolvers,
+    cors: {
+        origin: ["http://localhost:3000"]
+    }
 });
+
 
 //Mongoose Connection here 
 mongoose.connect(MONGODB, {useNewUrlParser: true})
@@ -20,3 +24,5 @@ mongoose.connect(MONGODB, {useNewUrlParser: true})
     }).then((res) => {
         console.log(`Server running at ${res.url}`);
 });
+
+

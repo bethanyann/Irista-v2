@@ -1,16 +1,23 @@
 import React, { useEffect, useState, useContext } from 'react';
 import isEmpty from 'lodash';
 import { AuthContext } from '../../context/authContext';
+import { User, Photos, Photo } from '../../models/types';
 import { Wrapper, Content } from './photos.styles';
+import { usePhotoFetch } from '../../hooks/usePhotoFetch';
+import { API_KEY, API_SECRET } from '../../config';
+import axios from 'axios';
+import { ASTValidationContext } from 'graphql/validation/ValidationContext';
 
-const Photos = () => {
+const PhotoGrid = () => {
     const { user } = useContext(AuthContext); 
-    const isUserLoggedOut = isEmpty(user);  
+    //const unknownUser = user as unknown;
+    //const loggedInUser = unknownUser as User;
 
-    if(!isUserLoggedOut){
-        //get all the photos for the user here 
-    }
-
+    debugger;
+    //get all the photos for the user here
+    //const { state, loading, error, setIsLoadingMore } =  usePhotoFetch(loggedInUser.username); 
+    
+   
 
     return(
         <Wrapper>
@@ -22,4 +29,4 @@ const Photos = () => {
     )
 }
 
-export default Photos;
+export default PhotoGrid;
