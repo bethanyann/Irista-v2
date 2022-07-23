@@ -28,8 +28,8 @@ export const FormStyle = styled.div`
     //height: 300px; // take off once i have data in here 
     top:40%;
     left:50%;
-    width:20%;//change accordingly or even not necessary to define
-    height:30%;//change accordingly or even not necessary to define
+    width:32%;//change accordingly or even not necessary to define
+    height:34%;//change accordingly or even not necessary to define
     //margin-top: 50px;
     transform:translate(-50%,-50%);
     -moz-transform:translate(-50%,-50%);
