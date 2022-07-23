@@ -14,9 +14,11 @@ const PhotoGrid = () => {
     
     const getImages = async () => {
         try{
+            
             const result = await fetch(`/api/getPhotos/${user.username}`);
             const data = await result.json();
-            
+            console.log(data);
+
         } catch(error) {
             console.log(error);
         }

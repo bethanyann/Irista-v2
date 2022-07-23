@@ -11,15 +11,8 @@ const http = require('http');
 //cloudinary
 const { cloudinary } = require('./utilities/cloudinary');
 
-
 const app = express();
 app.use(cors());
-
-//this was causing an error with apollo server sandbox so commented out until I can find a better solution
-// app.use(cors({
-//     credentials: true,
-//     origin: ['http://localhost:3000']
-// }));
 
 app.get('/api/getPhotos/:username', async (req, res) => {
     try{
@@ -27,9 +20,12 @@ app.get('/api/getPhotos/:username', async (req, res) => {
        console.log("did this work?" + username);
 
        const { resources } = await cloudinary.api.resources({ type: 'upload', prefix: 'test', resource_type: 'image', max_results: 30, direction: 'desc'});
-   
-       console.log(resources);
-      // res.send();
+    
+       const sorted = resources.sort((objA, objB) => Number(objB.created_at) - Number(objA.created_at));
+       //console.log(sorted);
+
+       //send data back to frontend
+       res.send(sorted);
     } catch(error) {
         console.log(error);
     }
