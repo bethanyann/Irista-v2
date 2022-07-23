@@ -5,19 +5,26 @@ import { User, Photos, Photo } from '../../models/types';
 import { Wrapper, Content } from './photos.styles';
 import { usePhotoFetch } from '../../hooks/usePhotoFetch';
 import { API_KEY, API_SECRET } from '../../config';
-import axios from 'axios';
-import { ASTValidationContext } from 'graphql/validation/ValidationContext';
 
 const PhotoGrid = () => {
     const { user } = useContext(AuthContext); 
-    //const unknownUser = user as unknown;
-    //const loggedInUser = unknownUser as User;
-
     debugger;
     //get all the photos for the user here
     //const { state, loading, error, setIsLoadingMore } =  usePhotoFetch(loggedInUser.username); 
     
-   
+    const getImages = async () => {
+        try{
+            const result = await fetch(`/api/getPhotos/${user.username}`);
+            const data = await result.json();
+            
+        } catch(error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        getImages();
+    }, []);
 
     return(
         <Wrapper>
