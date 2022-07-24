@@ -4,30 +4,14 @@ import { AuthContext } from '../../context/authContext';
 import { User, Photos, Photo } from '../../models/types';
 import { Wrapper, Content } from './photos.styles';
 import { usePhotoFetch } from '../../hooks/usePhotoFetch';
-import { API_KEY, API_SECRET } from '../../config';
 
 const PhotoGrid = () => {
     const { user } = useContext(AuthContext); 
     debugger;
     //get all the photos for the user here
-    //const { state, loading, error, setIsLoadingMore } =  usePhotoFetch(loggedInUser.username); 
-    
-    const getImages = async () => {
-        try{
-            
-            const result = await fetch(`/api/getPhotos/${user.username}`);
-            const data = await result.json();
-            console.log(data);
+    const { state, loading, error, setIsLoadingMore } =  usePhotoFetch(user); 
 
-        } catch(error) {
-            console.log(error);
-        }
-    }
-
-    useEffect(() => {
-        getImages();
-    }, []);
-
+    console.log(state);
     return(
         <Wrapper>
             <h3>Timeline</h3>
