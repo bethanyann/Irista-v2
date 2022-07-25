@@ -20,7 +20,8 @@ app.get('/api/getPhotos/:username', async (req, res) => {
        console.log("did this work?" + username);
 
        const { resources } = await cloudinary.api.resources({ type: 'upload', prefix: 'test', resource_type: 'image', max_results: 30, direction: 'desc'});
-    
+       //console.log(resources);
+
        const sorted = resources.sort((objA, objB) => Number(objB.created_at) - Number(objA.created_at));
        //console.log(sorted);
 

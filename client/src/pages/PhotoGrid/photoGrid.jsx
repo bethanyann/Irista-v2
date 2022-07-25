@@ -13,9 +13,9 @@ const PhotoGrid = () => {
 
     if(error) return <div> Something went wrong...</div>;
     
-    const stateIsAnArray = Array.isArray(state) ? true : false;
-    debugger;
-    const test = groupBy(state,  photo => { return photo.created_at }).value();
+    //const stateIsAnArray = Array.isArray(state) ? true : false;
+    //debugger;
+    //const test = groupBy(state,  photo => { return photo.created_at }).value();
     //console.log(test);
     //setFilteredPhotos(state.groupBy(photo => { return photo.created_at }));
     //console.log(filteredPhotos);
