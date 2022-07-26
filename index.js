@@ -17,7 +17,7 @@ app.use(cors());
 app.get('/api/getPhotos/:username', async (req, res) => {
     try{
        let username = req.params.username;
-       console.log("did this work?" + username);
+       //console.log("did this work?" + username);
 
        const { resources } = await cloudinary.api.resources({ type: 'upload', prefix: 'test', resource_type: 'image', max_results: 30, direction: 'desc'});
        //console.log(resources);
@@ -30,6 +30,20 @@ app.get('/api/getPhotos/:username', async (req, res) => {
     } catch(error) {
         console.log(error);
     }
+})
+
+app.get('/api/getPhotoInfo/:encodedPhotoId', async (req,res) => {
+    try {
+        let photoId = req.params.encodedPhotoId;
+        // console.log(req.params.encodedPhotoId);
+        // console.log(photoId + " photo id in backend ");
+        const photo = await cloudinary.api.resource(photoId, {resource_type: 'image', colors: true, image_metadata: true});
+        console.log(photo);
+        res.send(photo);
+    } catch(error){
+        console.log(error);
+    }
+
 })
 
 /////////////////////////////////////

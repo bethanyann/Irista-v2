@@ -1,0 +1,32 @@
+/* Overrides to make the modal full-screen*/
+.ant-modal {
+    width: 0;
+    height: 100vh;
+    margin: 0;
+    top: 0 !important;
+    width: 100vw !important;
+}
+
+.ant-modal-content {
+    /* height: 100vh; */
+    margin: 0;
+    top: 10px;
+    /* width: 100vw; */
+
+}
+
+.ant-modal-body {
+    height: calc(100vh - 20px);
+    background-color: #282828 !important;
+}
+
+
+.ant-modal-footer {
+    display: none;
+}
+
+.ant-modal-close-x {
+    color: var(--snow);
+    font-size:23px;
+}
+

@@ -44,7 +44,7 @@ const Login = ( props:any ) => {
             navigate('/photos', {replace: true});
         }, 
         onError({graphQLErrors}) {
-            debugger;
+
             if(graphQLErrors.length > 0)
             {
                 //TODO - see if its a frontend or backend error as the backend errors come back differently and are messing this up

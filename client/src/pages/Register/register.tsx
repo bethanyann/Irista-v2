@@ -55,7 +55,7 @@ const Register = ( props:any ) => {
             navigate('/photos', {replace:true});
         }, 
         onError({ graphQLErrors }) {
-            debugger;
+
             if(graphQLErrors.length > 0)
             {
                 var errors = graphQLErrors[0].extensions.errors as [];

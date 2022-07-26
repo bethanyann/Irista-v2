@@ -27,4 +27,35 @@ export type Photo = {
     access_mode: string; //authenticated
     url: string //url of photo in cloudinary
     secure_url: string; //another url of photo in cloudinary
+    original_filename: string; //filename without the folders like in the public_id
+    image_metadata: PhotoMetadata;
+    colors: PhotoColors;
+    tags: string[];
+}
+
+export type PhotoMetadata = {
+    createData: string;
+    dateTimeOriginal: string;
+    make: string;
+    model: string;
+    orientation: string;
+    exposureProgram: string;
+    iso: string;
+    exifVersion: string;
+    shutterSpeedValue: string;
+    apertureValue: string;
+    brightnessValue: string;
+    exposureCompensation: string;
+    meteringMode: string;
+    flash: string;
+    focalLength: string;
+    exposureMode: string;
+    whiteBalance: string;
+    lensInfo: string;
+    lensMake: string;
+    dateCreated: string;
+}
+
+export type PhotoColors = {
+    colorPair: [];
 }

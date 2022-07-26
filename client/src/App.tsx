@@ -11,7 +11,7 @@ import Register from './pages/Register/register';
 import Login from './pages/Login/login';
 import Album from './pages/Album/album';
 import PhotoGrid from './pages/PhotoGrid/photoGrid';
-//import PhotoInfo from './pages/PhotoInfo/photoInfo';
+import PhotoInfo from './pages/PhotoInfo/photoInfo';
 import Upload from './pages/Upload/upload';
 import Landing from './pages/Landing/landing';
 import { WithNav, WithoutNav } from './components/Navbar/navbarDisplay';
@@ -27,10 +27,10 @@ export default function App() {
                 <Route path='/photos' element={<RequireAuth><PhotoGrid/></RequireAuth>}/>
                 <Route path='/albums' element={<RequireAuth><Album/></RequireAuth>}/>
                 <Route path='/upload' element={<RequireAuth><Upload/></RequireAuth>}/>
-                {/* <Route path='photo/:photoId' element={<RequireAuth><PhotoInfo/></RequireAuth>} /> */}
               </Route>  
               <Route element={<WithoutNav />}>
-                <Route path='/' element={<Landing />} />  
+                <Route path='/' element={<Landing />} />
+                <Route path='photo/:photoId' element={<RequireAuth><PhotoInfo/></RequireAuth>} />
               </Route>
             </Routes>
           <GlobalStyle />
