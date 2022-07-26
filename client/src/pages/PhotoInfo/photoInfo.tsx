@@ -9,6 +9,11 @@ import { Content, Metadata } from './photoInfo.styles';
 import './modal.css';
 //images
 import aperture from '../../images/icons/aperture.png';
+import whitebalance from '../../images/icons/whitebalance.png';
+import camera from '../../images/icons/camera.png';
+import shutterspeed from '../../images/icons/shutterspeed.png';
+import flash from '../../images/icons/flash.png';
+import iso from '../../images/icons/iso.png';
 
 const PhotoInfo = () => {
     const { photoId } = useParams();
@@ -62,7 +67,7 @@ const PhotoInfo = () => {
                                         </div>
                                     </div>
                                     <div className='second-column'>
-                                    <img src={aperture} alt='aperture-icon' className='icon'/>
+                                    <img src={shutterspeed} alt='shutter-speed-icon' className='icon'/>
                                         <div>
                                             <p className='smaller-font'>Shutter Speed</p>
                                             <p>{photo.image_metadata.shutterSpeedValue ?? "----"}</p>
@@ -71,14 +76,14 @@ const PhotoInfo = () => {
                                 </div>
                                 <div className="two-column">
                                     <div className='first-column'>
-                                        <img src={aperture} alt='aperture-icon' className='icon'/>
+                                        <img src={shutterspeed} alt='focal-length-icon' className='icon'/>
                                         <div>
                                             <p className='smaller-font'>Focal Length</p>
                                             <p>{photo.image_metadata.focalLength ?? "----"}</p>
                                         </div>
                                     </div>
                                     <div className='second-column'>
-                                    <img src={aperture} alt='aperture-icon' className='icon'/>
+                                    <img src={iso} alt='iso-icon' className='icon'/>
                                         <div>
                                             <p className='smaller-font'>ISO</p>
                                             <p>{photo.image_metadata.iso ?? "----"}</p>
@@ -87,14 +92,14 @@ const PhotoInfo = () => {
                                 </div>
                                 <div className="two-column">
                                     <div className='first-column'>
-                                        <img src={aperture} alt='aperture-icon' className='icon'/>
+                                        <img src={whitebalance} alt='white-balance-icon' className='icon'/>
                                         <div>
                                             <p className='smaller-font'>White Balance</p>
                                             <p>{photo.image_metadata.whiteBalance ?? "----"}</p>
                                         </div>
                                     </div>
                                     <div className='second-column'>
-                                    <img src={aperture} alt='aperture-icon' className='icon'/>
+                                    <img src={flash} alt='flash-icon' className='icon'/>
                                         <div>
                                             <p className='smaller-font'>Flash</p>
                                             <p>{photo.image_metadata.flash ?? "----"}</p>
