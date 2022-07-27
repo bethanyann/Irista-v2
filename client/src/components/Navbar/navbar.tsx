@@ -28,7 +28,7 @@ const Navbar = () => {
     return (
         <Wrapper>
             <Content>          
-                <Link to={isUserLoggedOut ? '/' : '/dashboard'} >
+                <Link to={isUserLoggedOut ? '/' : '/photos'} >
                     <LogoImg src={CanonLogo} /> <span className="irista-text"> Irista </span>
                 </Link>
                 <div>

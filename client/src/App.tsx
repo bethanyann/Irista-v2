@@ -30,7 +30,6 @@ export default function App() {
               </Route>  
               <Route element={<WithoutNav />}>
                 <Route path='/' element={<Landing />} />
-                <Route path='photo/:photoId' element={<RequireAuth><PhotoInfo/></RequireAuth>} />
               </Route>
             </Routes>
           <GlobalStyle />

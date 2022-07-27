@@ -9,10 +9,10 @@ import PhotoInfo from './../PhotoInfo/photoInfo';
 
 const PhotoGrid = () => {
     const { user } = useContext(AuthContext); 
-    //const [ filteredPhotos, setFilteredPhotos ] = useState([]);
-    //get all the photos for the user here
+  
     const [ isOpen, setIsOpen ] = useState(false);
     const [ activePhotoId, setActivePhotoId ] = useState("");
+
     const { state, loading, error, setIsLoadingMore } =  usePhotoFetch(user); 
 
     if(error) return <div> Something went wrong...</div>;
@@ -25,12 +25,13 @@ const PhotoGrid = () => {
     //console.log(filteredPhotos);
     
     const handleModalOpen = (photoId) => {
-        console.log( " is working.");
-       
+        setActivePhotoId(photoId);
+        setIsOpen(true);
     }
 
     const handleModalClose = () => {
         setIsOpen(false);
+        setActivePhotoId(null);
     }
 
     return(
@@ -40,9 +41,10 @@ const PhotoGrid = () => {
             <Content>
                 {
                     state ? state.map((photo) => (
-                        <PhotoThumbnail alt='photo-thumbnail' key={photo.asset_id} photo={photo}/>
+                        <div key={photo.asset_id} onClick={() => handleModalOpen(photo.public_id)}>
+                            <PhotoThumbnail alt='photo-thumbnail' photo={photo}/>
+                        </div>  
                     )) : null
-
                 }
                 {/* {
                     state && Object.keys(state).length > 0 ?  (
@@ -52,7 +54,7 @@ const PhotoGrid = () => {
                     ) : null
                 } */}
 
-                <PhotoInfo visible={isOpen} photoId={activePhotoId} onClose={handleModalClose}/>
+                 <PhotoInfo visible={isOpen} photoId={activePhotoId} onClose={handleModalClose}/> 
                 
             </Content>
         </Wrapper>
