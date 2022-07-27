@@ -1,16 +1,16 @@
 import { isCompositeType } from 'graphql';
 import { useState, useEffect } from 'react';
-import { Photo } from '../models/types';
+import { Photo, PhotoMetadata } from '../models/types';
 
 
-//export type MovieState = Movie & { cast: Cast[], directors: Crew[]}
+export type PhotoState = Photo & { image_metadata: PhotoMetadata[] }
 
 // const initialState = {
 //     results: {} as Photo
 // }
 
 export const usePhotoInfoFetch = (photoId: string) => {
-    const [ photo, setPhoto ] = useState({} as Photo);
+    const [ photo, setPhoto ] = useState({} as PhotoState);
     const [ loading, setLoading ] = useState(true); 
     const [ error, setError ] = useState(false);
 
@@ -25,6 +25,7 @@ export const usePhotoInfoFetch = (photoId: string) => {
                     const encodedPhotoId = encodeURIComponent(photoId);
                     const photo = await fetch(`/api/getPhotoInfo/${encodedPhotoId}`);
                     const result = await photo.json();
+                    
                     debugger;
                     setPhoto(result);
                 }
@@ -36,6 +37,8 @@ export const usePhotoInfoFetch = (photoId: string) => {
                 setError(true);
                 setLoading(false);
             }
+
+            setLoading(false);
         }
 
         fetchPhoto();
