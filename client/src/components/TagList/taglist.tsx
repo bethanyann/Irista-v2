@@ -15,7 +15,6 @@ const TagList = ({photoTags} : IProps) => {
     const [inputValue, setInputValue] = useState('');
     const inputRef = useRef<InputRef>(null);
 
-    
     //what type is photoTags?
     useEffect(() => {
         if (inputVisible) {
@@ -34,7 +33,7 @@ const TagList = ({photoTags} : IProps) => {
       const handleInputConfirm = () => {
         if(inputValue && tags.indexOf(inputValue) === -1 ) {
             setTags([...tags, inputValue]);
-            console.log(tags);
+            //console.log(tags);
             //send api call here 
         }
         setInputVisible(false);
@@ -43,7 +42,7 @@ const TagList = ({photoTags} : IProps) => {
 
       const handleDeleteTag = (removedTag: string) => {
         const newTagList = tags.filter( (tag: string) => tag !== removedTag);
-        console.log(newTagList);
+        //console.log(newTagList);
         setTags(newTagList);
 
         //send api call here

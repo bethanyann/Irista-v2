@@ -67,7 +67,7 @@ const Register = ( props:any ) => {
     });
 
     function registerUserCallback() {
-        console.log("register user callback");
+        //console.log("register user callback");
         registerUser();
     }
     

@@ -26,5 +26,11 @@ export const Content = styled.div`
     justify-content: start;
     flex-direction: row;
     flex-wrap: wrap;
+
+    .header-date{
+        font-size: 1.2em;
+        color: var(--silver);
+        letter-spacing: .4px;
+    }
 `;
 

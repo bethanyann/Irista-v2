@@ -27,7 +27,7 @@ const PhotoInfo = ({visible, photoId, onClose} : Props) => {
     const { photo, loading, error} = usePhotoInfoFetch(photoId!);
     let formattedDate = null;
 
-    console.log(photo.image_metadata);
+    //console.log(photo.image_metadata);
 
     const colorArray: string[] = [];
     if(typeof(photo.colors) == "object"){
@@ -39,7 +39,7 @@ const PhotoInfo = ({visible, photoId, onClose} : Props) => {
     if(photo.image_metadata?.CreateDate !== undefined) {
         const date = photo.image_metadata.CreateDate.slice(0,10);
         formattedDate = date.replace(/:/g,"-")
-        console.log(formattedDate);
+        //console.log(formattedDate);
     }
 
     return (

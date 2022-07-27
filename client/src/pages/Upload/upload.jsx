@@ -59,7 +59,7 @@ const Upload = () => {
                 EXIF.getData(file, function() {
                   var exifData = EXIF.pretty(this);
                   if (exifData) {
-                    console.log(exifData);
+                    //console.log(exifData);
                     let gpsLat = EXIF.getTag(this, "GPSLatitude");
                     let gpsLong = EXIF.getTag(this, "GPSLongitude");
                     if(gpsLat & gpsLong)
@@ -117,17 +117,18 @@ const Upload = () => {
                     headers: { "X-Requested-With": "XMLHttpRequest" },
                     onUploadProgress: progressEvent => {
                                 var percentCompleted = Math.round((progressEvent.loaded*100)/progressEvent.total);
-                                console.log(progressEvent.loaded);
-                                console.log(percentCompleted)},
-                  }).then( response => {
+                               // console.log(progressEvent.loaded);
+                              //  console.log(percentCompleted)
+                            },
+                   }).then( response => {
                         const data = response.data;
                         const fileUrl = data.secure_url;  //store this somewhere 
-                        console.log(data);
-                  }).catch(err => {
+                       // console.log(data);
+                   }).catch(err => {
                         setLoading(false);
                         setError(err.message);
-                        console.log(err);
-                  });
+                       // console.log(err);
+                   });
             });
                 
             //once all files are uploaded then
