@@ -46,13 +46,6 @@ const PhotoGrid = () => {
                         </div>  
                     )) : null
                 }
-                {/* {
-                    state && Object.keys(state).length > 0 ?  (
-                        Object.values(state).map(photo => (
-                            <PhotoThumbnail alt='photo-thumbnail' key={photo.asset_id} photo={photo} />
-                        ))
-                    ) : null
-                } */}
 
                  <PhotoInfo visible={isOpen} photoId={activePhotoId} onClose={handleModalClose}/> 
                 

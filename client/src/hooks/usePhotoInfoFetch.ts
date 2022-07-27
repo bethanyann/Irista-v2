@@ -26,7 +26,6 @@ export const usePhotoInfoFetch = (photoId: string) => {
                     const photo = await fetch(`/api/getPhotoInfo/${encodedPhotoId}`);
                     const result = await photo.json();
                     
-                    debugger;
                     setPhoto(result);
                 }
                 else {

@@ -23,7 +23,6 @@ export const usePhotoFetch =  (user: User) => {
             {
                 const photos = await fetch(`/api/getPhotos/${user.username}`);
                 const results = await photos.json();
-                //debugger;
                 //console.log(results + " results from hook");    
                 setState(results);
             }

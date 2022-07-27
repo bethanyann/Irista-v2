@@ -21,7 +21,7 @@ const TagList = ({photoTags} : IProps) => {
         if (inputVisible) {
           inputRef.current?.focus();
         }
-      }, []);
+      }, [inputVisible]);
 
       const showInput = () => {
         setInputVisible(true);

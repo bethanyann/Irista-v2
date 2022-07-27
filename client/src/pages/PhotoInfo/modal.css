@@ -11,19 +11,26 @@
     /* height: 100vh; */
     margin: 0;
     top: 10px;
-    /* left: 15px; */
-    /* width: 100vw; */
+   
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 
 }
 
 .ant-modal-body {
     height: calc(100vh - 20px);
     background-color: #282828 !important;
+    padding: 15px !important;
 }
 
 
 .ant-modal-footer {
     display: none;
+}
+
+.ant-modal-close {
+    margin-right: 14px;
 }
 
 .ant-modal-close-x {
