@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Photo } from '../../models/types';
-import { Wrapper, Thumbnail } from './photoThumb.styles';
+import { Wrapper, Thumbnail, CheckboxContainer } from './photoThumb.styles';
 
 interface IProps {
     photo: Photo,
@@ -11,11 +11,11 @@ interface IProps {
 const PhotoThumbnail = ({ photo } : IProps) => {
     return (
         <Wrapper>
-            {/* <Link to={`/photo/${encodedPhotoId}`}>
-                <Thumbnail src={photo.secure_url} alt='photo-thumbnail' />
-            </Link>  */}
-
-            <Thumbnail src={photo.secure_url} alt='photo-thumbnail' /> 
+            {/* <CheckboxContainer>
+                <input type="checkbox"/> */}
+            
+            <Thumbnail src={photo.secure_url} alt='photo-thumbnail' />
+            {/* </CheckboxContainer> */}
         </Wrapper>
     )
 }

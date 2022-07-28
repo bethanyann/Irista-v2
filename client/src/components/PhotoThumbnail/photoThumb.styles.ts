@@ -11,6 +11,18 @@ export const Wrapper = styled.div`
     }
 `;
 
+export const CheckboxContainer = styled.div`
+    position: relative;
+    max-width: 300px;
+
+    input {
+        position: absolute;
+        bottom: 0;
+        color: white;
+        text-align: left;
+    }
+`;
+
 export const Thumbnail = styled.img`
     height: 150px;
     width: auto;
