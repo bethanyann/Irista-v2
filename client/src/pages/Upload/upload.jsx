@@ -12,21 +12,10 @@ import { Wrapper, Content, UploadImage, ThumbsContainer } from './upload.styles'
 import { Modal, Alert } from 'antd';
 import uploadImage from '../../images/upload.png';
 
-
-  //TODO
-       //DONE the upload is renaming the file and not keeping the original filename - fix
-       //I want to figure out how to store the username as contextual metadata as a key/value pair on an image - is this easy to query? 
-       //set up a progress bar for the upload - esp important on larger uploads
-       //DONE display a confirm modal when the upload is successful, or an error if it isn't
-       //how to handle after photos are uploaded? have a 'upload more photos' or a 'see photos' that redirects to the photos page? 
-       //have a way for the user to select a folder to upload the images to?
-
 // interface Files extends File {
 //     preview: string;
 // }
 
-//this will be the page that will display either the drag and drop upload with a message to start uploading photos to their new account
-//or it will display by default a timeline of all of their photos in chronological order, sorted by day
 const Upload = () => {
     const { user } = useContext(AuthContext); 
     const isUserLoggedOut = isEmpty(user);  
@@ -36,7 +25,6 @@ const Upload = () => {
     const [ loading, setLoading ] = useState(false);
     const [ error, setError ] = useState('');
     const [ totalFiles, setTotalFiles ] = useState(0);
-    
 
     useEffect(() => {
         // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
@@ -98,18 +86,13 @@ const Upload = () => {
                 setLoading(true);
                 
                 //initial FormData
-
                 const fileName = file.name.substring(0, file.name.indexOf('.'));
                 const formData = new FormData();
                 formData.append("file", file);
-                // if(isUserLoggedOut) //a logged out user shouldn't ever be able to do this but just to check
-                // {
-                //     formData.append("tags", `${user.username}`);
-                // }
                 formData.append("upload_preset", "canon_irista");
                 formData.append("timestamp", (Date.now()/1000) | 0);
                 formData.append("public_id", fileName);
-                //formData.append("folder", `${user.username}`);  //idea for now is to just store all photos in an album under the users name, and any actual albums/subalbums under that one. 
+                //formData.append("folder", `${user.username}`); 
                 formData.append("context", `username=${user.username}`);
                 
                 //make ajax upload request using cloudinary api
@@ -123,11 +106,9 @@ const Upload = () => {
                    }).then( response => {
                         const data = response.data;
                         const fileUrl = data.secure_url;  //store this somewhere 
-                       // console.log(data);
                    }).catch(err => {
                         setLoading(false);
                         setError(err.message);
-                       // console.log(err);
                    });
             });
                 
@@ -214,5 +195,7 @@ const Upload = () => {
     )
 }
 
-
+const styles = {
+    
+}
 export default Upload;

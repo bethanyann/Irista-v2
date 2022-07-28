@@ -45,7 +45,7 @@ const PhotoInfo = ({visible, photoId, onClose} : Props) => {
     return (
         
             <Modal
-            className='ant-modal'
+            className='ant-modal-large'
             onCancel={() => onClose()}
             visible={visible}
             bodyStyle={{overflowY:'scroll'}}
