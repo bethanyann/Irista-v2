@@ -37,7 +37,7 @@ const PhotoGrid = () => {
             <Content>
                 {
                     state && Object.keys(state).length > 0 ?  (
-                        Object.keys(state).map(function (date){
+                        Object.keys(state).map(function(date) {
                             return (
                                 <>
                                 <div key={date} style={{width:'100%'}}>

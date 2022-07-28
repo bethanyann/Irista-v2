@@ -102,15 +102,15 @@ const Upload = () => {
                 const fileName = file.name.substring(0, file.name.indexOf('.'));
                 const formData = new FormData();
                 formData.append("file", file);
-                if(isUserLoggedOut) //a logged out user shouldn't ever be able to do this but just to check
-                {
-                    formData.append("tags", `${user.username}`);
-                }
+                // if(isUserLoggedOut) //a logged out user shouldn't ever be able to do this but just to check
+                // {
+                //     formData.append("tags", `${user.username}`);
+                // }
                 formData.append("upload_preset", "canon_irista");
                 formData.append("timestamp", (Date.now()/1000) | 0);
                 formData.append("public_id", fileName);
-                formData.append("folder", `${user.username}`);  //idea for now is to just store all photos in an album under the users name, and any actual albums/subalbums under that one. 
-    
+                //formData.append("folder", `${user.username}`);  //idea for now is to just store all photos in an album under the users name, and any actual albums/subalbums under that one. 
+                formData.append("context", `username=${user.username}`);
                 
                 //make ajax upload request using cloudinary api
                 return axios.post(`https://${API_KEY}:${API_SECRET}${ADMIN_API_URL}${CLOUD_NAME}/image/upload`, formData, {
