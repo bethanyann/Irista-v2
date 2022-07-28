@@ -41,7 +41,7 @@ app.get('/api/getPhotoInfo/:encodedPhotoId', async (req,res) => {
         // console.log(req.params.encodedPhotoId);
         // console.log(photoId + " photo id in backend ");
         const photo = await cloudinary.api.resource(photoId, {resource_type: 'image', colors: true, image_metadata: true});
-        console.log(photo);
+       // console.log(photo);
         res.send(photo);
     } catch(error){
         console.log(error);

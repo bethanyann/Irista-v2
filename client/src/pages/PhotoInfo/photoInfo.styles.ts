@@ -4,12 +4,14 @@ export const Content = styled.div`
 
     display: flex;
     justify-content: space-evenly;
-    align-items: center;
+    align-items: flex-start;
     height: 100%;
 
     .photo-horizontal {
-        width: 70%;
-        /* margin-top: 25vh; */
+        max-height: 93vh;
+        max-width: 70vw;
+        margin: auto;
+        overflow: hidden;
     }
 
     .photo-vertical {
@@ -19,7 +21,10 @@ export const Content = styled.div`
     }
 
     .img-horizontal {
-        width: 100%
+        width: 100%;
+        height: 100%;
+        margin: auto;
+        max-height: 93vh;
     }
 
     .img-vertical {
@@ -29,11 +34,11 @@ export const Content = styled.div`
 `; 
 
 export const Metadata = styled.div`
-    width: 400px;
+    width: 370px;
     margin-left: 20px;
     padding: 10px;
-    position: relative;
-    top: -30px;
+    /* position: relative; */
+    /* top: -50px; */
     color: var(--snow);
 
     h2 {
@@ -58,8 +63,7 @@ export const Metadata = styled.div`
 
     .divider {
         border-bottom: 1px solid var(--steam);
-        margin-bottom: 20px;
-        margin-top: 20px;
+        margin: 15px 0;
     }
 
     .three-column{
@@ -104,3 +108,47 @@ export const Metadata = styled.div`
         border: .5px solid var(--snow);
     }
 `;
+
+interface Props {
+    color: string
+}
+
+export const ColorButton = styled.button<Props>`
+        width:65px;
+        height:65px;
+        border:none;
+        border-radius:5px;
+        margin-right:5px;
+        margin-bottom: 5px;
+        background-color: ${(props) => props.color};
+
+        .colorName {
+            color: transparent;
+            width:65px;
+            height:65px;
+            font-size: .6rem;
+            font-weight: 500;
+        }
+
+        :hover {
+            opacity: 0.7;
+          
+            //cursor: pointer;
+            .colorName{
+                color: ${(props) => setTextColor(props.color)};
+                font-size: .6rem;
+                font-weight: 500;
+            } 
+        }
+`;
+
+function setTextColor(color: string) {
+    const r:number = parseInt(color.slice(1, 3), 16);
+    const g:number = parseInt(color.slice(3, 5), 16);
+    const b:number = parseInt(color.slice(5, 7), 16);
+    
+    let rgb = [r,g,b];
+    var sum = Math.round((rgb[0] * 299) + (rgb[1] * 587) + (rgb[2] * 114)) / 1000;
+
+    return (sum > 100) ? '#000000' : '#FFFFFF';
+}

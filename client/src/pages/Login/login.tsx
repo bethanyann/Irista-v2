@@ -52,7 +52,7 @@ const Login = ( props:any ) => {
                 var backendError = error?.message;
                 var errors = graphQLErrors[0].extensions.errors as [];
                 setErrors(errors);
-                console.log(errors);
+                //console.log(errors);
             }
         },
         variables: { loginInput: values }

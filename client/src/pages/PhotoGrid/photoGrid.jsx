@@ -3,27 +3,23 @@ import { groupBy } from 'lodash';
 import { AuthContext } from '../../context/authContext';
 import { Wrapper, Content } from './photoGrid.styles';
 import { usePhotoFetch } from '../../hooks/usePhotoFetch';
+import Moment from 'react-moment';
 //components
 import PhotoThumbnail from '../../components/PhotoThumbnail/photoThumb';
 import PhotoInfo from './../PhotoInfo/photoInfo';
 
 const PhotoGrid = () => {
     const { user } = useContext(AuthContext); 
-  
+    
     const [ isOpen, setIsOpen ] = useState(false);
     const [ activePhotoId, setActivePhotoId ] = useState("");
-
+    
     const { state, loading, error, setIsLoadingMore } =  usePhotoFetch(user); 
 
     if(error) return <div> Something went wrong...</div>;
-    
-    //const stateIsAnArray = Array.isArray(state) ? true : false;
-    //debugger;
-    //const test = groupBy(state,  photo => { return photo.created_at }).value();
-    //console.log(test);
-    //setFilteredPhotos(state.groupBy(photo => { return photo.created_at }));
-    //console.log(filteredPhotos);
-    
+   
+    //console.log(state);
+
     const handleModalOpen = (photoId) => {
         setActivePhotoId(photoId);
         setIsOpen(true);
@@ -40,20 +36,27 @@ const PhotoGrid = () => {
             <div className='divider'></div>
             <Content>
                 {
-                    state ? state.map((photo) => (
-                        <div key={photo.asset_id} onClick={() => handleModalOpen(photo.public_id)}>
-                            <PhotoThumbnail alt='photo-thumbnail' photo={photo}/>
-                        </div>  
-                    )) : null
-                }
-                {/* {
                     state && Object.keys(state).length > 0 ?  (
-                        Object.values(state).map(photo => (
-                            <PhotoThumbnail alt='photo-thumbnail' key={photo.asset_id} photo={photo} />
-                        ))
+                        Object.keys(state).map(function (date){
+                            return (
+                                <>
+                                <div key={date} style={{width:'100%'}}>
+                                    <h4 className="header-date"><Moment format="D MMMM YYYY">{date}</Moment></h4>
+                                </div>
+                                  {
+                                    state[date].map(photo => {
+                                        return (
+                                            <div key={photo.asset_id} onClick={() => handleModalOpen(photo.public_id)}>
+                                                <PhotoThumbnail alt='photo-thumbnail' photo={photo}/>
+                                            </div>
+                                        )
+                                    })
+                                  }
+                                </>
+                              )
+                        })
                     ) : null
-                } */}
-
+                }
                  <PhotoInfo visible={isOpen} photoId={activePhotoId} onClose={handleModalClose}/> 
                 
             </Content>

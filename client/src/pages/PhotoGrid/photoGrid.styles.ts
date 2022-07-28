@@ -11,6 +11,7 @@ export const Wrapper = styled.div`
         @media screen and (max-width: 768px){
             font-size: var(--fontBig);
         }
+        font-size: 1.3em
     }
 
     .divider {
@@ -26,5 +27,13 @@ export const Content = styled.div`
     justify-content: start;
     flex-direction: row;
     flex-wrap: wrap;
+
+    .header-date{
+        font-size: 1.1em;
+        color: #b0b0b0;
+        /* letter-spacing: .4px; */
+        margin-bottom: 15px;
+        margin-top: 15px;
+    }
 `;
 

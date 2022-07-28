@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom'; //this is how you get the movieId prop from the router
+import React from 'react';
 import Moment from 'react-moment';
 import { Modal } from 'antd';
-import isEmpty from 'lodash';
 //hooks
 import { usePhotoInfoFetch } from '../../hooks/usePhotoInfoFetch';
 //styling
-import { Content, Metadata } from './photoInfo.styles';
+import { Content, Metadata, ColorButton } from './photoInfo.styles';
 import './modal.css';
 //components
 import TagList from '../../components/TagList/taglist';
@@ -14,7 +12,6 @@ import TagList from '../../components/TagList/taglist';
 import aperture from '../../images/icons/aperture.png';
 import whitebalance from '../../images/icons/whitebalance.png';
 import focallength from '../../images/icons/focallength.png';
-// import camera from '../../images/icons/camera.png';
 import shutterspeed from '../../images/icons/shutterspeed.png';
 import flash from '../../images/icons/flash.png';
 import iso from '../../images/icons/iso.png';
@@ -27,10 +24,10 @@ interface Props {
 
 const PhotoInfo = ({visible, photoId, onClose} : Props) => {
     
-   
     const { photo, loading, error} = usePhotoInfoFetch(photoId!);
-    let formattedDate = '';
-    debugger;
+    let formattedDate = null;
+
+    //console.log(photo.image_metadata);
 
     const colorArray: string[] = [];
     if(typeof(photo.colors) == "object"){
@@ -39,11 +36,10 @@ const PhotoInfo = ({visible, photoId, onClose} : Props) => {
         }
     }
 
-    if(photo.image_metadata.CreateDate){
+    if(photo.image_metadata?.CreateDate !== undefined) {
         const date = photo.image_metadata.CreateDate.slice(0,10);
         formattedDate = date.replace(/:/g,"-")
-        console.log(formattedDate)
-
+        //console.log(formattedDate);
     }
 
     return (
@@ -52,6 +48,7 @@ const PhotoInfo = ({visible, photoId, onClose} : Props) => {
             className='ant-modal'
             onCancel={() => onClose()}
             visible={visible}
+            bodyStyle={{overflowY:'scroll'}}
             >
             { loading ? <div> loading. .. . . .. </div> : 
                 <Content>
@@ -73,13 +70,19 @@ const PhotoInfo = ({visible, photoId, onClose} : Props) => {
                                 <div className="three-column">
                                     <p style={{width:'50px', textTransform:'uppercase'}}>{photo.format}</p>
                                     <p style={{width:'110px'}}>{photo.bytes / 1000} KB</p>
-                                    <p style={{width:'120px'}}>{photo.width + "x" + photo.height}</p>
+                                    <p style={{width:'120px'}}>{photo.width + " x " + photo.height}</p>
                                 </div>
                             <div className='divider'></div>
-                            <p className='smaller-font'>Camera</p>
-                                  <p>{photo.image_metadata?.Model ?? "----"}</p>  
-                            <p className='smaller-font'>Lens</p>
-                                  <p>{photo.image_metadata?.LensInfo ? photo.image_metadata.LensInfo + ", " + photo.image_metadata.LensMake : "----"}</p> 
+                            <div className="two-column">
+                                <div>
+                                    <p className='smaller-font'>Camera</p>
+                                    <p>{photo.image_metadata?.Model ?? "----"}</p>  
+                                </div>
+                                <div>
+                                    <p className='smaller-font'>Lens</p>
+                                    <p>{photo.image_metadata?.LensInfo ? photo.image_metadata.LensInfo + ( photo.image_metadata.LensMake ? ", " + photo.image_metadata.LensMake  : ""  ) : "----"}</p> 
+                                </div>    
+                            </div>                         
                             <div className='divider'></div>
                             <h4>LOCATION</h4>
                             <div className='divider'></div>
@@ -140,7 +143,7 @@ const PhotoInfo = ({visible, photoId, onClose} : Props) => {
                             <div className='divider'></div>
                             <h4>COLORS</h4>
                              {colorArray ? colorArray.map(color => (
-                                <button key={color} className='colorButton' style={{backgroundColor: `${color}`}}></button>
+                                <ColorButton key={color} color={color}><span className='colorName'>{color.toString()}</span></ColorButton>
                             )): null } 
                         </div>
                     </Metadata>

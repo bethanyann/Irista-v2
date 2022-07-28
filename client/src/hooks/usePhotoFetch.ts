@@ -1,5 +1,7 @@
 import { useState, useEffect} from 'react';
 import { Photo, Photos, User  } from '../models/types';
+import { Dictionary, groupBy } from 'lodash';
+const moment = require('moment');
 
 const initialState = {
     resources: [] as Photo[],
@@ -9,7 +11,7 @@ const initialState = {
 //need a way to store the next_cursor to determine if there are more photos to load
 export const usePhotoFetch =  (user: User) => {
 
-    const [ state, setState ] = useState(null);
+    const [ state, setState ] = useState<Dictionary<any[]>>();
     const [ loading, setLoading ] = useState(false);
     const [ error, setError ] = useState(false);
     const [ isLoadingMore, setIsLoadingMore ] = useState(false);
@@ -23,9 +25,13 @@ export const usePhotoFetch =  (user: User) => {
             {
                 const photos = await fetch(`/api/getPhotos/${user.username}`);
                 const results = await photos.json();
-                //debugger;
-                //console.log(results + " results from hook");    
-                setState(results);
+                
+                const sortedResults = groupBy(results,  (photo:any) => { 
+                    let date = moment(photo.created_at);
+                    return date.format("MM-DD-YYYY");
+                });
+
+                setState(sortedResults);
             }
            
 
