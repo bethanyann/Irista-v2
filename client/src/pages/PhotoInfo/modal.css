@@ -1,14 +1,13 @@
 /* Overrides to make the modal full-screen*/
-.ant-modal {
+.ant-modal-large {
     width: 0;
     height: 100vh;
     margin: 0;
     top: 0 !important;
     width: 100vw !important;
 }
-
+.ant-modal-large
 .ant-modal-content {
-    /* height: 100vh; */
     margin: 0;
     top: 10px;
    
@@ -18,23 +17,26 @@
 
 }
 
+.ant-modal-large
 .ant-modal-body {
     height: calc(100vh - 20px);
     background-color: #282828 !important;
     padding: 15px !important;
 }
 
-
+.ant-modal-large
 .ant-modal-footer {
     display: none;
 }
 
+.ant-modal-large
 .ant-modal-close {
     margin-right: 14px;
 }
 
+.ant-modal-large
 .ant-modal-close-x {
     color: var(--snow);
     font-size:23px;
 }
-
+ 

@@ -12,7 +12,10 @@ const http = require('http');
 const { cloudinary } = require('./utilities/cloudinary');
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    credentials: true,
+    origin: ['http://localhost:3000']
+}));
 
 app.get('/api/getPhotos/:username', async (req, res) => {
     try{
@@ -22,11 +25,9 @@ app.get('/api/getPhotos/:username', async (req, res) => {
        //AdminAPI 
        //const { resources } = await cloudinary.api.resources({ type: 'upload', prefix: 'test', resource_type: 'image', max_results: 30, direction: 'desc'});
        //SearchAPI
-       const { resources } = await cloudinary.search.expression(`tags:${username}`).sort_by('created_at', 'desc').max_results(30).execute();
-       //console.log(resources);
-
-       //const sorted = resources.sort((objA, objB) => Number(objB.created_at) - Number(objA.created_at));
-       //console.log(sorted);
+       //const { resources } = await cloudinary.search.expression(`tags:${username}`).sort_by('created_at', 'desc').max_results(30).execute();
+       //SearchAPI using context
+       const { resources } = await cloudinary.search.expression(`context.username=${username}`).sort_by('created_at', 'desc').max_results(30).execute();
 
        //send data back to frontend
        res.send(resources);
@@ -38,16 +39,70 @@ app.get('/api/getPhotos/:username', async (req, res) => {
 app.get('/api/getPhotoInfo/:encodedPhotoId', async (req,res) => {
     try {
         let photoId = req.params.encodedPhotoId;
-        // console.log(req.params.encodedPhotoId);
-        // console.log(photoId + " photo id in backend ");
+      
         const photo = await cloudinary.api.resource(photoId, {resource_type: 'image', colors: true, image_metadata: true});
-       // console.log(photo);
+      
         res.send(photo);
     } catch(error){
         console.log(error);
     }
 
 })
+
+//UPLOAD A PHOTO WITHOUT ASSIGNING IT TO A FOLDER
+app.post('/api/uploadPhotos/:username', async (req,res) => {
+    try {
+        console.log(req.body);
+        console.log(req.data);
+        //console.log(req.data.file);
+        console.log(req.params.username);
+
+        //  let file = req.body.data;
+        //  let username = req.params.username;
+        //  let fileName = req.params.filename;
+        // console.log(file);
+        // console.log(username);
+        // console.log(fileName);
+
+        // //maybe add folder here eventually  or make a new api call for folder
+        // const uploadResponse = await cloudinary.uploader.unsigned_upload(file, {
+        //     upload_preset: 'canon_irista',
+        //     timestamp: (Date.now()/1000).toString(),
+        //     public_id: fileName,
+        //     context: ['username', username],
+        // });
+
+        //console.log(uploadResponse);
+
+    } catch(error) {
+        console.log(error);
+        res.status(500).json({ error: 'Something went wrong' });
+    }
+})
+
+//UPLOAD A PHOTO AND ASSIGN IT TO A FOLDER
+app.post('/api/uploadPhotos/:username/:folderName', async (req,res) => {
+    try {
+        let file = req.body.data;
+        let username = req.params.username;
+        let folderName = req.params.folderName;
+        let fileName = file.name.substring(0, file.name.indexOf('.'));
+
+        //maybe add folder here eventually  or make a new api call for folder
+        const uploadResponse = await cloudinary.uploader.upload(file, {
+            upload_preset: 'canon_irista',
+            timestamp: (Date.now()/1000).toString(),
+            public_id: fileName,
+            context: ['username', username],
+            folder: folderName
+        })
+    } catch(error) {
+        console.log(error);
+        res.status(500).json({ error: 'Something went wrong' });
+    }
+})
+
+
 
 /////////////////////////////////////
 // Gets details of an uploaded image

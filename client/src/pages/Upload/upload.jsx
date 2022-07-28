@@ -3,40 +3,32 @@ import Dropzone from 'react-dropzone';
 import axios from 'axios';
 import EXIF from 'exif-js';
 import isEmpty from 'lodash';
+import { useNavigate } from 'react-router-dom';
 //context
 import { AuthContext } from '../../context/authContext';
 //api config
 import { ADMIN_API_URL, API_KEY, API_SECRET, CLOUD_NAME } from '../../config';
 //styles
 import { Wrapper, Content, UploadImage, ThumbsContainer } from './upload.styles';
-import { Modal, Alert } from 'antd';
+import { Modal, Alert, Result, Button } from 'antd';
 import uploadImage from '../../images/upload.png';
-
-
-  //TODO
-       //DONE the upload is renaming the file and not keeping the original filename - fix
-       //I want to figure out how to store the username as contextual metadata as a key/value pair on an image - is this easy to query? 
-       //set up a progress bar for the upload - esp important on larger uploads
-       //DONE display a confirm modal when the upload is successful, or an error if it isn't
-       //how to handle after photos are uploaded? have a 'upload more photos' or a 'see photos' that redirects to the photos page? 
-       //have a way for the user to select a folder to upload the images to?
 
 // interface Files extends File {
 //     preview: string;
 // }
 
-//this will be the page that will display either the drag and drop upload with a message to start uploading photos to their new account
-//or it will display by default a timeline of all of their photos in chronological order, sorted by day
 const Upload = () => {
     const { user } = useContext(AuthContext); 
     const isUserLoggedOut = isEmpty(user);  
 
+    let navigate = useNavigate();
     const [ files, setFiles ] = useState([]);
     const [ openModal, setOpenModal ] = useState(false);
     const [ loading, setLoading ] = useState(false);
     const [ error, setError ] = useState('');
     const [ totalFiles, setTotalFiles ] = useState(0);
-    
+    const [ hover, setHover ] = useState(false);
+
 
     useEffect(() => {
         // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
@@ -98,19 +90,14 @@ const Upload = () => {
                 setLoading(true);
                 
                 //initial FormData
-
                 const fileName = file.name.substring(0, file.name.indexOf('.'));
                 const formData = new FormData();
                 formData.append("file", file);
-                if(isUserLoggedOut) //a logged out user shouldn't ever be able to do this but just to check
-                {
-                    formData.append("tags", `${user.username}`);
-                }
                 formData.append("upload_preset", "canon_irista");
                 formData.append("timestamp", (Date.now()/1000) | 0);
                 formData.append("public_id", fileName);
-                formData.append("folder", `${user.username}`);  //idea for now is to just store all photos in an album under the users name, and any actual albums/subalbums under that one. 
-    
+                //formData.append("folder", `${user.username}`); 
+                formData.append("context", `username=${user.username}`);
                 
                 //make ajax upload request using cloudinary api
                 return axios.post(`https://${API_KEY}:${API_SECRET}${ADMIN_API_URL}${CLOUD_NAME}/image/upload`, formData, {
@@ -123,11 +110,9 @@ const Upload = () => {
                    }).then( response => {
                         const data = response.data;
                         const fileUrl = data.secure_url;  //store this somewhere 
-                       // console.log(data);
                    }).catch(err => {
                         setLoading(false);
                         setError(err.message);
-                       // console.log(err);
                    });
             });
                 
@@ -142,12 +127,12 @@ const Upload = () => {
 
     const handleConfirmModal = () => {
         //navigate to the photos page to show the latest uploaded photos on timeline? 
-         
         setOpenModal(false);
+        setTotalFiles(0);
+        navigate("/photos", {replace: true})
     }
 
     const handleCancelModal = () => {
-        
         setOpenModal(false);
         setTotalFiles(0);
     }
@@ -199,20 +184,51 @@ const Upload = () => {
                 <button className='accept-button' onClick={handlePhotoUpload}> Upload Photos </button>
             </div>
 
-            <Modal className="ant-modal" title="" visible={openModal} onOk={handleConfirmModal} onCancel={handleCancelModal} 
-                footer={[
-                     <button onClick={handleCancelModal}>Close</button>,
-                     <button onClick={handleConfirmModal}>Go to Photos</button>
-                ]}>
-                <h3> {totalFiles > 1 ? totalFiles + " photos successfully uploaded.": totalFiles + " photo successfully uploaded."}</h3>
+            <Modal className="ant-modal" title="" visible={openModal} onCancel={handleCancelModal} footer={null}>
+                {/* <h3> {totalFiles > 1 ? totalFiles + " photos successfully uploaded.": totalFiles + " photo successfully uploaded."}</h3> */}
+                <Result 
+                    status="success"
+                    title="Success!"
+                    subTitle={totalFiles > 1 ? totalFiles + " photos successfully uploaded.": totalFiles + " photo successfully uploaded."}
+                    extra={[
+                        <button style={{ 
+                            backgroundColor: '#CC0000',
+                            color: '#fcfdff',
+                            border: 'none',
+                            borderRadius: '5px',
+                            textTransform: 'uppercase',
+                            // letterSpacing: '1px',
+                            cursor: 'pointer',
+                            fontSize: 'medium',
+                            padding: '6px 12px'
+                        }}
+                        onClick={handleConfirmModal}
+                        >
+                          View Photos
+                        </button>,
+                        <button style={{ 
+                            backgroundColor: '#d4d9e8',
+                            color: '#848c9e',
+                            border: 'none',
+                            borderRadius: '5px',
+                            textTransform: 'uppercase',
+                            // letterSpacing: '1px',
+                            cursor: 'pointer',
+                            fontSize: 'medium',
+                            padding: '6px 12px'
+                        }}
+                        onClick={handleCancelModal}
+                        >
+                          Upload More Photos</button>,
+                    ]}
+                />
             </Modal>
-
         </Wrapper>
-
-        
         </>
     )
 }
 
-
+const styles = {
+    
+}
 export default Upload;
