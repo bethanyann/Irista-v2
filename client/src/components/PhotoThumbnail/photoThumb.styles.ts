@@ -22,6 +22,7 @@ export const Thumbnail = styled.img`
 
         :hover {
             opacity: 0.7;
+            cursor: pointer;
         }
 
         @keyframes animateThumb {

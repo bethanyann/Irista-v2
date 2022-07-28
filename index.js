@@ -17,19 +17,36 @@ app.use(cors());
 app.get('/api/getPhotos/:username', async (req, res) => {
     try{
        let username = req.params.username;
-       console.log("did this work?" + username);
+       //console.log("did this work?" + username);
 
-       const { resources } = await cloudinary.api.resources({ type: 'upload', prefix: 'test', resource_type: 'image', max_results: 30, direction: 'desc'});
+       //AdminAPI 
+       //const { resources } = await cloudinary.api.resources({ type: 'upload', prefix: 'test', resource_type: 'image', max_results: 30, direction: 'desc'});
+       //SearchAPI
+       const { resources } = await cloudinary.search.expression(`tags:${username}`).sort_by('created_at', 'desc').max_results(30).execute();
        //console.log(resources);
 
-       const sorted = resources.sort((objA, objB) => Number(objB.created_at) - Number(objA.created_at));
+       //const sorted = resources.sort((objA, objB) => Number(objB.created_at) - Number(objA.created_at));
        //console.log(sorted);
 
        //send data back to frontend
-       res.send(sorted);
+       res.send(resources);
     } catch(error) {
         console.log(error);
     }
+})
+
+app.get('/api/getPhotoInfo/:encodedPhotoId', async (req,res) => {
+    try {
+        let photoId = req.params.encodedPhotoId;
+        // console.log(req.params.encodedPhotoId);
+        // console.log(photoId + " photo id in backend ");
+        const photo = await cloudinary.api.resource(photoId, {resource_type: 'image', colors: true, image_metadata: true});
+        console.log(photo);
+        res.send(photo);
+    } catch(error){
+        console.log(error);
+    }
+
 })
 
 /////////////////////////////////////

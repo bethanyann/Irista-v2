@@ -5,15 +5,17 @@ import { Wrapper, Thumbnail } from './photoThumb.styles';
 
 interface IProps {
     photo: Photo,
+    //handleModalOpen: () => {}
 }
 
-const PhotoThumbnail = ({photo} : IProps) => {
-
+const PhotoThumbnail = ({ photo } : IProps) => {
     return (
         <Wrapper>
-            <Link to={`/photo/${photo.asset_id}`}>
+            {/* <Link to={`/photo/${encodedPhotoId}`}>
                 <Thumbnail src={photo.secure_url} alt='photo-thumbnail' />
-            </Link> 
+            </Link>  */}
+
+            <Thumbnail src={photo.secure_url} alt='photo-thumbnail' /> 
         </Wrapper>
     )
 }

@@ -85,7 +85,7 @@ const Upload = () => {
     }
 
     const handlePhotoUpload = () => {
-        debugger;
+
         if(files.length === 0)
         {
             //set error message that no photos were selected
@@ -98,7 +98,7 @@ const Upload = () => {
                 setLoading(true);
                 
                 //initial FormData
-                debugger;
+
                 const fileName = file.name.substring(0, file.name.indexOf('.'));
                 const formData = new FormData();
                 formData.append("file", file);
@@ -120,7 +120,6 @@ const Upload = () => {
                                 console.log(progressEvent.loaded);
                                 console.log(percentCompleted)},
                   }).then( response => {
-                        debugger;
                         const data = response.data;
                         const fileUrl = data.secure_url;  //store this somewhere 
                         console.log(data);

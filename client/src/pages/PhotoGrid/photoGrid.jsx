@@ -3,12 +3,16 @@ import { groupBy } from 'lodash';
 import { AuthContext } from '../../context/authContext';
 import { Wrapper, Content } from './photoGrid.styles';
 import { usePhotoFetch } from '../../hooks/usePhotoFetch';
+//components
 import PhotoThumbnail from '../../components/PhotoThumbnail/photoThumb';
+import PhotoInfo from './../PhotoInfo/photoInfo';
 
 const PhotoGrid = () => {
     const { user } = useContext(AuthContext); 
-    //const [ filteredPhotos, setFilteredPhotos ] = useState([]);
-    //get all the photos for the user here
+  
+    const [ isOpen, setIsOpen ] = useState(false);
+    const [ activePhotoId, setActivePhotoId ] = useState("");
+
     const { state, loading, error, setIsLoadingMore } =  usePhotoFetch(user); 
 
     if(error) return <div> Something went wrong...</div>;
@@ -19,6 +23,16 @@ const PhotoGrid = () => {
     //console.log(test);
     //setFilteredPhotos(state.groupBy(photo => { return photo.created_at }));
     //console.log(filteredPhotos);
+    
+    const handleModalOpen = (photoId) => {
+        setActivePhotoId(photoId);
+        setIsOpen(true);
+    }
+
+    const handleModalClose = () => {
+        setIsOpen(false);
+        setActivePhotoId(null);
+    }
 
     return(
         <Wrapper>
@@ -27,7 +41,9 @@ const PhotoGrid = () => {
             <Content>
                 {
                     state ? state.map((photo) => (
-                        <PhotoThumbnail alt='photo-thumbnail' key={photo.asset_id} photo={photo} />
+                        <div key={photo.asset_id} onClick={() => handleModalOpen(photo.public_id)}>
+                            <PhotoThumbnail alt='photo-thumbnail' photo={photo}/>
+                        </div>  
                     )) : null
                 }
                 {/* {
@@ -37,6 +53,9 @@ const PhotoGrid = () => {
                         ))
                     ) : null
                 } */}
+
+                 <PhotoInfo visible={isOpen} photoId={activePhotoId} onClose={handleModalClose}/> 
+                
             </Content>
         </Wrapper>
     )
