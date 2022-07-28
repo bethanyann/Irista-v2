@@ -3,13 +3,14 @@ import Dropzone from 'react-dropzone';
 import axios from 'axios';
 import EXIF from 'exif-js';
 import isEmpty from 'lodash';
+import { useNavigate } from 'react-router-dom';
 //context
 import { AuthContext } from '../../context/authContext';
 //api config
 import { ADMIN_API_URL, API_KEY, API_SECRET, CLOUD_NAME } from '../../config';
 //styles
 import { Wrapper, Content, UploadImage, ThumbsContainer } from './upload.styles';
-import { Modal, Alert } from 'antd';
+import { Modal, Alert, Result, Button } from 'antd';
 import uploadImage from '../../images/upload.png';
 
 // interface Files extends File {
@@ -20,11 +21,14 @@ const Upload = () => {
     const { user } = useContext(AuthContext); 
     const isUserLoggedOut = isEmpty(user);  
 
+    let navigate = useNavigate();
     const [ files, setFiles ] = useState([]);
     const [ openModal, setOpenModal ] = useState(false);
     const [ loading, setLoading ] = useState(false);
     const [ error, setError ] = useState('');
     const [ totalFiles, setTotalFiles ] = useState(0);
+    const [ hover, setHover ] = useState(false);
+
 
     useEffect(() => {
         // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
@@ -123,12 +127,12 @@ const Upload = () => {
 
     const handleConfirmModal = () => {
         //navigate to the photos page to show the latest uploaded photos on timeline? 
-         
         setOpenModal(false);
+        setTotalFiles(0);
+        navigate("/photos", {replace: true})
     }
 
     const handleCancelModal = () => {
-        
         setOpenModal(false);
         setTotalFiles(0);
     }
@@ -180,17 +184,46 @@ const Upload = () => {
                 <button className='accept-button' onClick={handlePhotoUpload}> Upload Photos </button>
             </div>
 
-            <Modal className="ant-modal" title="" visible={openModal} onOk={handleConfirmModal} onCancel={handleCancelModal} 
-                footer={[
-                     <button onClick={handleCancelModal}>Close</button>,
-                     <button onClick={handleConfirmModal}>Go to Photos</button>
-                ]}>
-                <h3> {totalFiles > 1 ? totalFiles + " photos successfully uploaded.": totalFiles + " photo successfully uploaded."}</h3>
+            <Modal className="ant-modal" title="" visible={openModal} onCancel={handleCancelModal} footer={null}>
+                {/* <h3> {totalFiles > 1 ? totalFiles + " photos successfully uploaded.": totalFiles + " photo successfully uploaded."}</h3> */}
+                <Result 
+                    status="success"
+                    title="Success!"
+                    subTitle={totalFiles > 1 ? totalFiles + " photos successfully uploaded.": totalFiles + " photo successfully uploaded."}
+                    extra={[
+                        <button style={{ 
+                            backgroundColor: '#CC0000',
+                            color: '#fcfdff',
+                            border: 'none',
+                            borderRadius: '5px',
+                            textTransform: 'uppercase',
+                            // letterSpacing: '1px',
+                            cursor: 'pointer',
+                            fontSize: 'medium',
+                            padding: '6px 12px'
+                        }}
+                        onClick={handleConfirmModal}
+                        >
+                          View Photos
+                        </button>,
+                        <button style={{ 
+                            backgroundColor: '#d4d9e8',
+                            color: '#848c9e',
+                            border: 'none',
+                            borderRadius: '5px',
+                            textTransform: 'uppercase',
+                            // letterSpacing: '1px',
+                            cursor: 'pointer',
+                            fontSize: 'medium',
+                            padding: '6px 12px'
+                        }}
+                        onClick={handleCancelModal}
+                        >
+                          Upload More Photos</button>,
+                    ]}
+                />
             </Modal>
-
         </Wrapper>
-
-        
         </>
     )
 }
