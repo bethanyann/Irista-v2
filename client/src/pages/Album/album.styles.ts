@@ -33,13 +33,6 @@ export const Content = styled.div`
         grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); //css grid syntax here for a responsive grid
     } */
 
-    .fake-content{
-        width: 300px;
-        height: 300px;
-        border-radius: 5px;
-        background-color: var(--steam);
-    }
-
 `;
 
 export const NewAlbumButton = styled.div`
@@ -53,10 +46,27 @@ export const NewAlbumButton = styled.div`
     text-transform: uppercase;
     font-weight: 410;
 
-    .red-plus{
+    :hover {
+        cursor: pointer;
+        background-color: var(--smoke);
+    }
+
+    .red-plus {
         font-weight: 600;
         margin-left: 5px;
         font-size: 1.1rem;
         color: var(--red);
     }
+`;
+
+export const AlbumThumbnail = styled.div`
+    width: 300px;
+    height: 300px;
+    border-radius: 10px;
+    background-color: var(--steam);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    font-weight: 410;
 `;

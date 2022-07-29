@@ -54,3 +54,8 @@ export type PhotoMetadata = {
     LensMake: string;
     DateCreated: string;
 }
+
+export type Album = {
+    name: string;
+    path: string;
+}

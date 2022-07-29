@@ -12,16 +12,16 @@ const http = require('http');
 const { cloudinary } = require('./utilities/cloudinary');
 
 const app = express();
-app.use(cors({
-    credentials: true,
-    origin: ['http://localhost:3000']
-}));
+// app.use(cors({
+//     credentials: true,
+//     origin: ['http://localhost:3000']
+// }));
 
+
+// GET ALL USER PHOTOS FOR HOMEPAGE PHOTO TIMELINE GRID 
 app.get('/api/getPhotos/:username', async (req, res) => {
     try{
        let username = req.params.username;
-       //console.log("did this work?" + username);
-
        //AdminAPI 
        //const { resources } = await cloudinary.api.resources({ type: 'upload', prefix: 'test', resource_type: 'image', max_results: 30, direction: 'desc'});
        //SearchAPI
@@ -29,27 +29,24 @@ app.get('/api/getPhotos/:username', async (req, res) => {
        //SearchAPI using context
        const { resources } = await cloudinary.search.expression(`context.username=${username}`).sort_by('created_at', 'desc').max_results(30).execute();
 
-       //send data back to frontend
        res.send(resources);
     } catch(error) {
         console.log(error);
     }
 })
 
+// GET SINGLE PHOTO DETAILS
 app.get('/api/getPhotoInfo/:encodedPhotoId', async (req,res) => {
     try {
         let photoId = req.params.encodedPhotoId;
-      
         const photo = await cloudinary.api.resource(photoId, {resource_type: 'image', colors: true, image_metadata: true});
-      
         res.send(photo);
     } catch(error){
         console.log(error);
     }
-
 })
 
-//UPLOAD A PHOTO WITHOUT ASSIGNING IT TO A FOLDER
+// UPLOAD A PHOTO WITHOUT ASSIGNING IT TO A FOLDER
 app.post('/api/uploadPhotos/:username', async (req,res) => {
     try {
         console.log(req.body);
@@ -102,6 +99,36 @@ app.post('/api/uploadPhotos/:username/:folderName', async (req,res) => {
     }
 })
 
+
+//CREATE AN ALBUM AND RETURN LIST OF ALBUMS
+app.get('/api/createAlbum/:username/:albumname', async (req, res) => {
+    try{
+        let albumName = req.params.albumname;
+        let userName = req.params.username;
+
+        const createAlbumResponse = await cloudinary.api.create_folder(`${userName}/${albumName}`)
+        console.log(createAlbumResponse);
+
+        res.send(createAlbumResponse);
+    } catch(error) {
+        console.log(error);
+        req.status(500).json({ error: "Something went wrong"});
+    }
+})
+
+// GET ALL FOLDERS
+app.get('/api/getAllAlbums/:username', async (req, res) => {
+    try {
+        let userName = req.params.username;
+
+        const albumList = await cloudinary.api.sub_folders(`${userName}`);
+        
+        res.send(albumList); 
+    } catch(error) {
+        console.log(error);
+        req.status(500).json({ error: "Something went wrong"});
+    }
+})
 
 
 /////////////////////////////////////

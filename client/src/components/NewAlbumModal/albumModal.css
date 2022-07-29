@@ -1,0 +1,39 @@
+.ant-input-prefix {
+    margin-right: 15px;
+}
+.ant-input-affix-wrapper > input.ant-input {
+    font-size: 1.1em;
+}
+
+button {
+    display:inline-block;
+    padding: 5px 10px;
+    color: white;
+    /* background-color: var(--red); */
+    border: none;
+    font-size: medium;
+    border-radius: 5px;
+    cursor: pointer;
+    text-transform: uppercase;
+    /* letter-spacing: 1px; */
+}
+
+.cancel-button {
+    background-color: var(--smoke);
+    color: var(--snow);
+    margin-right: 20px;
+}
+
+.cancel-button:hover {
+    background-color: var(--slate);
+}
+
+.accept-button {
+    background-color: var(--darkRed);
+    color: var(--snow);
+}
+
+.accept-button:hover {
+    background-color: var(--red);
+}
+
