@@ -22,7 +22,7 @@ export const Wrapper = styled.div`
 export const Content = styled.div`
     display: grid;
     // set to repeat the columns, and then set it to auto fill, and then when its 200px wide it cant' go lower so it removes 1 column instead to make it responsive for mobile
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); //css grid syntax here for a responsive grid
+    grid-template-columns: repeat(auto-fill, minmax(275px, 0fr)); //css grid syntax here for a responsive grid
     grid-gap: 1.3rem; //spacing between rows/columns
 
     /* @media screen and (max-width: 768px) {
@@ -36,8 +36,8 @@ export const Content = styled.div`
 `;
 
 export const NewAlbumButton = styled.div`
-    width: 300px;
-    height: 300px;
+    width: 250px;
+    height: 250px;
     border-radius: 10px;
     background-color: var(--steam);
     display: flex;
@@ -60,8 +60,8 @@ export const NewAlbumButton = styled.div`
 `;
 
 export const AlbumThumbnail = styled.div`
-    width: 300px;
-    height: 300px;
+    width: 250px;
+    height: 250px;
     border-radius: 10px;
     background-color: var(--steam);
     display: flex;
@@ -69,4 +69,9 @@ export const AlbumThumbnail = styled.div`
     align-items: center;
     text-transform: uppercase;
     font-weight: 410;
+    cursor: pointer;
+
+    :hover {
+        background-color: var(--smoke);
+    }
 `;

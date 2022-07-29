@@ -116,7 +116,7 @@ app.get('/api/createAlbum/:username/:albumname', async (req, res) => {
     }
 })
 
-// GET ALL FOLDERS
+// GET ALL ALBUMS/FOLDERS
 app.get('/api/getAllAlbums/:username', async (req, res) => {
     try {
         let userName = req.params.username;
@@ -129,6 +129,23 @@ app.get('/api/getAllAlbums/:username', async (req, res) => {
         req.status(500).json({ error: "Something went wrong"});
     }
 })
+
+// GET ALL PHOTOS INSIDE AN ALBUM
+app.get('/api/getAlbumPhotos/:albumName', async (req, res) => {
+    try {
+        let albumName = req.params.albumName;
+        console.log(albumName);
+
+        const photoList  = await cloudinary.search.expression(`folder:${albumName} AND resource_type:image`).sort_by('created_at', 'desc').max_results(100).execute();
+        // const photoList = await cloudinary.api.resources({ type: 'upload', folder:`${albumName}`, resource_type: 'image', max_results: 30, direction: 'desc'});
+        
+        console.log(photoList);
+        res.send(photoList);
+    } catch(error) {
+        console.log(error);
+        req.status(500).json({error: "something went wrong with the fetch request"});
+    }
+});
 
 
 /////////////////////////////////////

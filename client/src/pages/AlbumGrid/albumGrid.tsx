@@ -2,14 +2,16 @@ import React, { useState, useContext } from 'react';
 //context
 import { AuthContext } from '../../context/authContext';
 //styles
-import { Wrapper, Content, NewAlbumButton, AlbumThumbnail } from './album.styles';
+import { Wrapper, Content, NewAlbumButton, AlbumThumbnail } from './albumGrid.styles';
 //components
 import NewAlbumModal from '../../components/NewAlbumModal/newAlbumModal';
 //hooks
-import { useAlbumFetch } from './../../hooks/useAlbumFetch';
+import { useAlbumFetch } from '../../hooks/useAlbumFetch';
+import { useNavigate } from 'react-router-dom';
 
 
 const Album = () => {
+    let navigate = useNavigate();
     const { user } = useContext(AuthContext); 
     const [ albumModalIsOpen, setAlbumModalIsOpen ] = useState(false);
     
@@ -22,6 +24,9 @@ const Album = () => {
 
     const handleOpenAlbum = (path : string) => {
         //take album path and redirect to an album/photo page
+        const albumName = encodeURIComponent(path);
+        console.log(albumName); 
+        navigate(`/album/${albumName}`, {replace: true});
     }
 
     return (
