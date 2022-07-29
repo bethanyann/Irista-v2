@@ -3,12 +3,14 @@ import { Photo, Photos, User  } from '../models/types';
 import { Dictionary, groupBy } from 'lodash';
 const moment = require('moment');
 
-
+// type AlbumPhotos = {
+//     resources: Photo[],    
+// }
 
 //need a way to store the next_cursor to determine if there are more photos to load
 export const useAlbumPhotoFetch =  (albumName:string) => {
 
-    const [ photos, setPhotos ] = useState([]);
+    const [ photos, setPhotos ] = useState<Photos>();
     const [ loading, setLoading ] = useState(false);
     const [ error, setError ] = useState(false);
     const [ isLoadingMore, setIsLoadingMore ] = useState(false);
@@ -23,22 +25,14 @@ export const useAlbumPhotoFetch =  (albumName:string) => {
                 albumName = encodeURIComponent(albumName);
                 const photos = await fetch(`/api/getAlbumPhotos/${albumName}`);
                 const results = await photos.json();
-                debugger;
-                // const sortedResults = groupBy(results,  (photo:any) => { 
-                //     let date = moment(photo.created_at);
-                //     return date.format("MM-DD-YYYY");
-                // });
-
+                
                 setPhotos(results);
             }
-           
-
         } catch(error) {
             setLoading(false);
             setError(true);
             console.log(error);
         }
-            
         setLoading(false);
     }
 

@@ -16,9 +16,18 @@ const AlbumPhotos = () => {
     const { photos, loading, error } = useAlbumPhotoFetch(albumName!);
 
     const handleModalOpen = () => {
-
+        setIsOpen(true);
     }
 
+    const handleModalClose = () => {
+        setIsOpen(false);
+    }
+
+    const handlePhotoUpload = () => {
+        //upload photos here
+        //I really need to figure out how to get the upload to the backend
+        //just call method from upload component here  
+    }
 
     if(loading) {
         return <div> Loading photos ... </div>
@@ -39,7 +48,7 @@ const AlbumPhotos = () => {
                         <PhotoTile key={photo.asset_id}>
                             <div className='tile-select-checkbox'>
                                 <span>
-                                    <input type='checkbox' />
+                                    <input type='checkbox' className='checkbox' />
                                 </span>
                             </div>
                             <Photo src={photo.secure_url} />
@@ -50,8 +59,8 @@ const AlbumPhotos = () => {
             </Content>
         </Wrapper>
 
-        <Modal visible={isOpen}>
-            
+        <Modal visible={isOpen} onOk={handlePhotoUpload} onCancel={handleModalClose}>
+            <p> upload component goes here </p>
         </Modal>
         </>
       

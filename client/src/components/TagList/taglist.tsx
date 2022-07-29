@@ -31,10 +31,14 @@ const TagList = ({photoTags} : IProps) => {
       }
 
       const handleInputConfirm = () => {
-        if(inputValue && tags.indexOf(inputValue) === -1 ) {
+        debugger;
+        if(inputValue && tags !== undefined && tags.indexOf(inputValue) === -1 ) {
             setTags([...tags, inputValue]);
             //console.log(tags);
             //send api call here 
+        }
+        else if(!tags && inputValue){
+            setTags([inputValue]);
         }
         setInputVisible(false);
         setInputValue('');

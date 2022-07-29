@@ -6,10 +6,10 @@ export const Wrapper = styled.div`
     padding: 20px 20px 20px 20px;
 
     h3{
-        color: var(--medGrey);
+        color: var(--slate);
         font-weight: 500;
         @media screen and (max-width: 768px){
-            font-size: var(--fontBig);
+           // font-size: var(--fontBig);
         }
         font-size: 1.3em
     }

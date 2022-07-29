@@ -29,7 +29,7 @@ export const Content = styled.div`
 
     .img-vertical {
         //height: 100%;
-        max-height: 94vh;
+        max-height: 90vh;
     }
 `; 
 

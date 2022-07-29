@@ -130,16 +130,15 @@ app.get('/api/getAllAlbums/:username', async (req, res) => {
     }
 })
 
-// GET ALL PHOTOS INSIDE AN ALBUM
+// GET ALL PHOTOS INSIDE AN ALBUM ( NOT GRABBING SUB-ALBUMS YET )
 app.get('/api/getAlbumPhotos/:albumName', async (req, res) => {
     try {
         let albumName = req.params.albumName;
         console.log(albumName);
 
-        const photoList  = await cloudinary.search.expression(`folder:${albumName} AND resource_type:image`).sort_by('created_at', 'desc').max_results(100).execute();
-        // const photoList = await cloudinary.api.resources({ type: 'upload', folder:`${albumName}`, resource_type: 'image', max_results: 30, direction: 'desc'});
-        
-        console.log(photoList);
+        //need to put album name in additional quotes in case it has spaces in the name
+        const photoList  = await cloudinary.search.expression(`folder:"${albumName}" AND resource_type:image`).max_results(100).execute();
+        //console.log(photoList);
         res.send(photoList);
     } catch(error) {
         console.log(error);
