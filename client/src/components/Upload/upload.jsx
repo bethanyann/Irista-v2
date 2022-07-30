@@ -1,11 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react';
 import Dropzone from 'react-dropzone';
-import { Alert } from 'antd';
-//styles
+import { Alert, Button } from 'antd';
 import axios from 'axios';
 import EXIF from 'exif-js';
 import isEmpty from 'lodash';
 import { useNavigate } from 'react-router-dom';
+//types
+import {Photo} from '../../models/types';
 //context
 import { AuthContext } from '../../context/authContext';
 //api config
@@ -25,11 +26,10 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
 
     let navigate = useNavigate();
     const [ files, setFiles ] = useState([]);
-    // const [ openModal, setOpenModal ] = useState(false);
     const [ loading, setLoading ] = useState(false);
     const [ error, setError ] = useState('');
-    //const [ totalFiles, setTotalFiles ] = useState(0);
     const [ hover, setHover ] = useState(false);
+    const [ uploadedPhotos, setUploadedPhotos ] = useState([]);
 
 
     useEffect(() => {
@@ -39,6 +39,8 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
 
     const handleCancelUpload = () => {
         setFiles([]);
+        setLoading(false);
+
         if(setOpenModal)
         {
             setOpenModal(false);
@@ -88,7 +90,7 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
         }
 
         else {
-            
+            let uploadedPhotoList = [];
             const uploadedData = files.map(file => {
                 
                 setLoading(true);
@@ -114,7 +116,8 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
                             },
                    }).then( response => {
                         const data = response.data;
-                        const fileUrl = data.secure_url;  //store this somewhere 
+                        //is the response data photos that I can send back? 
+                        uploadedPhotoList = [...uploadedPhotoList, data];
                    }).catch(err => {
                         setLoading(false);
                         setError(err.message);
@@ -123,12 +126,14 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
                 
             //once all files are uploaded then
             axios.all(uploadedData).then(() => {
-                setTotalFiles(files.length);
-
+                
                 if(setOpenAlertModal) {
                     setOpenAlertModal(true);
                 }
-                
+                if(setTotalFiles){
+                    setTotalFiles(uploadedPhotoList);
+                }
+
                 setLoading(false);
                 setFiles([]);
             });
@@ -175,14 +180,9 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
             </Dropzone>
             <div className="button-container">
                {error ?  <Alert message={error} type="error"/> : null}
-                <button className='cancel-button' onClick={handleCancelUpload}> Cancel </button>
-                <button className='accept-button' onClick={handlePhotoUpload}> Upload Photos </button>
+                <Button className='cancel-button'  onClick={handleCancelUpload} disabled={loading}> Cancel </Button>
+                <Button className='accept-button' onClick={handlePhotoUpload} loading={loading}>{loading ? "Uploading..." : "Upload Photos"}</Button>
             </div>
-
-
-            
-
-
         </Wrapper>
 
     )
