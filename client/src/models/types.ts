@@ -10,13 +10,14 @@ export type User = {
 export type Photos = {
     resources: Photo[];
     next_cursor: string;
+    total_count?: number;
 }
 
 export type Photo = {
     asset_id: string;
     public_id: string;
     format: string; //jpg, png etc
-    version: number; //unsure if i need this
+    //version: number; //unsure if i need this
     resource_type: string; //image, video
     type: string; //upload
     created_at: Date;
@@ -53,4 +54,9 @@ export type PhotoMetadata = {
     LensInfo: string;
     LensMake: string;
     DateCreated: string;
+}
+
+export type Album = {
+    name: string;
+    path: string;
 }

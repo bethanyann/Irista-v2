@@ -29,7 +29,7 @@ export const Content = styled.div`
 
     .img-vertical {
         //height: 100%;
-        max-height: 94vh;
+        max-height: 90vh;
     }
 `; 
 
@@ -126,7 +126,7 @@ export const ColorButton = styled.button<Props>`
             color: transparent;
             width:65px;
             height:65px;
-            font-size: .6rem;
+            font-size: .5rem;
             font-weight: 500;
         }
 
@@ -136,7 +136,7 @@ export const ColorButton = styled.button<Props>`
             //cursor: pointer;
             .colorName{
                 color: ${(props) => setTextColor(props.color)};
-                font-size: .6rem;
+                font-size: .5rem;
                 font-weight: 500;
             } 
         }
