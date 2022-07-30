@@ -6,10 +6,11 @@ import { TweenOneGroup } from 'rc-tween-one';
 import { Wrapper, Content } from './taglist.styles';
 
 interface IProps {
-    photoTags: string[]
+    photoTags: string[],
+    photoId: string
 }
 
-const TagList = ({photoTags} : IProps) => {
+const TagList = ({photoTags, photoId} : IProps) => {
     const [tags, setTags] = useState<string[]>(photoTags);
     const [inputVisible, setInputVisible] = useState<boolean>(false);
     const [inputValue, setInputValue] = useState('');
@@ -22,34 +23,57 @@ const TagList = ({photoTags} : IProps) => {
         }
       }, [inputVisible]);
 
-      const showInput = () => {
+    useEffect(() => {
+        const saveTags = async () => {
+            let encodedPhotoId = encodeURIComponent(photoId)
+            
+            await fetch(`/api/saveTags/${encodedPhotoId}`, {
+                method: 'POST',
+                body: JSON.stringify(tags),
+                headers: {
+                    'Content-type':'application/json; charset=UTF-8'
+                }
+            }).then(data => {
+                console.log(data);
+            }).catch(error => {
+                console.log(error);
+            });
+          }
+
+        if(tags && tags.length > 0)
+        {
+            saveTags();
+        }
+    }, [tags,photoId]);
+
+    const showInput = () => {
         setInputVisible(true);
-      }
+    }
 
-      const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
-      }
+    }
 
-      const handleInputConfirm = () => {
-        debugger;
+    const handleInputConfirm = () => {
         if(inputValue && tags !== undefined && tags.indexOf(inputValue) === -1 ) {
             setTags([...tags, inputValue]);
-            //console.log(tags);
-            //send api call here 
+            // saveTags();
         }
         else if(!tags && inputValue){
             setTags([inputValue]);
+            // saveTags();
         }
         setInputVisible(false);
         setInputValue('');
-      }
+    }
 
       const handleDeleteTag = (removedTag: string) => {
+        debugger;
         const newTagList = tags.filter( (tag: string) => tag !== removedTag);
-        //console.log(newTagList);
+        console.log(newTagList);
         setTags(newTagList);
-
-        //send api call here
+        console.log(tags);
+        //saveTags();
       }
 
       return (
@@ -73,7 +97,7 @@ const TagList = ({photoTags} : IProps) => {
                 </TweenOneGroup>
             </Content>
             { inputVisible ? (
-                <Input ref={inputRef} type="text" size="small" placeholder='new tag'style={{width:90, height:27}} value={inputValue} onChange={handleInputChange} onBlur={handleInputConfirm} onPressEnter={handleInputConfirm} />
+                <Input ref={inputRef} type="text" size="small" placeholder='new tag' style={{width:130, height:27}} value={inputValue} onChange={handleInputChange} onBlur={handleInputConfirm} onPressEnter={handleInputConfirm} />
             ) : null}
             { !inputVisible ? (
                 <Tag onClick={showInput} className="site-tag-plus add-tag-button">
