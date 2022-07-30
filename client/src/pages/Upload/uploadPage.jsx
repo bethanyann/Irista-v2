@@ -8,7 +8,7 @@ import { AuthContext } from '../../context/authContext';
 //api config
 import { ADMIN_API_URL, API_KEY, API_SECRET, CLOUD_NAME } from '../../config';
 //styles
-import { Wrapper, Content, UploadImage, ThumbsContainer } from './uploadPage.styles';
+import { Wrapper } from './uploadPage.styles';
 import { Modal, Alert, Result, Button } from 'antd';
 import uploadImage from '../../images/upload.png';
 //components
@@ -42,7 +42,7 @@ const UploadPage = () => {
     return (
         <>
         <Wrapper>
-            {/* <Upload visible={true} setTotalFiles={setTotalFiles} setOpenAlertModal={setOpenAlertModal} albumName={''}/> */}
+            <Upload visible={true} setTotalFiles={setTotalFiles} setOpenAlertModal={setOpenAlertModal} albumName={''}/> 
             <Modal className="ant-modal" title="" visible={openAlertModal} onCancel={handleCancelModal} footer={null}>
                 <Result 
                     status="success"
