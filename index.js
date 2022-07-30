@@ -120,9 +120,7 @@ app.get('/api/createAlbum/:username/:albumname', async (req, res) => {
 app.get('/api/getAllAlbums/:username', async (req, res) => {
     try {
         let userName = req.params.username;
-
         const albumList = await cloudinary.api.sub_folders(`${userName}`);
-        
         res.send(albumList); 
     } catch(error) {
         console.log(error);
@@ -134,11 +132,8 @@ app.get('/api/getAllAlbums/:username', async (req, res) => {
 app.get('/api/getAlbumPhotos/:albumName', async (req, res) => {
     try {
         let albumName = req.params.albumName;
-        console.log(albumName);
-
         //need to put album name in additional quotes in case it has spaces in the name
         const photoList  = await cloudinary.search.expression(`folder:"${albumName}" AND resource_type:image`).max_results(100).execute();
-        //console.log(photoList);
         res.send(photoList);
     } catch(error) {
         console.log(error);

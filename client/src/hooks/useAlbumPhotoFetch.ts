@@ -17,6 +17,7 @@ export const useAlbumPhotoFetch =  (albumName:string) => {
 
     const fetchPhotos = async (albumName: string) => {
         try {
+            debugger;
             setLoading(true);
             setError(false);
 
@@ -38,7 +39,7 @@ export const useAlbumPhotoFetch =  (albumName:string) => {
 
     useEffect(() => {
         fetchPhotos(albumName);
-    }, [albumName] );
+    }, [albumName, setPhotos] );
 
-    return { photos, loading, error, setIsLoadingMore };
+    return { photos, setPhotos, loading, error, setIsLoadingMore };
 };

@@ -10,7 +10,7 @@ import Register from './pages/Register/register';
 import Login from './pages/Login/login';
 import AlbumGrid from './pages/AlbumGrid/albumGrid';
 import PhotoGrid from './pages/PhotoGrid/photoGrid';
-import Upload from './pages/Upload/upload';
+import UploadPage from './pages/Upload/uploadPage';
 import Landing from './pages/Landing/landing';
 import AlbumPhotos from './pages/AlbumPhotos/albumPhotos';
 import { WithNav, WithoutNav } from './components/Navbar/navbarDisplay';
@@ -24,7 +24,7 @@ export default function App() {
                 <Route path='/register' element={<Register />} /> 
                 <Route path='/photos' element={<RequireAuth><PhotoGrid/></RequireAuth>}/>
                 <Route path='/albums' element={<RequireAuth><AlbumGrid/></RequireAuth>}/>
-                <Route path='/upload' element={<RequireAuth><Upload/></RequireAuth>}/>
+                <Route path='/upload' element={<RequireAuth><UploadPage/></RequireAuth>}/>
                 <Route path='/album/:albumName' element={<RequireAuth><AlbumPhotos /></RequireAuth>} />
               </Route>  
               <Route element={<WithoutNav />}>
