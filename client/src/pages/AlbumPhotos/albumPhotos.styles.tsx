@@ -46,9 +46,14 @@ export const Content = styled.div`
 `;
 
 export const PhotoContainer = styled.div`
-    display:flex;
-    justify-content:space-between ;
-    align-items: center;
+    
+    p {
+        margin-top: 10px;
+        font-size: smaller;
+        text-transform: uppercase;
+        color: var(--steel);
+        text-align: center;
+    }
 `;
 
 export const PhotoTile = styled.div`

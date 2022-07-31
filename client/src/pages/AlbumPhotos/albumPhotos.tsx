@@ -20,7 +20,10 @@ const AlbumPhotos = () => {
     const [ openAlertModal, setOpenAlertModal ] = useState(false);
     const [ totalFiles, setTotalFiles ] = useState([]);
 
+    const [ selectedPhotos, setSelectedPhotos] = useState<string[]>([]);
+
     const { photos, setPhotos, loading, error } = useAlbumPhotoFetch(albumName!);
+   // console.log(photos);
 
     const handleModalOpen = () => {
         setIsOpen(true);
@@ -47,9 +50,20 @@ const AlbumPhotos = () => {
        
         setPhotos(newArray);
 
-        console.log(photos);
+        //console.log(photos);
         setOpenAlertModal(false);
         setIsOpen(false);
+    }
+
+    const handleSelectPhoto = (event: {target:Element}, photoId: string) => {
+        event.preventDefault();
+
+        debugger;
+        //is event checked/unchecked here? 
+        if(event.target.checked){
+
+        }
+
     }
 
     if(loading) {
@@ -67,14 +81,17 @@ const AlbumPhotos = () => {
             <Content>
                 {
                     photos && photos ? photos.resources.map((photo) => (
-                        <PhotoTile key={photo.asset_id}>
-                            <div className='tile-select-checkbox'>
-                                <span className='tile-select-checkbox-span'>
-                                    <input type='checkbox' className='checkbox' />
-                                </span>
-                            </div>
-                            <PhotoImage src={photo.secure_url} />
-                        </PhotoTile>
+                        <PhotoContainer>
+                            <PhotoTile key={photo.asset_id}>
+                                <div className='tile-select-checkbox'>
+                                    <span className='tile-select-checkbox-span'>
+                                        <input type='checkbox' className='checkbox' onClick={event => handleSelectPhoto(event, photo.public_id)}/>
+                                    </span>
+                                </div>
+                                <PhotoImage src={photo.secure_url} />
+                            </PhotoTile>
+                            <p>{photo.filename + "." + photo.format}</p>
+                        </PhotoContainer>
                     )) : null
                 }
               
