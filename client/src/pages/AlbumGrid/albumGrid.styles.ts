@@ -59,17 +59,36 @@ export const NewAlbumButton = styled.div`
     }
 `;
 
-export const AlbumThumbnail = styled.div`
+interface AlbumThumbnailProps {
+    image: any
+}
+
+export const AlbumThumbnail = styled.div<AlbumThumbnailProps>`
     width: 250px;
     height: 250px;
     border-radius: 10px;
     background-color: var(--steam);
     display: flex;
-    justify-content: center;
-    align-items: center;
-    text-transform: uppercase;
+    justify-content: start;
+    align-items: flex-end;
+    color: white;
     font-weight: 410;
+    font-size: x-large;
+    padding-left: 15px;
+    padding-bottom: 3px;
+
     cursor: pointer;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) 46%,
+        rgba(0, 0, 0, 0.9) 89%
+    ),
+    url(${props => props.image}), var(--steam);
+
+    /* background: url(${props => props.image}), var(--steam); */
+    background-size: 300px;
+    background-position: center;
+    
 
     :hover {
         background-color: var(--smoke);
