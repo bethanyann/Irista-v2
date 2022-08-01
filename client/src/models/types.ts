@@ -33,6 +33,7 @@ export type Photo = {
     image_metadata: PhotoMetadata;
     colors: [];
     tags: string[];
+    isSelected: boolean;
 }
 
 export type PhotoMetadata = {
