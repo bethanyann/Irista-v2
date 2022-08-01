@@ -57,23 +57,17 @@ const TagList = ({photoTags, photoId} : IProps) => {
     const handleInputConfirm = () => {
         if(inputValue && tags !== undefined && tags.indexOf(inputValue) === -1 ) {
             setTags([...tags, inputValue]);
-            // saveTags();
         }
         else if(!tags && inputValue){
             setTags([inputValue]);
-            // saveTags();
         }
         setInputVisible(false);
         setInputValue('');
     }
 
       const handleDeleteTag = (removedTag: string) => {
-        debugger;
         const newTagList = tags.filter( (tag: string) => tag !== removedTag);
-        console.log(newTagList);
         setTags(newTagList);
-        console.log(tags);
-        //saveTags();
       }
 
       return (

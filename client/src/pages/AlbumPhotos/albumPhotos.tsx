@@ -6,11 +6,15 @@ import { useAlbumPhotoFetch } from '../../hooks/useAlbumPhotoFetch';
 import { Modal, Result } from 'antd';
 import { Wrapper, Header, Content, PhotoContainer, PhotoTile, PhotoImage} from './albumPhotos.styles';
 import AddIcon from '../../images/icons/add.png';
+import DeleteIcon from '../../images/icons/delete.png';
 import './uploadModal.css';
 //components
 import Upload from '../../components/Upload/upload';
+import PhotoInfo from '../PhotoInfo/photoInfo';
 //types
 import { Photo, Photos } from '../../models/types';
+
+const initialState = new Set<string>();
 
 const AlbumPhotos = () => {
     const { albumName } = useParams();   
@@ -20,12 +24,26 @@ const AlbumPhotos = () => {
     const [ openAlertModal, setOpenAlertModal ] = useState(false);
     const [ totalFiles, setTotalFiles ] = useState([]);
 
-    const [ selectedPhotos, setSelectedPhotos] = useState<string[]>([]);
+    const [ selectedPhotos, setSelectedPhotos] = useState(() => initialState);
 
+    const [ activePhotoId, setActivePhotoId ] = useState('');
+    const [ isPhotoModalOpen, setIsPhotoModalOpen ] = useState(false);
+
+    //results from hook
     const { photos, setPhotos, loading, error } = useAlbumPhotoFetch(albumName!);
-   // console.log(photos);
+
+    const handlePhotoModalOpen = (photoId : string) => {
+        setActivePhotoId(photoId);
+        setIsPhotoModalOpen(true);
+    }
+
+    const handlePhotoModalClose = () => {
+        setIsPhotoModalOpen(false);
+        setActivePhotoId('');
+    }
 
     const handleModalOpen = () => {
+        setSelectedPhotos(initialState);
         setIsOpen(true);
     }
 
@@ -49,20 +67,38 @@ const AlbumPhotos = () => {
         }
        
         setPhotos(newArray);
-
-        //console.log(photos);
         setOpenAlertModal(false);
         setIsOpen(false);
     }
 
-    const handleSelectPhoto = (event: {target:Element}, photoId: string) => {
-        event.preventDefault();
-
-        debugger;
-        //is event checked/unchecked here? 
+    const handleSelectPhoto = (event: any, photo: Photo) => {
+        console.log(selectedPhotos);
         if(event.target.checked){
+            //add photo id to set
+            photo.isSelected = true;
+            setSelectedPhotos(prev => new Set(prev).add(photo.public_id));
 
+        } else {
+            //delete photo from set
+            photo.isSelected = false;
+            setSelectedPhotos(prev => {
+                const next = new Set(prev);
+                next.delete(photo.public_id);
+                return next;
+            })
         }
+    }
+
+    const handleTest = () => {
+        console.log('did this work')
+    }
+
+    const handleDeletePhotos = () => {
+        //show confirm delete modal
+        //if yes ->
+        //take set of selected photos
+        //make api call 
+        
 
     }
 
@@ -75,27 +111,32 @@ const AlbumPhotos = () => {
         <Wrapper>
             <Header>
                 <h3>{formattedAlbumName}</h3>
-                <img src={AddIcon} alt='add button' onClick={handleModalOpen} />
+                <div>
+                    <img src={DeleteIcon} alt='delete button' onClick={handleDeletePhotos} style={{marginRight:'20px', height: '30px'}}/>
+                    <img src={AddIcon} alt='add button' onClick={handleModalOpen} />
+                </div>
             </Header>
             <div className="divider"></div>
             <Content>
                 {
                     photos && photos ? photos.resources.map((photo) => (
-                        <PhotoContainer>
-                            <PhotoTile key={photo.asset_id}>
+                        <PhotoContainer  key={photo.asset_id}>
+                            <PhotoTile className='photo-tile' style={photo.isSelected ? {backgroundColor:'#f3f4fa', border:'1px solid var(--smoke)'} : { }}>
                                 <div className='tile-select-checkbox'>
                                     <span className='tile-select-checkbox-span'>
-                                        <input type='checkbox' className='checkbox' onClick={event => handleSelectPhoto(event, photo.public_id)}/>
+                                        <input type='checkbox' className='checkbox' checked={photo.isSelected} onChange={event => handleSelectPhoto(event, photo)}/>
                                     </span>
                                 </div>
-                                <PhotoImage src={photo.secure_url} />
+                                <div className='photo-image-wrapper' style={{zIndex:1}} onClick={() => handlePhotoModalOpen(photo.public_id)}>
+                                    <PhotoImage src={photo.secure_url} style={photo.isSelected? {maxHeight:'290px', maxWidth:'290px'} : {}} />
+                                </div>       
                             </PhotoTile>
                             <p>{photo.filename + "." + photo.format}</p>
                         </PhotoContainer>
                     )) : null
                 }
-              
             </Content>
+            <PhotoInfo visible={isPhotoModalOpen} photoId={activePhotoId} onClose={handlePhotoModalClose}/> 
         </Wrapper>
 
         <Modal className="upload-modal"
