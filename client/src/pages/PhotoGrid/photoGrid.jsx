@@ -18,8 +18,6 @@ const PhotoGrid = () => {
 
     if(error) return <div> Something went wrong...</div>;
    
-    //console.log(state);
-
     const handleModalOpen = (photoId) => {
         setActivePhotoId(photoId);
         setIsOpen(true);
@@ -39,7 +37,7 @@ const PhotoGrid = () => {
                     state && Object.keys(state).length > 0 ?  (
                         Object.keys(state).map(function(date) {
                             return (
-                                <>
+                                <div key={date}>
                                 <div key={date} style={{width:'100%'}}>
                                     <h4 className="header-date"><Moment format="D MMMM YYYY">{date}</Moment></h4>
                                 </div>
@@ -52,7 +50,7 @@ const PhotoGrid = () => {
                                         )
                                     })
                                   }
-                                </>
+                                </div>
                               )
                         })
                     ) : null

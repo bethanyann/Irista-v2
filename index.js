@@ -172,13 +172,17 @@ app.post('/api/saveTags/:encodedPhotoId', async (req, res) => {
 
 
 // DELETE SET OF PHOTOS FROM ALBUM
-app.delete('/api/deletePhotos/', async (req,res) =>{
+app.post('/api/deletePhotos', async (req,res) => {
     try{
         let photoList = req.body;
         console.log(photoList);
-        // await cloudinary.api.delete_resources(photoList).then(
-        //     response => res.send(response)
-        // );
+
+        await cloudinary.api.delete_resources(photoList).then(
+            response => {
+                console.log(response);
+                res.send(response);
+            }
+        );
 
     } catch(error) {
         console.log(error);
@@ -188,9 +192,7 @@ app.delete('/api/deletePhotos/', async (req,res) =>{
 
 });
 
-/////////////////////////////////////
-// Gets details of an uploaded image
-/////////////////////////////////////
+
 // const getAssetInfo = async (publicId) => {
 
 //     // Return colors in the response
