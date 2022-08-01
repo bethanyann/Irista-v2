@@ -89,19 +89,31 @@ const AlbumPhotos = () => {
         }
     }
 
-    const handleTest = () => {
-        console.log('did this work')
-    }
-
-    const handleDeletePhotos = () => {
+    const handleDeletePhotos = async () => {
         //show confirm delete modal
         //if yes ->
         //take set of selected photos
-        //make api call 
-        
+        if(selectedPhotos.size > 0){
+ 
+            await fetch(`/api/deletePhotos/`, {
+                method: 'DELETE',
+                body: JSON.stringify(selectedPhotos),
+                headers: {
+                    'Content-type':'application/json; charset=UTF-8'
+                }
+            }).then(data => {
+                console.log(data);
+            }).catch(error => {
+                console.log(error);
+            });
+        }
+        else {
+            //return error that no photos are selected for deletion
 
+        }
     }
 
+    //TODO - loading needs some styling help
     if(loading) {
         return <div> Loading photos ... </div>
     }

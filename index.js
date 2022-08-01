@@ -171,6 +171,22 @@ app.post('/api/saveTags/:encodedPhotoId', async (req, res) => {
 });
 
 
+// DELETE SET OF PHOTOS FROM ALBUM
+app.delete('/api/deletePhotos/', async (req,res) =>{
+    try{
+        let photoList = req.body;
+        console.log(photoList);
+        // await cloudinary.api.delete_resources(photoList).then(
+        //     response => res.send(response)
+        // );
+
+    } catch(error) {
+        console.log(error);
+        res.status(500).json({error: "something went wrong when deleting the photo list"});
+
+    }
+
+});
 
 /////////////////////////////////////
 // Gets details of an uploaded image
