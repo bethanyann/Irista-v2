@@ -25,7 +25,12 @@ const PhotoGrid = () => {
 
     const handleModalClose = () => {
         setIsOpen(false);
-        setActivePhotoId(null);
+        //setActivePhotoId(null);
+    }
+
+    const handlePhotoRename = (activePhotoId) => {
+        setActivePhotoId(activePhotoId);
+        setIsOpen(true);
     }
 
     return(
@@ -37,7 +42,7 @@ const PhotoGrid = () => {
                     state && Object.keys(state).length > 0 ?  (
                         Object.keys(state).map(function(date) {
                             return (
-                                <div key={date}>
+                                <>
                                 <div key={date} style={{width:'100%'}}>
                                     <h4 className="header-date"><Moment format="D MMMM YYYY">{date}</Moment></h4>
                                 </div>
@@ -50,12 +55,12 @@ const PhotoGrid = () => {
                                         )
                                     })
                                   }
-                                </div>
+                                </>
                               )
                         })
                     ) : null
                 }
-                 <PhotoInfo visible={isOpen} photoId={activePhotoId} onClose={handleModalClose}/> 
+                 <PhotoInfo visible={isOpen} photoId={activePhotoId} onClose={handleModalClose} onRenamePhoto={handlePhotoRename}/> 
                 
             </Content>
         </Wrapper>

@@ -3,7 +3,7 @@ import Moment from 'react-moment';
 import { Modal, Input, InputRef } from 'antd';
 import { EditTwoTone, EditOutlined } from '@ant-design/icons';
 //hooks
-import { usePhotoInfoFetch } from '../../hooks/usePhotoInfoFetch';
+import { usePhotoInfoFetch, PhotoState } from '../../hooks/usePhotoInfoFetch';
 //styling
 import { Content, Metadata, ColorButton } from './photoInfo.styles';
 import './modal.css';
@@ -17,20 +17,22 @@ import shutterspeed from '../../images/icons/shutterspeed.png';
 import flash from '../../images/icons/flash.png';
 import iso from '../../images/icons/iso.png';
 
+
 interface Props {
     visible: boolean;
     photoId: string;
     onClose: () => void;
+    onRenamePhoto: (public_id: string) => void;
 }
 
-const PhotoInfo = ({visible, photoId, onClose} : Props) => {
+const PhotoInfo = ({visible, photoId, onClose, onRenamePhoto} : Props) => {
     const [inputVisible, setInputVisible] = useState<boolean>(false);
     const [inputValue, setInputValue] = useState('');
     const inputRef = useRef<InputRef>(null);
-
-    const { photo, loading, error} = usePhotoInfoFetch(photoId!);
+    debugger;
+    const { photo, setPhoto, loading, error} = usePhotoInfoFetch(photoId!);
     let formattedDate = null;
-   
+   console.log(photo);
     useEffect(() => {
         if (inputVisible) {
           inputRef.current?.focus();
@@ -56,16 +58,17 @@ const PhotoInfo = ({visible, photoId, onClose} : Props) => {
             setInputVisible(false);
            // return small error message that the filename can't be blank
         } else {
-            //cloudinary.v2.uploader.rename(from_public_id, to_public_id, options, callback);
             const saveNewFilename = async () => {
                 let encodedNewFilename = encodeURIComponent(inputValue);
                 let encodedOldFilename = encodeURIComponent(photo.public_id);
 
                 await fetch(`/api/renamePhoto/${encodedOldFilename}/${encodedNewFilename}`, {
-                    method: 'POST'
-                }).then(data => {
-                    console.log(data);
+                    method: 'GET'
+                }).then( async (data) => {
+                    const result:PhotoState = await data.json();
                     //display green checkmark? small success message? 
+                    console.log(result);
+                    onRenamePhoto(result.public_id);
                 });
             }
             
@@ -74,8 +77,8 @@ const PhotoInfo = ({visible, photoId, onClose} : Props) => {
             setInputVisible(false);
         }
     }
-
-    //edit photoname here
+    
+     //control how many colors are being displayed here
     const colorArray: string[] = [];
     if(typeof(photo.colors) == "object"){
         for(var i = 0; i < photo.colors.length; i++) {
@@ -83,6 +86,7 @@ const PhotoInfo = ({visible, photoId, onClose} : Props) => {
         }
     }
 
+    //disgard the time info and just grab the date & format 
     if(photo.image_metadata?.CreateDate !== undefined) {
         const date = photo.image_metadata.CreateDate.slice(0,10);
         formattedDate = date.replace(/:/g,"-")
@@ -108,27 +112,27 @@ const PhotoInfo = ({visible, photoId, onClose} : Props) => {
                             {
                                 inputVisible ? (
                                     <>
-                                    <Input ref={inputRef}  type="text" style={{width:200, height:27}} value={inputValue} onChange={handleInputChange} onPressEnter={handleInputConfirm} onBlur={handleInputConfirm} placeholder={photo.original_filename}/>
-                                    <span style={{fontSize:'1.3em', marginLeft:'2px'}}>{"." + photo.format} <EditTwoTone onClick={showInput} style={{marginLeft:'5px'}} /></span>
+                                    <Input ref={inputRef}  type="text" style={{width:200, height:27}} value={inputValue} onChange={handleInputChange} onPressEnter={handleInputConfirm} onBlur={handleInputConfirm} placeholder={photo.public_id ?? photo.filename ?? photo.original_filename}/>
+                                    <span style={{fontSize:'1.3em', marginLeft:'2px'}}>{"." + photo.format} <EditTwoTone twoToneColor="#26cfa2" onClick={showInput} style={{marginLeft:'5px'}} /></span>
                                     </>
                                 ) : null
                             }
                             {
                                 !inputVisible ? (
-                                    <p>{photo.original_filename + "." + photo.format} <EditOutlined onClick={showInput} style={{marginLeft:'5px'}} /></p>
+                                    <p>{(photo.public_id ?? photo.filename ?? photo.original_filename) + "." + photo.format} <EditOutlined onClick={showInput} style={{marginLeft:'5px'}} /></p>
                                 ) : null
                             }
                             <p className='smaller-font'> Date Created</p>
                                 <p><Moment date={formattedDate ?? photo.created_at} format="MM/DD/YYYY"/></p>
                                 <div className="three-column">
                                     <p className='smaller-font' style={{width:'50px'}}>Format</p>
-                                    <p className='smaller-font' style={{width:'110px'}}>Size</p>
-                                    <p className='smaller-font' style={{width:'120px'}}>Dimensions</p>
+                                    <p className='smaller-font' style={{width:'110px', marginLeft:'10px'}}>Size</p>
+                                    <p className='smaller-font' style={{width:'120px', marginLeft:'10px'}}>Dimensions</p>
                                 </div>
                                 <div className="three-column">
                                     <p style={{width:'50px', textTransform:'uppercase'}}>{photo.format}</p>
-                                    <p style={{width:'110px'}}>{photo.bytes / 1000} KB</p>
-                                    <p style={{width:'120px'}}>{photo.width + " x " + photo.height}</p>
+                                    <p style={{width:'110px', marginLeft:'10px'}}>{Math.round(photo.bytes / 1000)} KB</p>
+                                    <p style={{width:'120px', marginLeft:'10px'}}>{photo.width + " x " + photo.height}</p>
                                 </div>
                             <div className='divider'></div>
                             <div className="two-column">

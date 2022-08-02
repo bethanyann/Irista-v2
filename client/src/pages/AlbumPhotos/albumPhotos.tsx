@@ -130,6 +130,9 @@ const AlbumPhotos = () => {
         }
     }
 
+    const handleRenamePhoto = (photoId: string) => {
+        setActivePhotoId(photoId);
+    }
     //TODO - loading needs some styling help, its displaying in the top left of the page
     //could use a spinner or some simple animation too 
     if(loading) {
@@ -166,7 +169,7 @@ const AlbumPhotos = () => {
                     )) : null
                 }
             </Content>
-            <PhotoInfo visible={isPhotoModalOpen} photoId={activePhotoId} onClose={handlePhotoModalClose}/> 
+            <PhotoInfo visible={isPhotoModalOpen} photoId={activePhotoId} onClose={handlePhotoModalClose} onRenamePhoto={handleRenamePhoto}/> 
         </Wrapper>
 
 
@@ -260,16 +263,16 @@ const AlbumPhotos = () => {
       
     )
 
-    const confirmButtonStyle = {
-        backgroundColor: '#CC0000',
-        color: '#fcfdff',
-        border: 'none',
-        borderRadius: '5px',
-        textTransform: 'uppercase',
-        cursor: 'pointer',
-        fontSize: 'medium',
-        padding: '6px 12px'
-    }
+    // const confirmButtonStyle = {
+    //     backgroundColor: '#CC0000',
+    //     color: '#fcfdff',
+    //     border: 'none',
+    //     borderRadius: '5px',
+    //     textTransform: 'uppercase',
+    //     cursor: 'pointer',
+    //     fontSize: 'medium',
+    //     padding: '6px 12px'
+    // }
 }
 
 export default AlbumPhotos;
