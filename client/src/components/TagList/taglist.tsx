@@ -16,7 +16,6 @@ const TagList = ({photoTags, photoId} : IProps) => {
     const [inputValue, setInputValue] = useState('');
     const inputRef = useRef<InputRef>(null);
 
-    //what type is photoTags?
     useEffect(() => {
         if (inputVisible) {
           inputRef.current?.focus();
@@ -44,7 +43,7 @@ const TagList = ({photoTags, photoId} : IProps) => {
         {
             saveTags();
         }
-    }, [tags,photoId]);
+    }, [tags, photoId]);
 
     const showInput = () => {
         setInputVisible(true);
