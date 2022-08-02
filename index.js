@@ -16,7 +16,7 @@ const app = express();
 //     credentials: true,
 //     origin: ['http://localhost:3000']
 // }));
-
+app.use(express.json());
 
 // GET ALL USER PHOTOS FOR HOMEPAGE PHOTO TIMELINE GRID 
 app.get('/api/getPhotos/:username', async (req, res) => {
@@ -140,6 +140,28 @@ app.get('/api/getAlbumPhotos/:albumName', async (req, res) => {
         req.status(500).json({error: "something went wrong with the fetch request"});
     }
 });
+
+// POST A PHOTOS TAGS WHEN NEW ONES ARE ADDED OR TAGS ARE DELETED
+app.post('/api/saveTags/:encodedPhotoId', async (req, res) => {
+    try {
+        let photoId = req.params.encodedPhotoId;
+        let tagList = req.body.join(",");
+        console.log(tagList);
+       
+        await cloudinary.api.update(`${photoId}`, {
+            tags: req.body
+        }).then(data => {
+            res.send(data);
+        }).catch(error => {
+            console.log(error);
+        })
+
+    } catch(error) {
+        console.log(error);
+        req.status(500).json({error: "something went wrong with the fetch request"});
+    }
+});
+
 
 
 /////////////////////////////////////

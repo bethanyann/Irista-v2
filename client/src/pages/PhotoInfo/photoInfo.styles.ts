@@ -93,20 +93,6 @@ export const Metadata = styled.div`
             width: 40px;
         } */
     }
-
-    .colorButton {
-        width:45px;
-        height:45px;
-        border:none;
-        border-radius:5px;
-        margin-right:5px;
-    }
-
-    .colorButton:hover{
-        opacity: 0.9;
-        cursor: pointer;
-        border: .5px solid var(--snow);
-    }
 `;
 
 interface Props {
@@ -117,26 +103,26 @@ export const ColorButton = styled.button<Props>`
         width:65px;
         height:65px;
         border:none;
+        padding:0;
         border-radius:5px;
         margin-right:5px;
         margin-bottom: 5px;
         background-color: ${(props) => props.color};
 
+
         .colorName {
             color: transparent;
             width:65px;
             height:65px;
-            font-size: .5rem;
+            font-size: .6rem;
             font-weight: 500;
         }
 
         :hover {
             opacity: 0.7;
-          
-            //cursor: pointer;
             .colorName{
                 color: ${(props) => setTextColor(props.color)};
-                font-size: .5rem;
+                font-size: .6rem;
                 font-weight: 500;
             } 
         }

@@ -26,7 +26,7 @@ const PhotoInfo = ({visible, photoId, onClose} : Props) => {
     
     const { photo, loading, error} = usePhotoInfoFetch(photoId!);
     let formattedDate = null;
-
+   
     //console.log(photo.image_metadata);
 
     const colorArray: string[] = [];
@@ -138,7 +138,7 @@ const PhotoInfo = ({visible, photoId, onClose} : Props) => {
                             <div className='divider'></div>
                             <h4>TAGS</h4>
                             {
-                                 <TagList photoTags={photo.tags} />
+                                 <TagList photoTags={photo.tags} photoId={photo.public_id} />
                             }
                             <div className='divider'></div>
                             <h4>COLORS</h4>
