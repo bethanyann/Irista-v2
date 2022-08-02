@@ -26,7 +26,6 @@ const NewAlbumModal = ({visible, onClose} : Props) => {
         } else {
            createAlbum(user!);
         }
-        console.log(albumName);
     }
 
     const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,17 +34,15 @@ const NewAlbumModal = ({visible, onClose} : Props) => {
     }
 
     const createAlbum = async (user : User) => {
-        debugger;
-       try {
+        try {
             const album = await fetch(`/api/createAlbum/${user.username}/${albumName}`);
-            console.log(album);
             //confirm that new album was created
 
             //close modal
             
-        }catch(error:any) {
+        } catch(error:any) {
             setError(error);
-       }
+        }
     }
 
 

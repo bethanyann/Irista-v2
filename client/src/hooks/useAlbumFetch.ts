@@ -4,14 +4,13 @@ import { User, Album } from '../models/types';
 const moment = require('moment');
 
 const initialState = {
-    folders: [] as Album[],
-    next_cursor: ''
+    album: [] as any,
 }
 
 //need a way to store the next_cursor to determine if there are more photos to load
 export const useAlbumFetch =  (user: User) => {
 
-    const [ albums, setAlbums ] = useState(initialState);
+    const [ albums, setAlbums ] = useState<Album[]>([]);
     const [ loading, setLoading ] = useState(false);
     const [ errors, setErrors ] = useState(false);
     const [ isLoadingMore, setIsLoadingMore ] = useState(false);
@@ -20,12 +19,11 @@ export const useAlbumFetch =  (user: User) => {
         try {
             setLoading(true);
             setErrors(false);
-            debugger;
             if(user.username)
             {
                 const albums = await fetch(`/api/getAllAlbums/${user.username}`);
                 const results = await albums.json();
-                console.log(results);
+                debugger;
                 setAlbums(results);
             }
         } catch(error) {

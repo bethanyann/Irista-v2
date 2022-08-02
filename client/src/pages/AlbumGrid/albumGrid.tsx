@@ -17,7 +17,8 @@ const Album = () => {
     
     const { albums, loading, errors } = useAlbumFetch(user!);
     debugger;
-    
+    console.log(albums);
+
     const handleModalClose = () => {
         setAlbumModalIsOpen(false);
     }
@@ -35,9 +36,9 @@ const Album = () => {
             <div className='divider'></div>
             <Content>
                 <NewAlbumButton onClick={() => setAlbumModalIsOpen(true)}>New Album<span className='red-plus'>+</span></NewAlbumButton>
-                 {
-                    albums ? albums.folders.map((album) => (
-                        <AlbumThumbnail key={album.path} onClick={() => handleOpenAlbum(album.path)}>{album.name}</AlbumThumbnail>
+                {
+                    albums ? albums.map((album) => (
+                        <AlbumThumbnail key={album[0].path} image={album[1].secure_url ?? ""} onClick={() => handleOpenAlbum(album[0].path)}>{album[0].name}</AlbumThumbnail>
                     )) : null
                 } 
             </Content>

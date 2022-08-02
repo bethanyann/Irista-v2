@@ -57,6 +57,12 @@ export type PhotoMetadata = {
 }
 
 export type Album = {
-    name: string;
-    path: string;
+    [0]: {
+        name: string;
+        path: string;
+    };
+    [1]: { 
+        secure_url: string;
+    };
+    coverPhoto: Photo;
 }

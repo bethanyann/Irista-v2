@@ -107,24 +107,33 @@ app.get('/api/createAlbum/:username/:albumname', async (req, res) => {
         let userName = req.params.username;
 
         const createAlbumResponse = await cloudinary.api.create_folder(`${userName}/${albumName}`)
-        console.log(createAlbumResponse);
-
         res.send(createAlbumResponse);
     } catch(error) {
         console.log(error);
-        req.status(500).json({ error: "Something went wrong"});
+        res.status(500).json({ error: "Something went wrong"});
     }
 })
 
-// GET ALL ALBUMS/FOLDERS
+// GET ALL ALBUMS/FOLDERS FOR ONE USER 
 app.get('/api/getAllAlbums/:username', async (req, res) => {
     try {
+        let albumList = [];
         let userName = req.params.username;
-        const albumList = await cloudinary.api.sub_folders(`${userName}`);
-        res.send(albumList); 
+        const albums = await cloudinary.api.sub_folders(`${userName}`);
+        
+        await Promise.all(albums.folders.map(async (album) => {
+            const photo =  await cloudinary.search.expression(`folder:"${album.path}" AND resource_type:image`).max_results(1).execute();
+           
+            albumList.push([
+                album,
+                photo.resources[0]
+            ]);
+        }));
+
+        res.send(albumList);
     } catch(error) {
         console.log(error);
-        req.status(500).json({ error: "Something went wrong"});
+        res.status(500).json({ error: "Something went wrong"});
     }
 })
 
@@ -137,7 +146,7 @@ app.get('/api/getAlbumPhotos/:albumName', async (req, res) => {
         res.send(photoList);
     } catch(error) {
         console.log(error);
-        req.status(500).json({error: "something went wrong with the fetch request"});
+        res.status(500).json({error: "something went wrong with the fetch request"});
     }
 });
 
@@ -146,7 +155,6 @@ app.post('/api/saveTags/:encodedPhotoId', async (req, res) => {
     try {
         let photoId = req.params.encodedPhotoId;
         let tagList = req.body.join(",");
-        console.log(tagList);
        
         await cloudinary.api.update(`${photoId}`, {
             tags: req.body
@@ -158,7 +166,7 @@ app.post('/api/saveTags/:encodedPhotoId', async (req, res) => {
 
     } catch(error) {
         console.log(error);
-        req.status(500).json({error: "something went wrong with the fetch request"});
+        res.status(500).json({error: "something went wrong with the fetch request"});
     }
 });
 
