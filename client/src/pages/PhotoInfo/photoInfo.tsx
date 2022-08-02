@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import Moment from 'react-moment';
-import { Modal } from 'antd';
+import { Modal, Input, InputRef } from 'antd';
+import { EditTwoTone, EditOutlined } from '@ant-design/icons';
 //hooks
 import { usePhotoInfoFetch } from '../../hooks/usePhotoInfoFetch';
 //styling
@@ -23,12 +24,58 @@ interface Props {
 }
 
 const PhotoInfo = ({visible, photoId, onClose} : Props) => {
-    
+    const [inputVisible, setInputVisible] = useState<boolean>(false);
+    const [inputValue, setInputValue] = useState('');
+    const inputRef = useRef<InputRef>(null);
+
     const { photo, loading, error} = usePhotoInfoFetch(photoId!);
     let formattedDate = null;
    
-    //console.log(photo.image_metadata);
+    useEffect(() => {
+        if (inputVisible) {
+          inputRef.current?.focus();
+        }
+      }, [inputVisible]);
 
+    const showInput = () => {
+        setInputVisible(!inputVisible);
+        if(!inputVisible)
+        {
+            setInputValue('');
+        }
+    }
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setInputValue(e.target.value);
+    }
+ 
+    const handleInputConfirm = () => {
+        if(inputValue === '')
+        {
+            setInputValue('');
+            setInputVisible(false);
+           // return small error message that the filename can't be blank
+        } else {
+            //cloudinary.v2.uploader.rename(from_public_id, to_public_id, options, callback);
+            const saveNewFilename = async () => {
+                let encodedNewFilename = encodeURIComponent(inputValue);
+                let encodedOldFilename = encodeURIComponent(photo.public_id);
+
+                await fetch(`/api/renamePhoto/${encodedOldFilename}/${encodedNewFilename}`, {
+                    method: 'POST'
+                }).then(data => {
+                    console.log(data);
+                    //display green checkmark? small success message? 
+                });
+            }
+            
+            saveNewFilename();
+            setInputValue('');
+            setInputVisible(false);
+        }
+    }
+
+    //edit photoname here
     const colorArray: string[] = [];
     if(typeof(photo.colors) == "object"){
         for(var i = 0; i < photo.colors.length; i++) {
@@ -39,7 +86,6 @@ const PhotoInfo = ({visible, photoId, onClose} : Props) => {
     if(photo.image_metadata?.CreateDate !== undefined) {
         const date = photo.image_metadata.CreateDate.slice(0,10);
         formattedDate = date.replace(/:/g,"-")
-        //console.log(formattedDate);
     }
 
     return (
@@ -59,7 +105,19 @@ const PhotoInfo = ({visible, photoId, onClose} : Props) => {
                         <div className="info-row">
                             <h2>Information</h2>
                             <p className='smaller-font'>Filename</p>
-                                <p>{photo.original_filename + "." + photo.format}</p>
+                            {
+                                inputVisible ? (
+                                    <>
+                                    <Input ref={inputRef}  type="text" style={{width:200, height:27}} value={inputValue} onChange={handleInputChange} onPressEnter={handleInputConfirm} onBlur={handleInputConfirm} placeholder={photo.original_filename}/>
+                                    <span style={{fontSize:'1.3em', marginLeft:'2px'}}>{"." + photo.format} <EditTwoTone onClick={showInput} style={{marginLeft:'5px'}} /></span>
+                                    </>
+                                ) : null
+                            }
+                            {
+                                !inputVisible ? (
+                                    <p>{photo.original_filename + "." + photo.format} <EditOutlined onClick={showInput} style={{marginLeft:'5px'}} /></p>
+                                ) : null
+                            }
                             <p className='smaller-font'> Date Created</p>
                                 <p><Moment date={formattedDate ?? photo.created_at} format="MM/DD/YYYY"/></p>
                                 <div className="three-column">

@@ -5,8 +5,6 @@ import axios from 'axios';
 import EXIF from 'exif-js';
 import isEmpty from 'lodash';
 import { useNavigate } from 'react-router-dom';
-//types
-import {Photo} from '../../models/types';
 //context
 import { AuthContext } from '../../context/authContext';
 //api config
@@ -15,22 +13,13 @@ import { ADMIN_API_URL, API_KEY, API_SECRET, CLOUD_NAME } from '../../config';
 import {Wrapper, Content, UploadImage, ThumbsContainer } from './upload.styles';
 import uploadImage from '../../images/upload.png';
 
-// interface PhotoFile {
-//  file: File,
-//  preview: string
-// }
 
 const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) => {
     const { user } = useContext(AuthContext); 
-    const isUserLoggedOut = isEmpty(user);  
 
-    let navigate = useNavigate();
     const [ files, setFiles ] = useState([]);
     const [ loading, setLoading ] = useState(false);
     const [ error, setError ] = useState('');
-    const [ hover, setHover ] = useState(false);
-    const [ uploadedPhotos, setUploadedPhotos ] = useState([]);
-
 
     useEffect(() => {
         // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
@@ -94,7 +83,7 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
             const uploadedData = files.map(file => {
                 
                 setLoading(true);
-                
+              
                 //initial FormData
                 const fileName = file.name.substring(0, file.name.indexOf('.'));
                 const formData = new FormData();
