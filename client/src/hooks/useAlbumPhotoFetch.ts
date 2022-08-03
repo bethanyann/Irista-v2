@@ -17,7 +17,7 @@ export const useAlbumPhotoFetch =  (albumName:string) => {
 
     const fetchPhotos = async (albumName: string) => {
         try {
-            debugger;
+            
             setLoading(true);
             setError(false);
 

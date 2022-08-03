@@ -16,7 +16,7 @@ export const Header = styled.div`
     display:flex;
     justify-content: space-between;
     align-items: center;
-
+    margin-top: 20px;
     h3{
         color: var(--slate);
         font-weight: 500;
@@ -46,19 +46,26 @@ export const Content = styled.div`
 `;
 
 export const PhotoContainer = styled.div`
-    display:flex;
-    justify-content:space-between ;
-    align-items: center;
-`;
-
-export const PhotoTile = styled.div`
     height: 300px;
     width: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: default;
-    //transition: .3s;
+    margin-top: 20px;
+    p {
+        margin-top: 10px;
+        font-size: smaller;
+        text-transform: uppercase;
+        color: var(--steel);
+        text-align: center;
+    }
+
+    .photo-tile:hover {
+        background-color: var(--steam);
+        justify-content: center;
+
+        .checkbox {
+            opacity: 1;
+            cursor: pointer;
+        }
+    }
 
     .tile-select-checkbox {
         height: 300px;
@@ -70,35 +77,41 @@ export const PhotoTile = styled.div`
         position: relative;
         top: 13px;
         left: 13px;
-        opacity: 0;
     }
 
     .checkbox {
         height: 19px;
         width: 19px;
+        opacity: 0;
     }
 
-    //checkbox div with a span inside it and then the input inside of that
-    :hover {
-        background-color: var(--steam);
-        justify-content: center;
+    .checkbox:checked {
+        opacity: 1;
+        cursor:pointer;
+    }
 
-        .tile-select-checkbox-span {
-            opacity: 1;
-        }
+`;
 
-        .checkbox {
-            cursor: pointer;
-        }
-    } 
+export const PhotoTile = styled.div`
+    height: 300px;
+    width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: default;
+    
+    .photo-image-wrapper:hover {
+        cursor: pointer;
+    }
 
-  
+    /* :hover{
+        border: 1px solid var(--smoke);
+    } */
 `;
 
 export const PhotoImage = styled.img`
     max-height: 300px;
     max-width: 300px;
-    //position: absolute;
     border-radius: 2px;
     transition: .3s;
     

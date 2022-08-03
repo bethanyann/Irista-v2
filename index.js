@@ -18,6 +18,11 @@ const app = express();
 // }));
 app.use(express.json());
 
+
+//////////////////////////////////
+////     PHOTO API CALLS  ////////
+//////////////////////////////////
+
 // GET ALL USER PHOTOS FOR HOMEPAGE PHOTO TIMELINE GRID 
 app.get('/api/getPhotos/:username', async (req, res) => {
     try{
@@ -100,6 +105,53 @@ app.post('/api/uploadPhotos/:username/:folderName', async (req,res) => {
 })
 
 
+// POST PHOTO TAGS WHEN NEW ONES ARE ADDED OR TAGS ARE DELETED
+app.post('/api/saveTags/:encodedPhotoId', async (req, res) => {
+    try {
+        let photoId = req.params.encodedPhotoId;
+        let tagList = req.body.join(",");
+       
+        await cloudinary.api.update(`${photoId}`, {
+            tags: req.body
+        }).then(data => {
+            res.send(data);
+        }).catch(error => {
+            console.log(error);
+        })
+
+    } catch(error) {
+        console.log(error);
+        res.status(500).json({error: "something went wrong with the fetch request"});
+    }
+});
+
+
+// RENAME A FILE/PHOTO FROM THE PHOTO INFO PAGE
+app.get('/api/renamePhoto/:encodedOldFileName/:encodedNewFilename', async (req, res) => {
+    try {
+        let oldFileName = req.params.encodedOldFileName;
+        let newFileName = req.params.encodedNewFilename;
+
+        await cloudinary.uploader.rename(oldFileName, newFileName, {overwrite: true, colors: true, tagList: true, image_metadata: true}).then(result => {
+            console.log(result)
+            res.send(result)
+        }).catch(error => {
+            res.send(error)
+        });
+
+
+    } catch(error) {
+        console.log(error);
+        res.status(500).json({error: "something went wrong with renaming a file"});
+    }
+})
+
+
+
+//////////////////////////////////
+////     ALBUM API CALLS  ////////
+//////////////////////////////////
+
 //CREATE AN ALBUM AND RETURN LIST OF ALBUMS
 app.get('/api/createAlbum/:username/:albumname', async (req, res) => {
     try{
@@ -150,31 +202,28 @@ app.get('/api/getAlbumPhotos/:albumName', async (req, res) => {
     }
 });
 
-// POST A PHOTOS TAGS WHEN NEW ONES ARE ADDED OR TAGS ARE DELETED
-app.post('/api/saveTags/:encodedPhotoId', async (req, res) => {
-    try {
-        let photoId = req.params.encodedPhotoId;
-        let tagList = req.body.join(",");
-       
-        await cloudinary.api.update(`${photoId}`, {
-            tags: req.body
-        }).then(data => {
-            res.send(data);
-        }).catch(error => {
-            console.log(error);
-        })
+// DELETE SET OF PHOTOS FROM ALBUM
+app.post('/api/deletePhotos', async (req,res) => {
+    try{
+        let photoList = req.body;
+        console.log(photoList);
+
+        await cloudinary.api.delete_resources(photoList).then(
+            response => {
+                console.log(response);
+                res.send(response);
+            }
+        );
 
     } catch(error) {
         console.log(error);
-        res.status(500).json({error: "something went wrong with the fetch request"});
+        res.status(500).json({error: "something went wrong when deleting the photo list"});
+
     }
+
 });
 
 
-
-/////////////////////////////////////
-// Gets details of an uploaded image
-/////////////////////////////////////
 // const getAssetInfo = async (publicId) => {
 
 //     // Return colors in the response

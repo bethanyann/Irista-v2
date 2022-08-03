@@ -1,12 +1,13 @@
-/* .upload-modal {
-    width: 0;
-    height: 100vh;
-    margin: 0;
-    top: 0 !important;
-    width: 100vw !important;
-} */
 
 .upload-modal
 .ant-modal-footer {
     display: none !important;
+}
+
+.confirm-button {
+
+}
+
+.cancel-button {
+    
 }

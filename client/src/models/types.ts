@@ -28,10 +28,12 @@ export type Photo = {
     access_mode: string; //authenticated
     url: string //url of photo in cloudinary
     secure_url: string; //another url of photo in cloudinary
-    original_filename: string; //filename without the folders like in the public_id
+    filename: string; //filename without the folders like in the public_id
+    original_filename: string;
     image_metadata: PhotoMetadata;
     colors: [];
     tags: string[];
+    isSelected: boolean;
 }
 
 export type PhotoMetadata = {

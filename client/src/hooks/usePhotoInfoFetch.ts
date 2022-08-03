@@ -19,7 +19,7 @@ export const usePhotoInfoFetch = (photoId: string) => {
             try {
                 setLoading(true);
                 setError(false);
-                
+                debugger;
                 if(photoId)
                 {
                     const encodedPhotoId = encodeURIComponent(photoId);
@@ -44,5 +44,5 @@ export const usePhotoInfoFetch = (photoId: string) => {
 
     }, [photoId]);
 
-    return { photo, loading, error }
+    return { photo, setPhoto, loading, error }
 }

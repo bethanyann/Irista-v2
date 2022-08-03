@@ -18,8 +18,6 @@ const PhotoGrid = () => {
 
     if(error) return <div> Something went wrong...</div>;
    
-    //console.log(state);
-
     const handleModalOpen = (photoId) => {
         setActivePhotoId(photoId);
         setIsOpen(true);
@@ -27,7 +25,12 @@ const PhotoGrid = () => {
 
     const handleModalClose = () => {
         setIsOpen(false);
-        setActivePhotoId(null);
+        //setActivePhotoId(null);
+    }
+
+    const handlePhotoRename = (activePhotoId) => {
+        setActivePhotoId(activePhotoId);
+        setIsOpen(true);
     }
 
     return(
@@ -57,7 +60,7 @@ const PhotoGrid = () => {
                         })
                     ) : null
                 }
-                 <PhotoInfo visible={isOpen} photoId={activePhotoId} onClose={handleModalClose}/> 
+                 <PhotoInfo visible={isOpen} photoId={activePhotoId} onClose={handleModalClose} onRenamePhoto={handlePhotoRename}/> 
                 
             </Content>
         </Wrapper>

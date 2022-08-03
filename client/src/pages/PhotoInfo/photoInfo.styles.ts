@@ -108,7 +108,7 @@ export const ColorButton = styled.button<Props>`
         margin-right:5px;
         margin-bottom: 5px;
         background-color: ${(props) => props.color};
-
+        cursor: default;
 
         .colorName {
             color: transparent;
