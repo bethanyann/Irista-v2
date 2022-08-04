@@ -24,19 +24,18 @@ interface Props {
 }
 
 const PhotoInfo = ({visible, photoId, onClose} : Props) => {
-    const [inputVisible, setInputVisible] = useState<boolean>(false);
-    const [inputValue, setInputValue] = useState('');
-    const inputRef = useRef<InputRef>(null);
+    // const [inputVisible, setInputVisible] = useState<boolean>(false);
+    // const [inputValue, setInputValue] = useState('');
+    // const inputRef = useRef<InputRef>(null);
     const { photo, setPhoto, loading, error} = usePhotoInfoFetch(photoId!);
     
     let formattedDate = null;
 
-
-    useEffect(() => {
-        if (inputVisible) {
-          inputRef.current?.focus();
-        }
-      }, [inputVisible]);
+    // useEffect(() => {
+    //     if (inputVisible) {
+    //       inputRef.current?.focus();
+    //     }
+    //   }, [inputVisible]);
     
     //control how many colors are being displayed here
     const colorArray: string[] = [];
@@ -78,11 +77,8 @@ const PhotoInfo = ({visible, photoId, onClose} : Props) => {
                                     </>
                                 ) : null
                             } */}
-                            {
-                                !inputVisible ? (  // <p>{(photo.public_id ?? photo.filename ?? photo.original_filename) + "." + photo.format} <EditOutlined onClick={showInput} style={{marginLeft:'5px'}} /></p>
-                                <p>{(photo.public_id ?? photo.filename ?? photo.original_filename) + "." + photo.format}</p>
-                                ) : null
-                            }
+                               
+                            <p>{(photo.public_id.substring(0, photo.public_id.lastIndexOf('/') + 1) ?? photo.filename ?? photo.original_filename) + "." + photo.format}</p>
                             <p className='smaller-font'> Date Created</p>
                                 <p><Moment date={formattedDate ?? photo.created_at} format="MM/DD/YYYY"/></p>
                                 <div className="three-column">
