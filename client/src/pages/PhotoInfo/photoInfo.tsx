@@ -17,12 +17,10 @@ import shutterspeed from '../../images/icons/shutterspeed.png';
 import flash from '../../images/icons/flash.png';
 import iso from '../../images/icons/iso.png';
 
-
 interface Props {
     visible: boolean;
     photoId: string;
     onClose: () => void;
-
 }
 
 const PhotoInfo = ({visible, photoId, onClose} : Props) => {
@@ -44,6 +42,7 @@ const PhotoInfo = ({visible, photoId, onClose} : Props) => {
     const colorArray: string[] = [];
     if(typeof(photo.colors) == "object"){
         for(var i = 0; i < photo.colors.length; i++) {
+            if(i === 20) break;
             colorArray.push(photo.colors[i][0]);
         }
     }

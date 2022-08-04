@@ -1,4 +1,3 @@
-import { isCompositeType } from 'graphql';
 import { useState, useEffect } from 'react';
 import { Photo, PhotoMetadata } from '../models/types';
 
@@ -19,7 +18,7 @@ export const usePhotoInfoFetch = (photoId: string) => {
             try {
                 setLoading(true);
                 setError(false);
-                debugger;
+
                 if(photoId)
                 {
                     const encodedPhotoId = encodeURIComponent(photoId);

@@ -35,7 +35,6 @@ const AlbumPhotos = () => {
 
     //results from hook
     const { photos, setPhotos, loading, error } = useAlbumPhotoFetch(albumName!);
-    console.log(photos);
 
     const handlePhotoModalOpen = (photoId : string) => {
         setActivePhotoId(photoId);
@@ -62,8 +61,9 @@ const AlbumPhotos = () => {
     }
 
     const handleConfirmModal = () => {
-        //try to get the new photos added and re-render component here
-        debugger;
+        //this fires when new photos have been uploaded through the upload modal
+        //it takes in the totalFiles from the upload, builds a Photos object, and appends that
+        //to the photos already displayed on the page
         let newArray = { } as Photos;
         if(photos)
         {
@@ -220,7 +220,7 @@ const AlbumPhotos = () => {
         >
            <Upload setOpenModal={setIsOpen} setOpenAlertModal={setOpenAlertModal}  setTotalFiles={setTotalFiles} albumName={albumName}/>
         </Modal>
-
+    {/* TODO - turn these success and failure modals into their own component  */}
         <Modal className="ant-modal" title="" visible={openAlertModal} onCancel={handleCancelModal} footer={null}>
                 <Result 
                     status="success"
@@ -260,17 +260,6 @@ const AlbumPhotos = () => {
         </>
       
     )
-
-    // const confirmButtonStyle = {
-    //     backgroundColor: '#CC0000',
-    //     color: '#fcfdff',
-    //     border: 'none',
-    //     borderRadius: '5px',
-    //     textTransform: 'uppercase',
-    //     cursor: 'pointer',
-    //     fontSize: 'medium',
-    //     padding: '6px 12px'
-    // }
 }
 
 export default AlbumPhotos;

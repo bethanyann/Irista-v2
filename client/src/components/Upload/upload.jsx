@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import Dropzone from 'react-dropzone';
 import { Alert, Button } from 'antd';
 import axios from 'axios';
-import EXIF from 'exif-js';
+// import EXIF from 'exif-js';
 //context
 import { AuthContext } from '../../context/authContext';
 //styles
@@ -52,7 +52,6 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
                    Object.assign(file, {
                         fileString: reader.result
                     })
-                    console.log(file);
 
                     setFiles(prev => {
                         return [...prev, file]

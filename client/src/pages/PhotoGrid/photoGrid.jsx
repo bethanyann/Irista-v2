@@ -25,12 +25,6 @@ const PhotoGrid = () => {
 
     const handleModalClose = () => {
         setIsOpen(false);
-        //setActivePhotoId(null);
-    }
-
-    const handlePhotoRename = (activePhotoId) => {
-        setActivePhotoId(activePhotoId);
-        setIsOpen(true);
     }
 
     return(
