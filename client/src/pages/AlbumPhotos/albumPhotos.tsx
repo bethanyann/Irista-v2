@@ -63,6 +63,7 @@ const AlbumPhotos = () => {
 
     const handleConfirmModal = () => {
         //try to get the new photos added and re-render component here
+        debugger;
         let newArray = { } as Photos;
         if(photos)
         {
@@ -130,9 +131,6 @@ const AlbumPhotos = () => {
         }
     }
 
-    const handleRenamePhoto = (photoId: string) => {
-        setActivePhotoId(photoId);
-    }
     //TODO - loading needs some styling help, its displaying in the top left of the page
     //could use a spinner or some simple animation too 
     if(loading) {
@@ -164,12 +162,12 @@ const AlbumPhotos = () => {
                                     <PhotoImage src={photo.secure_url} style={photo.isSelected? {maxHeight:'290px', maxWidth:'290px'} : {}} />
                                 </div>       
                             </PhotoTile>
-                            <p>{(photo.filename ?? photo.original_filename) + "." + photo.format}</p>
+                            <p>{(photo.filename ?? photo.original_filename ?? photo.public_id.substring(0, photo.public_id.lastIndexOf('/') + 1)) + "." + photo.format}</p>
                         </PhotoContainer>
                     )) : null
                 }
             </Content>
-            <PhotoInfo visible={isPhotoModalOpen} photoId={activePhotoId} onClose={handlePhotoModalClose} onRenamePhoto={handleRenamePhoto}/> 
+            <PhotoInfo visible={isPhotoModalOpen} photoId={activePhotoId} onClose={handlePhotoModalClose} /> 
         </Wrapper>
 
 

@@ -60,7 +60,7 @@ const PhotoGrid = () => {
                         })
                     ) : null
                 }
-                 <PhotoInfo visible={isOpen} photoId={activePhotoId} onClose={handleModalClose} onRenamePhoto={handlePhotoRename}/> 
+                 <PhotoInfo visible={isOpen} photoId={activePhotoId} onClose={handleModalClose} /> 
                 
             </Content>
         </Wrapper>

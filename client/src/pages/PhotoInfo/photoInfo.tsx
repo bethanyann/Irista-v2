@@ -22,63 +22,25 @@ interface Props {
     visible: boolean;
     photoId: string;
     onClose: () => void;
-    onRenamePhoto: (public_id: string) => void;
+
 }
 
-const PhotoInfo = ({visible, photoId, onClose, onRenamePhoto} : Props) => {
+const PhotoInfo = ({visible, photoId, onClose} : Props) => {
     const [inputVisible, setInputVisible] = useState<boolean>(false);
     const [inputValue, setInputValue] = useState('');
     const inputRef = useRef<InputRef>(null);
-    debugger;
     const { photo, setPhoto, loading, error} = usePhotoInfoFetch(photoId!);
+    
     let formattedDate = null;
-   console.log(photo);
+
+
     useEffect(() => {
         if (inputVisible) {
           inputRef.current?.focus();
         }
       }, [inputVisible]);
-
-    const showInput = () => {
-        setInputVisible(!inputVisible);
-        if(!inputVisible)
-        {
-            setInputValue('');
-        }
-    }
-
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setInputValue(e.target.value);
-    }
- 
-    const handleInputConfirm = () => {
-        if(inputValue === '')
-        {
-            setInputValue('');
-            setInputVisible(false);
-           // return small error message that the filename can't be blank
-        } else {
-            const saveNewFilename = async () => {
-                let encodedNewFilename = encodeURIComponent(inputValue);
-                let encodedOldFilename = encodeURIComponent(photo.public_id);
-
-                await fetch(`/api/renamePhoto/${encodedOldFilename}/${encodedNewFilename}`, {
-                    method: 'GET'
-                }).then( async (data) => {
-                    const result:PhotoState = await data.json();
-                    //display green checkmark? small success message? 
-                    console.log(result);
-                    onRenamePhoto(result.public_id);
-                });
-            }
-            
-            saveNewFilename();
-            setInputValue('');
-            setInputVisible(false);
-        }
-    }
     
-     //control how many colors are being displayed here
+    //control how many colors are being displayed here
     const colorArray: string[] = [];
     if(typeof(photo.colors) == "object"){
         for(var i = 0; i < photo.colors.length; i++) {
@@ -109,17 +71,17 @@ const PhotoInfo = ({visible, photoId, onClose, onRenamePhoto} : Props) => {
                         <div className="info-row">
                             <h2>Information</h2>
                             <p className='smaller-font'>Filename</p>
-                            {
+                            {/* {
                                 inputVisible ? (
                                     <>
                                     <Input ref={inputRef}  type="text" style={{width:200, height:27}} value={inputValue} onChange={handleInputChange} onPressEnter={handleInputConfirm} onBlur={handleInputConfirm} placeholder={photo.public_id ?? photo.filename ?? photo.original_filename}/>
                                     <span style={{fontSize:'1.3em', marginLeft:'2px'}}>{"." + photo.format} <EditTwoTone twoToneColor="#26cfa2" onClick={showInput} style={{marginLeft:'5px'}} /></span>
                                     </>
                                 ) : null
-                            }
+                            } */}
                             {
-                                !inputVisible ? (
-                                    <p>{(photo.public_id ?? photo.filename ?? photo.original_filename) + "." + photo.format} <EditOutlined onClick={showInput} style={{marginLeft:'5px'}} /></p>
+                                !inputVisible ? (  // <p>{(photo.public_id ?? photo.filename ?? photo.original_filename) + "." + photo.format} <EditOutlined onClick={showInput} style={{marginLeft:'5px'}} /></p>
+                                <p>{(photo.public_id ?? photo.filename ?? photo.original_filename) + "." + photo.format}</p>
                                 ) : null
                             }
                             <p className='smaller-font'> Date Created</p>

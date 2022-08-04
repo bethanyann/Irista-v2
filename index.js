@@ -12,11 +12,8 @@ const http = require('http');
 const { cloudinary } = require('./utilities/cloudinary');
 
 const app = express();
-// app.use(cors({
-//     credentials: true,
-//     origin: ['http://localhost:3000']
-// }));
-app.use(express.json());
+//to fix a 'payload too large' error i was getting with the post requests
+app.use(express.json({limit: '50mb'}));
 
 
 //////////////////////////////////
@@ -51,59 +48,50 @@ app.get('/api/getPhotoInfo/:encodedPhotoId', async (req,res) => {
     }
 })
 
-// UPLOAD A PHOTO WITHOUT ASSIGNING IT TO A FOLDER
-app.post('/api/uploadPhotos/:username', async (req,res) => {
+// UPLOAD A PHOTO WITHOUT AN ALBUM
+app.post('/api/uploadPhotos/:username/:filename', async (req,res) => {
     try {
-        console.log(req.body);
-        console.log(req.data);
-        //console.log(req.data.file);
-        console.log(req.params.username);
-
-        //  let file = req.body.data;
-        //  let username = req.params.username;
-        //  let fileName = req.params.filename;
-        // console.log(file);
-        // console.log(username);
-        // console.log(fileName);
-
-        // //maybe add folder here eventually  or make a new api call for folder
-        // const uploadResponse = await cloudinary.uploader.unsigned_upload(file, {
-        //     upload_preset: 'canon_irista',
-        //     timestamp: (Date.now()/1000).toString(),
-        //     public_id: fileName,
-        //     context: ['username', username],
-        // });
-
-        //console.log(uploadResponse);
-
-    } catch(error) {
-        console.log(error);
-        res.status(500).json({ error: 'Something went wrong' });
-    }
-})
-
-//UPLOAD A PHOTO AND ASSIGN IT TO A FOLDER
-app.post('/api/uploadPhotos/:username/:folderName', async (req,res) => {
-    try {
-        let file = req.body.data;
         let username = req.params.username;
-        let folderName = req.params.folderName;
-        let fileName = file.name.substring(0, file.name.indexOf('.'));
+        let filename = req.params.filename;
+        let fileString = req.body.data;
 
-        //maybe add folder here eventually  or make a new api call for folder
-        const uploadResponse = await cloudinary.uploader.upload(file, {
+        const uploadResponse = await cloudinary.uploader.upload(fileString, {
             upload_preset: 'canon_irista',
             timestamp: (Date.now()/1000).toString(),
-            public_id: fileName,
-            context: ['username', username],
-            folder: folderName
-        })
+            public_id: filename,
+            context: `username=${username}`,
+        });
+        res.send(uploadResponse);
+
     } catch(error) {
         console.log(error);
         res.status(500).json({ error: 'Something went wrong' });
     }
 })
 
+// UPLOAD A PHOTO & ASSIGN IT TO AN ALBUM
+app.post('/api/uploadPhotos/:username/:filename/:albumName', async (req,res) => {
+    try {
+        let username = req.params.username;
+        let filename = req.params.filename;
+        let albumname = req.params.albumName
+        let fileString = req.body.data;
+
+        const uploadResponse = await cloudinary.uploader.upload(fileString, {
+            upload_preset: 'canon_irista',
+            timestamp: (Date.now()/1000).toString(),
+            public_id: filename,
+            context: `username=${username}`,
+            folder: albumname
+        });
+
+        res.send(uploadResponse);
+
+    } catch(error) {
+        console.log(error);
+        res.status(500).json({ error: 'Something went wrong' });
+    }
+})
 
 // POST PHOTO TAGS WHEN NEW ONES ARE ADDED OR TAGS ARE DELETED
 app.post('/api/saveTags/:encodedPhotoId', async (req, res) => {
@@ -171,8 +159,10 @@ app.get('/api/getAllAlbums/:username', async (req, res) => {
     try {
         let albumList = [];
         let userName = req.params.username;
+        //get all of the user's albums
         const albums = await cloudinary.api.sub_folders(`${userName}`);
         
+        //for each album, get the first photo uploaded and assign that to an array with the album
         await Promise.all(albums.folders.map(async (album) => {
             const photo =  await cloudinary.search.expression(`folder:"${album.path}" AND resource_type:image`).max_results(1).execute();
            
@@ -182,6 +172,7 @@ app.get('/api/getAllAlbums/:username', async (req, res) => {
             ]);
         }));
 
+        //return list of album/cover image pairs 
         res.send(albumList);
     } catch(error) {
         console.log(error);
@@ -222,26 +213,6 @@ app.post('/api/deletePhotos', async (req,res) => {
     }
 
 });
-
-
-// const getAssetInfo = async (publicId) => {
-
-//     // Return colors in the response
-//     const options = {
-//       colors: true,
-//     };
-
-//     try {
-//         // Get details about the asset
-//         const result = await cloudinary.api.resource(publicId, options);
-//         console.log(result);
-//         return result.colors;
-//         } catch (error) {
-//         console.error(error);
-//     }
-// };
-
-
 
 
 
