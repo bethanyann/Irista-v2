@@ -16,8 +16,7 @@ export const useAlbumPhotoFetch =  (albumName:string) => {
     const [ isLoadingMore, setIsLoadingMore ] = useState(false);
 
     const fetchPhotos = async (albumName: string) => {
-        try {
-            
+        try { 
             setLoading(true);
             setError(false);
 

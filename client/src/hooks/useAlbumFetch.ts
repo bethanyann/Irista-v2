@@ -1,11 +1,5 @@
 import { useState, useEffect} from 'react';
-import { Dictionary, groupBy } from 'lodash';
 import { User, Album } from '../models/types';
-const moment = require('moment');
-
-const initialState = {
-    album: [] as any,
-}
 
 //need a way to store the next_cursor to determine if there are more photos to load
 export const useAlbumFetch =  (user: User) => {
@@ -23,7 +17,6 @@ export const useAlbumFetch =  (user: User) => {
             {
                 const albums = await fetch(`/api/getAllAlbums/${user.username}`);
                 const results = await albums.json();
-                debugger;
                 setAlbums(results);
             }
         } catch(error) {
