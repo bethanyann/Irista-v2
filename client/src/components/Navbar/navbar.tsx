@@ -1,15 +1,15 @@
-import { useContext }from 'react';
+import { useContext, useState }from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { isEmpty } from 'lodash';
+import { Tooltip, Button, Avatar } from 'antd';
+import SearchOutlined from '@ant-design/icons/SearchOutlined';
+import UserOutlined from '@ant-design/icons/UserOutlined';
 //context
 import { AuthContext } from '../../context/authContext';
 //types
 import { User } from '../../models/types';
 //images
 import CanonLogo from '../../images/Canon_wordmark_smaller.png';
-import loginIcon from '../../images/icons/login.png';
-import logoutIcon from '../../images/icons/logout.png';
-import searchIcon from '../../images/icons/search.png';
 //styles
 import { Wrapper, Content, LogoImg, NavLinks } from './navbar.styles';
 
@@ -20,11 +20,16 @@ const Navbar = () => {
     const { user, logout } = useContext(AuthContext);
     const isUserLoggedOut = isEmpty(user);
 
+    const [ isSearching, setIsSearching ] = useState(false);
+
     const onLogout = () => {
         logout();
         navigate('/', {replace: true});
     }
     
+    const handleSearch = () => {
+        setIsSearching(true);
+    }
     return (
         <Wrapper>
             <Content>          
@@ -50,18 +55,15 @@ const Navbar = () => {
                         </span>
                     : null } 
                         <span className='nav-icons'>
-                            <Link to='/search' style={{paddingRight: '10px'}}>
-                                <img src={searchIcon} alt='search icon'/>
-                            </Link>
-                            {
-                                isUserLoggedOut  ? 
-                                <Link to='/login'>  
-                                    <img src={loginIcon} alt='login icon'/>
-                                </Link> :
-                                <Link to="#">  
-                                    <img src={logoutIcon} alt='log out icon' onClick={onLogout} />
-                                </Link>
-                            }
+                                <Tooltip title="search">
+                                    <div className="search-box">
+                                        <input type="text" className="search-txt" name="" placeholder="search for photo name, caption, or tag" />
+                                        <button className="search-button" onClick={handleSearch}><SearchOutlined style={{fontSize:'1.3em'}}/></button>
+                                    </div>
+                                </Tooltip>
+                         
+                                <button className="user-button"><UserOutlined style={{fontSize:'1.3em'}}/></button>
+                            
                         </span>  
                     </NavLinks>
                     </div>

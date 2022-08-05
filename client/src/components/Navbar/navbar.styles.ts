@@ -75,9 +75,10 @@ export const NavLinks = styled.div`
         font-weight: 410;
     }
     /* login and search icons section*/
-    .nav-icons{
+    .nav-icons {
         border-left: 2px solid var(--fog);
         padding-left: 20px; 
+        display:flex;
     }
       
     img {

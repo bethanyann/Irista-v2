@@ -3,10 +3,15 @@ import { useParams } from 'react-router-dom';
 //hooks
 import { useAlbumPhotoFetch } from '../../hooks/useAlbumPhotoFetch';
 //styles
-import { Modal, Result } from 'antd';
+import { Modal, Result, Space, Button, Tooltip } from 'antd';
+import DeleteOutlined from '@ant-design/icons/DeleteOutlined'
+import CloudUploadOutlined from '@ant-design/icons/CloudUploadOutlined';
+import DownloadOutlined from '@ant-design/icons/DownloadOutlined';
+import HeartOutlined from '@ant-design/icons/HeartOutlined';
+import FolderAddOutlined from '@ant-design/icons/FolderAddOutlined';
 import { Wrapper, Header, Content, PhotoContainer, PhotoTile, PhotoImage} from './albumPhotos.styles';
-import AddIcon from '../../images/icons/add.png';
-import DeleteIcon from '../../images/icons/delete.png';
+// import AddIcon from '../../images/icons/add.png';
+// import DeleteIcon from '../../images/icons/delete.png';
 import './uploadModal.css';
 //components
 import Upload from '../../components/Upload/upload';
@@ -27,6 +32,8 @@ const AlbumPhotos = () => {
     const [ totalFiles, setTotalFiles ] = useState([]);
 
     const [ selectedPhotos, setSelectedPhotos] = useState(() => initialState);
+    const [ isSelected, setIsSelected ] = useState(false);
+    const [ isLoading, setIsLoading ] = useState(false);
 
     const [ activePhotoId, setActivePhotoId ] = useState('');
     const [ isPhotoModalOpen, setIsPhotoModalOpen ] = useState(false);
@@ -82,7 +89,7 @@ const AlbumPhotos = () => {
             //add photo id to set
             photo.isSelected = true;
             setSelectedPhotos(prev => new Set(prev).add(photo.public_id));
-
+            setIsSelected(true);
         } else {
             //delete photo from set
             photo.isSelected = false;
@@ -91,6 +98,7 @@ const AlbumPhotos = () => {
                 next.delete(photo.public_id);
                 return next;
             })
+            setIsSelected(false);
         }
     }
 
@@ -98,6 +106,7 @@ const AlbumPhotos = () => {
         //show confirm delete modal
         //if yes ->
         //take set of selected photos
+        setIsLoading(true);
         if(selectedPhotos.size > 0){
             
             console.log(selectedPhotos);
@@ -110,20 +119,21 @@ const AlbumPhotos = () => {
                     'Content-type':'application/json; charset=UTF-8'
                 }
             }).then(data => {
-                console.log(data);
                 let newArray = { } as Photos;
-               
                 newArray.resources = photos!.resources.filter(photo => !selectedPhotoArr.find(em => (em === photo.public_id)));
-                
                 //close modal
                 setOpenDeleteAlert(false);
                 //set photo state to new array 
                 setPhotos(newArray);
                 //setSelectedPhoto array to []
                 setSelectedPhotos(initialState);
+                setIsSelected(false);
+                setIsLoading(false);
             }).catch(error => {
                 console.log(error);
+                setIsLoading(false);
             });
+          
         }
         else {
             //return error that no photos are selected for deletion
@@ -143,8 +153,38 @@ const AlbumPhotos = () => {
             <Header>
                 <h3>{formattedAlbumName}</h3>
                 <div>
-                    <img src={DeleteIcon} alt='delete button' onClick={() => setOpenDeleteAlert(true)} style={{marginRight:'20px', height: '30px'}}/>
-                    <img src={AddIcon} alt='add button' onClick={handleModalOpen} />
+                    <Space>
+                        {
+                            <>
+                                <Tooltip title="Add to folder" placement="bottomRight">
+                                    <Button className="album-button" disabled={true} icon={<FolderAddOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
+                                </Tooltip>
+                                <Tooltip title="Toggle Favorite" placement="bottomRight">
+                                    <Button className="album-button" disabled={true} icon={<HeartOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
+                                </Tooltip>
+                                <Tooltip title="Upload Images" placement="bottomRight">
+                                    <Button className="album-button" disabled={!isSelected} onClick={handleModalOpen} icon={<CloudUploadOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
+                                </Tooltip>
+                                <Tooltip title="Download" placement="bottomRight">
+                                    <Button className="album-button" disabled={true} icon={<DownloadOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
+                                </Tooltip>
+                                <Tooltip title="Delete" placement="bottom">
+                                    <Button className="album-button" disabled={!isSelected} onClick={handleDeletePhotos} icon={<DeleteOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
+                                </Tooltip>
+                            </>
+                            // :
+                            // <>
+                            //     <FolderAddOutlined  style={{fontSize:'1.6em',color:'#d4d9e8', marginLeft:'5px'}} />
+                            //     <HeartOutlined style={{fontSize:'1.6em',color:'#d4d9e8', marginLeft:'5px'}}/>
+                            //     <CloudUploadOutlined style={{fontSize:'1.6em',color:'#d4d9e8', marginLeft:'5px'}} onClick={handleModalOpen} />
+                            //     <DownloadOutlined style={{fontSize:'1.6em',color:'#d4d9e8', marginLeft:'5px'}} />
+                            //     <DeleteOutlined style={{fontSize:'1.6em',color:'#d4d9e8', marginLeft:'5px'}} />
+
+                            
+                        }     
+                    </Space>
+                    {/* <img src={DeleteIcon} alt='delete button' onClick={() => setOpenDeleteAlert(true)} style={{marginRight:'20px', height: '30px'}}/> */}
+                    {/* <img src={AddIcon} alt='add button' onClick={handleModalOpen} /> */}
                 </div>
             </Header>
             <div className="divider"></div>
@@ -162,7 +202,7 @@ const AlbumPhotos = () => {
                                     <PhotoImage src={photo.secure_url} style={photo.isSelected? {maxHeight:'290px', maxWidth:'290px'} : {}} />
                                 </div>       
                             </PhotoTile>
-                            <p>{(photo.filename ?? photo.original_filename ?? photo.public_id.substring(0, photo.public_id.lastIndexOf('/') + 1)) + "." + photo.format}</p>
+                            <p style={{wordBreak:'break-word'}}>{(photo.filename ?? photo.original_filename ?? photo.public_id.substring(0, photo.public_id.lastIndexOf('/') + 1)) + "." + photo.format}</p>
                         </PhotoContainer>
                     )) : null
                 }
@@ -179,7 +219,7 @@ const AlbumPhotos = () => {
                 subTitle="This is a permanent delete and the files will not be recoverable!"
                 extra={[
                    
-                    <button key={5678} style={{ 
+                    <Button key={5678} style={{ 
                         backgroundColor: '#d4d9e8',
                         color: '#848c9e',
                         border: 'none',
@@ -192,8 +232,8 @@ const AlbumPhotos = () => {
                         marginTop:'40px'
                         }}
                         onClick={() => setOpenDeleteAlert(false)}
-                    > Cancel</button>,
-                    <button key={1234} style={{ 
+                    > Cancel</Button>,
+                    <Button key={1234} style={{ 
                         backgroundColor: '#CC0000',
                         color: '#fcfdff',
                         border: 'none',
@@ -203,8 +243,9 @@ const AlbumPhotos = () => {
                         fontSize: 'medium',
                         padding: '6px 12px'
                         }}
+                        disabled={loading}
                         onClick={handleDeletePhotos}
-                    > Delete</button>
+                    > Delete</Button>
                 ]}
            />
 

@@ -32,12 +32,10 @@ const TagList = ({photoTags, photoId} : IProps) => {
                 headers: {
                     'Content-type':'application/json; charset=UTF-8'
                 }
-            }).then(data => {
-                console.log(data);
             }).catch(error => {
                 console.log(error);
             });
-          }
+        }
 
         if(tags && tags.length > 0)
         {
