@@ -74,16 +74,117 @@ export const NavLinks = styled.div`
         padding-bottom: 16px;
         font-weight: 410;
     }
+
     /* login and search icons section*/
-    .nav-icons{
-        border-left: 2px solid var(--fog);
-        padding-left: 20px; 
-    }
+  
       
-    img {
+    /* img {
         width: 35px;
         @media screen and (max-width: 720px) {
             width: 40px;
         }
+    } */
+`;
+
+export const NavIcons = styled.div`
+    border-left: 2px solid var(--fog);
+    padding-left: 20px; 
+    display:flex;
+
+    .search-box {
+        display:flex;
+    }
+    .search-box-active {
+        display: flex;
+    }
+
+    .search-button {
+    /* min-width: 35px; */
+        text-align: center;
+        border-radius: 50%;
+        background: none;
+        border: 1px solid black;
+        /* padding: 3px; */
+        padding-top: 9px;
+        margin-right: 15px;
+        padding-bottom: 4px;
+
+        transition: 0.35s; 
+        transition-delay: 0.24s;
+    }
+
+
+
+    .search-button-active {
+        border: none;
+        background:none;
+        /* display: none; */
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+        border-top-right-radius: 50%;
+        border-bottom-right-radius: 50%;
+        border-right: 1px solid black;
+        border-top-left-radius: 0%;
+        border-bottom-left-radius: 0%;
+        padding-top: 9px;
+        padding-bottom: 4px;
+        margin-right: 15px;
+        transition: 0.2s;
+    }
+
+    .search-button:hover {
+        border: 1px solid #CC0000;
+        color: #CC0000;
+    }
+
+ 
+    .search-text {
+        border: none;
+        border: 1px solid white;
+        background: none;
+        outline: none;
+        padding: 0;
+        transition: 0.5s;
+        width: 0px;
+        border-right: none;
+        border-radius: 20px;
+        border-top-right-radius: 0%;
+        border-bottom-right-radius: 0%;
+
+        transition: width 0.4s ease-out, border-color 0.4s ease 0.1s;
+       // transition: width .75s, border-color .7s;
+    }
+
+    .search-text:focus {
+        border-color: none;
+    }
+
+    .search-text-active {
+        width: 338px;
+        padding: 2px 6px 0px 11px;
+        border: 1px solid black;
+        border-radius: 20px;
+        height: 40px;
+        border-top-right-radius: 0%;
+        border-bottom-right-radius: 0%;
+        border-right: none;
+        transition: .4s;
+    }
+
+    .user-button {
+        /* min-width: 32px; */
+        text-align: center;
+        border-radius: 50%;
+        background: none;
+        border: 1px solid black;
+        /* padding: 3px; */
+        padding-top: 9px;
+        margin-right: 10px;
+        transition: 0.5s;
+    }
+
+    .user-button:hover {
+        border: 1px solid #CC0000;
+        color: #CC0000;
     }
 `;

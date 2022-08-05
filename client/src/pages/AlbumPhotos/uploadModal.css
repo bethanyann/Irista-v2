@@ -4,10 +4,68 @@
     display: none !important;
 }
 
-.confirm-button {
-
+.ant-btn-icon-only {
+    background: none !important;
+    border: none !important;
 }
 
-.cancel-button {
-    
+.ant-btn:hover {
+    color: #CC0000 !important;
+}
+
+.album-buttons {
+    background: none !important;
+    border: none !important;
+}
+
+
+.ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
+    border-color: black;
+    border-right-width: 1px;
+    z-index: 1;
+}
+
+
+element.style {
+    background-color: rgb(252, 253, 255);
+}
+
+.ant-input {
+    background-color: #fcfdff !important;
+}
+.ant-input-affix-wrapper-focused, .ant-input-affix-wrapper:focus {
+    z-index: 1;
+}
+.ant-input-affix-wrapper:focus, .ant-input-affix-wrapper-focused {
+    border-color: black !important;
+    box-shadow: none !important;
+    border-right-width: 1px;
+} 
+.ant-input:focus, .ant-input-focused {
+    border-color: black !important;
+}
+.ant-input:hover {
+    border-color: black !important;
+}
+
+.ant-input-affix-wrapper:focus .ant-input-affix-wrapper-focused {
+    border-color: black !important;
+}
+.ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover
+{
+    border-color: black !important; 
+}
+
+.ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
+    border-color: black !important;
+    border-right-width: 1px;
+    z-index: 1;
+}
+
+.ant-input-affix-wrapper > input.ant-input {
+    background-color: '#fcfdff';
+}
+
+.ant-input-prefix {
+    margin-right: 7px;
 }

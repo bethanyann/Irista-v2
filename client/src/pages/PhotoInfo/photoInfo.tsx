@@ -24,20 +24,12 @@ interface Props {
 }
 
 const PhotoInfo = ({visible, photoId, onClose} : Props) => {
-    // const [inputVisible, setInputVisible] = useState<boolean>(false);
-    // const [inputValue, setInputValue] = useState('');
-    // const inputRef = useRef<InputRef>(null);
+
     const { photo, setPhoto, loading, error} = usePhotoInfoFetch(photoId!);
     
     let formattedDate = null;
 
-    // useEffect(() => {
-    //     if (inputVisible) {
-    //       inputRef.current?.focus();
-    //     }
-    //   }, [inputVisible]);
-    
-    //control how many colors are being displayed here
+    //only allow top 20 colors to be displayed 
     const colorArray: string[] = [];
     if(typeof(photo.colors) == "object"){
         for(var i = 0; i < photo.colors.length; i++) {
@@ -68,17 +60,8 @@ const PhotoInfo = ({visible, photoId, onClose} : Props) => {
                     <Metadata>
                         <div className="info-row">
                             <h2>Information</h2>
-                            <p className='smaller-font'>Filename</p>
-                            {/* {
-                                inputVisible ? (
-                                    <>
-                                    <Input ref={inputRef}  type="text" style={{width:200, height:27}} value={inputValue} onChange={handleInputChange} onPressEnter={handleInputConfirm} onBlur={handleInputConfirm} placeholder={photo.public_id ?? photo.filename ?? photo.original_filename}/>
-                                    <span style={{fontSize:'1.3em', marginLeft:'2px'}}>{"." + photo.format} <EditTwoTone twoToneColor="#26cfa2" onClick={showInput} style={{marginLeft:'5px'}} /></span>
-                                    </>
-                                ) : null
-                            } */}
-                               
-                            <p>{(photo.public_id.substring(0, photo.public_id.lastIndexOf('/') + 1) ?? photo.filename ?? photo.original_filename) + "." + photo.format}</p>
+                            <p className='smaller-font'>Filename</p>   
+                            <p>{ photo.public_id?.substring(photo.public_id.lastIndexOf('/') + 1) + "." + photo.format}</p>
                             <p className='smaller-font'> Date Created</p>
                                 <p><Moment date={formattedDate ?? photo.created_at} format="MM/DD/YYYY"/></p>
                                 <div className="three-column">

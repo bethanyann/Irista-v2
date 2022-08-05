@@ -16,7 +16,6 @@ const Album = () => {
     const [ albumModalIsOpen, setAlbumModalIsOpen ] = useState(false);
     
     const { albums, loading, errors } = useAlbumFetch(user!);
-    console.log(albums);
 
     const handleModalClose = () => {
         setAlbumModalIsOpen(false);
@@ -25,7 +24,6 @@ const Album = () => {
     const handleOpenAlbum = (path : string) => {
         //take album path and redirect to an album/photo page
         const albumName = encodeURIComponent(path);
-        console.log(albumName); 
         navigate(`/album/${albumName}`, {replace: true});
     }
 
