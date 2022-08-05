@@ -86,7 +86,6 @@ app.post('/api/uploadPhotos/:username/:filename/:albumName', async (req,res) => 
         });
 
         res.send(uploadResponse);
-
     } catch(error) {
         console.log(error);
         res.status(500).json({ error: 'Something went wrong' });
@@ -121,12 +120,10 @@ app.get('/api/renamePhoto/:encodedOldFileName/:encodedNewFilename', async (req, 
         let newFileName = req.params.encodedNewFilename;
 
         await cloudinary.uploader.rename(oldFileName, newFileName, {overwrite: true, colors: true, tagList: true, image_metadata: true}).then(result => {
-            console.log(result)
             res.send(result)
         }).catch(error => {
             res.send(error)
         });
-
 
     } catch(error) {
         console.log(error);
@@ -201,7 +198,6 @@ app.post('/api/deletePhotos', async (req,res) => {
 
         await cloudinary.api.delete_resources(photoList).then(
             response => {
-                console.log(response);
                 res.send(response);
             }
         );
