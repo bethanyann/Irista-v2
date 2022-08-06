@@ -68,3 +68,8 @@ export type Album = {
     };
     coverPhoto: Photo;
 }
+
+export type SearchResults = {
+    total_count: number;
+    resources: Photo[];
+}

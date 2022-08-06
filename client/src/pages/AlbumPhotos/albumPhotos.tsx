@@ -72,12 +72,13 @@ const AlbumPhotos = () => {
         //it takes in the totalFiles from the upload, builds a Photos object, and appends that
         //to the photos already displayed on the page
         let newArray = { } as Photos;
+        //will this work if there aren't any photos in the album yet? 
         if(photos)
         {
             newArray.next_cursor = photos.next_cursor;
             newArray.total_count = photos ? photos.resources.length + totalFiles.length : totalFiles.length;
             newArray.resources = [...photos?.resources, ...totalFiles];
-        }
+        } 
        
         setPhotos(newArray);
         setOpenAlertModal(false);
@@ -172,15 +173,6 @@ const AlbumPhotos = () => {
                                     <Button className="album-button" disabled={!isSelected} onClick={handleDeletePhotos} icon={<DeleteOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
                                 </Tooltip>
                             </>
-                            // :
-                            // <>
-                            //     <FolderAddOutlined  style={{fontSize:'1.6em',color:'#d4d9e8', marginLeft:'5px'}} />
-                            //     <HeartOutlined style={{fontSize:'1.6em',color:'#d4d9e8', marginLeft:'5px'}}/>
-                            //     <CloudUploadOutlined style={{fontSize:'1.6em',color:'#d4d9e8', marginLeft:'5px'}} onClick={handleModalOpen} />
-                            //     <DownloadOutlined style={{fontSize:'1.6em',color:'#d4d9e8', marginLeft:'5px'}} />
-                            //     <DeleteOutlined style={{fontSize:'1.6em',color:'#d4d9e8', marginLeft:'5px'}} />
-
-                            
                         }     
                     </Space>
                     {/* <img src={DeleteIcon} alt='delete button' onClick={() => setOpenDeleteAlert(true)} style={{marginRight:'20px', height: '30px'}}/> */}
@@ -190,7 +182,7 @@ const AlbumPhotos = () => {
             <div className="divider"></div>
             <Content>
                 {
-                    photos && photos ? photos.resources.map((photo) => (
+                    photos && photos.resources.length > 0 ? photos.resources.map((photo) => (
                         <PhotoContainer  key={photo.asset_id}>
                             <PhotoTile className='photo-tile' style={photo.isSelected ? {backgroundColor:'#f3f4fa', border:'1px solid var(--smoke)'} : { }}>
                                 <div className='tile-select-checkbox'>

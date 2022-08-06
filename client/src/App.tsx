@@ -9,7 +9,7 @@ import RequireAuth from './context/requireAuth';
 import Register from './pages/Register/register';
 import Login from './pages/Login/login';
 import AlbumGrid from './pages/AlbumGrid/albumGrid';
-import PhotoGrid from './pages/PhotoGrid/photoGrid';
+import PhotoGrid from './pages/TimelineGrid/timelineGrid';
 import UploadPage from './pages/Upload/uploadPage';
 import Landing from './pages/Landing/landing';
 import AlbumPhotos from './pages/AlbumPhotos/albumPhotos';
