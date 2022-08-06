@@ -21,12 +21,15 @@ const SearchResults = () => {
     return (
         <Wrapper>
             <h2>Search Results for "{searchTerm}"</h2>
-            <h3>{searchResults?.total_count} matching photos found.</h3>
+            <h3>{searchResults?.total_count ?? 0} matching photos found.</h3>
             <div className='divider'></div>
             { loading ? <div>Loading .. .. .. </div> : null } 
             { error || errorMessage !== '' ?  <div></div> : null}
-                
-            <PhotoGrid photos={searchResults}/>
+            { searchResults && searchResults.total_count > 0 ? 
+                 <PhotoGrid photos={searchResults}/>
+                 :<div> No matching photos found. </div>
+            }  
+           
         </Wrapper>
     )
 }

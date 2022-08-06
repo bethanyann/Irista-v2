@@ -44,15 +44,15 @@ const AlbumPhotos = () => {
     //results from hook
     const { photos, setPhotos, loading, error } = useAlbumPhotoFetch(albumName!);
 
-    const handlePhotoModalOpen = (photoId : string) => {
-        setActivePhotoId(photoId);
-        setIsPhotoModalOpen(true);
-    }
+    // const handlePhotoModalOpen = (photoId : string) => {
+    //     setActivePhotoId(photoId);
+    //     setIsPhotoModalOpen(true);
+    // }
 
-    const handlePhotoModalClose = () => {
-        setIsPhotoModalOpen(false);
-        setActivePhotoId('');
-    }
+    // const handlePhotoModalClose = () => {
+    //     setIsPhotoModalOpen(false);
+    //     setActivePhotoId('');
+    // }
 
     const handleModalOpen = () => {
         setSelectedPhotos(initialState);
@@ -86,28 +86,25 @@ const AlbumPhotos = () => {
         setIsOpen(false);
     }
 
-    const handleSelectPhoto = (event: any, photo: Photo) => {
-        if(event.target.checked){
-            //add photo id to set
-            photo.isSelected = true;
-            setSelectedPhotos(prev => new Set(prev).add(photo.public_id));
-            setIsSelected(true);
-        } else {
-            //delete photo from set
-            photo.isSelected = false;
-            setSelectedPhotos(prev => {
-                const next = new Set(prev);
-                next.delete(photo.public_id);
-                return next;
-            })
-            setIsSelected(false);
-        }
-    }
+    // const handleSelectPhoto = (event: any, photo: Photo) => {
+    //     if(event.target.checked){
+    //         //add photo id to set
+    //         photo.isSelected = true;
+    //         setSelectedPhotos(prev => new Set(prev).add(photo.public_id));
+    //         setIsSelected(true);
+    //     } else {
+    //         //delete photo from set
+    //         photo.isSelected = false;
+    //         setSelectedPhotos(prev => {
+    //             const next = new Set(prev);
+    //             next.delete(photo.public_id);
+    //             return next;
+    //         })
+    //         setIsSelected(false);
+    //     }
+    // }
 
     const handleDeletePhotos = async () => {
-        //show confirm delete modal
-        //if yes ->
-        //take set of selected photos
         setIsLoading(true);
         if(selectedPhotos.size > 0){
             
@@ -145,9 +142,6 @@ const AlbumPhotos = () => {
 
     //TODO - loading needs some styling help, its displaying in the top left of the page
     //could use a spinner or some simple animation too 
-    if(loading) {
-        return <div> Loading photos ... </div>
-    }
 
     return (
         <>
@@ -176,16 +170,12 @@ const AlbumPhotos = () => {
                             </>
                         }     
                     </Space>
-                    {/* <img src={DeleteIcon} alt='delete button' onClick={() => setOpenDeleteAlert(true)} style={{marginRight:'20px', height: '30px'}}/> */}
-                    {/* <img src={AddIcon} alt='add button' onClick={handleModalOpen} /> */}
                 </div>
             </Header>
             <div className="divider"></div>
+            { loading ? < div> Loading .... </div> : null}
             <PhotoGrid photos={photos} setSelectedPhotos={setSelectedPhotos} setIsSelected={setIsSelected} />
-            <PhotoInfo visible={isPhotoModalOpen} photoId={activePhotoId} onClose={handlePhotoModalClose} /> 
         </Wrapper>
-
-
 
         <Modal className="ant-modal" title="" width={600} visible={openDeleteAlert} onCancel={() => setOpenDeleteAlert(false)} footer={null}>
             <Result
