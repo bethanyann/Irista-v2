@@ -15,7 +15,6 @@ import CanonLogo from '../../images/Canon_wordmark_smaller.png';
 //styles
 import { Wrapper, Content, LogoImg, NavLinks, NavIcons } from './navbar.styles';
 
-
 const Navbar = () => {
     let navigate = useNavigate();
     //can pull the user and the logout function from the context
@@ -24,7 +23,8 @@ const Navbar = () => {
 
     const inputRef = useRef<InputRef>(null);
     const [ isSearching, setIsSearching ] = useState(false);
-
+    const [ inputValue, setInputValue ] = useState('');
+    // const [ searchText, setSearchText ] = useState('');
     
     useEffect(() => {
         if (isSearching) {
@@ -36,9 +36,27 @@ const Navbar = () => {
         logout();
         navigate('/', {replace: true});
     }
-    
-    const handleSearch = () => {
-       setIsSearching(!isSearching);
+
+    const showSearchInput = () => {
+        setIsSearching(!isSearching);
+        setInputValue('');
+    }
+
+    const handleInputChange = (e : React.ChangeEvent<HTMLInputElement>) => {
+        setInputValue(e.target.value);
+    }
+
+    const handleInputSubmit = () => {
+        if(inputValue !== "") {
+            //set input value
+            //setSearchText(inputValue);
+            debugger;
+            navigate(`/search/${inputValue}`, {replace: true});
+        }
+        else {
+            // do nothing?
+            // display error? 
+        }
     }
 
     return (
@@ -66,17 +84,24 @@ const Navbar = () => {
                         </span>
                     : null } 
                         <NavIcons>
-                                    <div className={isSearching ? "search-box-active" : "search-box"}>
-                                        <Input ref={inputRef}  prefix={<CloseOutlined hidden={!isSearching} onClick={() => setIsSearching(false)}/>}type="text" className={isSearching ? "search-text-active" : "search-text"} name=""style={{backgroundColor: '#fcfdff'}} placeholder="Photo name, caption, or tag" />
-                                        <Tooltip title="search">
-                                            <button className={isSearching ? "search-button-active" : "search-button"} onClick={handleSearch}>
-                                                <SearchOutlined style={{fontSize:'1.3em'}}/>
-                                            </button>
-                                        </Tooltip>   
-                                    </div>
-                                
-                         
-                                <button className="user-button"><UserOutlined style={{fontSize:'1.3em'}}/></button>
+                            <div className={isSearching ? "search-box-active" : "search-box"}>
+                                <Input ref={inputRef} type="text" 
+                                    prefix={<CloseOutlined hidden={!isSearching} onClick={() => setIsSearching(false)}/>} 
+                                    className={isSearching ? "search-text-active" : "search-text"} 
+                                    name=""
+                                    style={{backgroundColor: '#fcfdff', paddingTop: 0, height:'37px'}} 
+                                    placeholder="Photo name, caption, or tag"
+                                    value={inputValue}
+                                    onChange={handleInputChange}
+                                    onPressEnter={handleInputSubmit}
+                                />
+                                {/* <Tooltip title="search"> */}
+                                    <button className={isSearching ? "search-button-active" : "search-button"} onClick={showSearchInput}>
+                                        <SearchOutlined style={{fontSize:'1.3em'}}/>
+                                    </button>
+                                {/* </Tooltip>    */}
+                            </div>
+                            <button className="user-button"><UserOutlined style={{fontSize:'1.3em'}}/></button>
                         </NavIcons>  
                     </NavLinks>
                     </div>

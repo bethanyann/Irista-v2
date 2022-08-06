@@ -17,6 +17,7 @@ const Album = () => {
     
     const { albums, loading, errors } = useAlbumFetch(user!);
 
+    debugger;
     const handleModalClose = () => {
         setAlbumModalIsOpen(false);
     }

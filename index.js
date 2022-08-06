@@ -26,8 +26,6 @@ app.get('/api/getPhotos/:username', async (req, res) => {
        let username = req.params.username;
        //AdminAPI 
        //const { resources } = await cloudinary.api.resources({ type: 'upload', prefix: 'test', resource_type: 'image', max_results: 30, direction: 'desc'});
-       //SearchAPI
-       //const { resources } = await cloudinary.search.expression(`tags:${username}`).sort_by('created_at', 'desc').max_results(30).execute();
        //SearchAPI using context
        const { resources } = await cloudinary.search.expression(`context.username=${username}`).sort_by('created_at', 'desc').max_results(30).execute();
 
@@ -129,9 +127,22 @@ app.get('/api/renamePhoto/:encodedOldFileName/:encodedNewFilename', async (req, 
         console.log(error);
         res.status(500).json({error: "something went wrong with renaming a file"});
     }
-})
+});
 
-
+// SEARCH FOR A PHOTO 
+app.get('/api/fetchSearchResults/:username/:searchText', async (req,res) => {
+    try {
+        let username = req.params.username;
+        let searchText = req.params.searchText;
+        //console.log(searchText);
+        const results = await cloudinary.search.expression(`context.username=${username} AND tags:${searchText}* OR ${searchText} OR filename:${searchText} OR public_id:${searchText}`).sort_by('created_at', 'desc').max_results(30).execute();
+        // console.log(results);
+        res.send(results);
+    } catch(error) {
+        console.log(error);
+        res.status(500).json({error: "Search fetch was unsuccessful"});
+    }
+});
 
 //////////////////////////////////
 ////     ALBUM API CALLS  ////////

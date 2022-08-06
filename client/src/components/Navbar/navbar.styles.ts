@@ -107,8 +107,8 @@ export const NavIcons = styled.div`
         /* padding: 3px; */
         padding-top: 9px;
         margin-right: 15px;
-        padding-bottom: 4px;
-
+        /* padding-bottom: 4px; */
+        height: 37px;
         transition: 0.35s; 
         transition-delay: 0.24s;
     }
@@ -127,8 +127,9 @@ export const NavIcons = styled.div`
         border-top-left-radius: 0%;
         border-bottom-left-radius: 0%;
         padding-top: 9px;
-        padding-bottom: 4px;
+        /* padding-bottom: 4px; */
         margin-right: 15px;
+        height: 37px;
         transition: 0.2s;
     }
 
@@ -180,6 +181,7 @@ export const NavIcons = styled.div`
         /* padding: 3px; */
         padding-top: 9px;
         margin-right: 10px;
+        height: 37px;
         transition: 0.5s;
     }
 
