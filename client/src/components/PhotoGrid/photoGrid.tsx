@@ -9,6 +9,12 @@ import PhotoInfo from '../../pages/PhotoInfo/photoInfo';
 // TODO fix the types so that either photo results or search results can be passed in here 
 // TODO put the select box onclick and handlers in here too 
 
+interface Props {
+    photos : any,
+    setIsSelected?: React.Dispatch<React.SetStateAction<boolean>>,
+    setSelectedPhotos?: React.Dispatch<React.SetStateAction<Set<string>>>
+}
+
 const PhotoGrid = ({ photos, setSelectedPhotos, setIsSelected }: any) => {
 
     const [ activePhotoId, setActivePhotoId ] = useState('');

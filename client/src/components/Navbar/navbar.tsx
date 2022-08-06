@@ -8,8 +8,6 @@ import CloseOutlined from '@ant-design/icons/CloseOutlined';
 
 //context
 import { AuthContext } from '../../context/authContext';
-//types
-import { User } from '../../models/types';
 //images
 import CanonLogo from '../../images/Canon_wordmark_smaller.png';
 //styles
@@ -24,7 +22,6 @@ const Navbar = () => {
     const inputRef = useRef<InputRef>(null);
     const [ isSearching, setIsSearching ] = useState(false);
     const [ inputValue, setInputValue ] = useState('');
-    // const [ searchText, setSearchText ] = useState('');
     
     useEffect(() => {
         if (isSearching) {
@@ -48,9 +45,6 @@ const Navbar = () => {
 
     const handleInputSubmit = () => {
         if(inputValue !== "") {
-            //set input value
-            //setSearchText(inputValue);
-            debugger;
             navigate(`/search/${inputValue}`, {replace: true});
         }
         else {
@@ -95,11 +89,9 @@ const Navbar = () => {
                                     onChange={handleInputChange}
                                     onPressEnter={handleInputSubmit}
                                 />
-                                {/* <Tooltip title="search"> */}
                                     <button className={isSearching ? "search-button-active" : "search-button"} onClick={showSearchInput}>
                                         <SearchOutlined style={{fontSize:'1.3em'}}/>
                                     </button>
-                                {/* </Tooltip>    */}
                             </div>
                             <button className="user-button"><UserOutlined style={{fontSize:'1.3em'}}/></button>
                         </NavIcons>  

@@ -19,4 +19,27 @@ export const Wrapper = styled.div`
     }
 `;
 
+export const Header = styled.div`
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    h3{
+        color: var(--slate);
+        font-weight: 500;
+        @media screen and (max-width: 768px){
+
+        }
+        font-size: 1.3em;
+    }
+
+    img {
+        height: 25px;
+    }
+
+    img:hover{
+        cursor: pointer;
+    }
+
+`;
 
