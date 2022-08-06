@@ -46,7 +46,7 @@ const PhotoGrid = ({ photos, setSelectedPhotos, setIsSelected }: any) => {
     return (
         <>
         <Content>
-            { photos && photos.total_count > 0 ? photos.resources.map((photo: any) => (
+            { photos ? photos.resources.map((photo: any) => (
                 <PhotoContainer  key={photo.asset_id}>
                     <PhotoTile className='photo-tile' style={photo.isSelected ? {backgroundColor:'#f3f4fa', border:'1px solid var(--smoke)'} : { }}>
                         <div className='tile-select-checkbox'>
