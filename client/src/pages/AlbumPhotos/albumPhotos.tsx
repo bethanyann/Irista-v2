@@ -16,6 +16,7 @@ import './uploadModal.css';
 //components
 import Upload from '../../components/Upload/upload';
 import PhotoInfo from '../PhotoInfo/photoInfo';
+import PhotoGrid from '../../components/PhotoGrid/photoGrid';
 //types
 import { Photo, Photos } from '../../models/types';
 
@@ -180,25 +181,7 @@ const AlbumPhotos = () => {
                 </div>
             </Header>
             <div className="divider"></div>
-            <Content>
-                {
-                    photos && photos.resources.length > 0 ? photos.resources.map((photo) => (
-                        <PhotoContainer  key={photo.asset_id}>
-                            <PhotoTile className='photo-tile' style={photo.isSelected ? {backgroundColor:'#f3f4fa', border:'1px solid var(--smoke)'} : { }}>
-                                <div className='tile-select-checkbox'>
-                                    <span className='tile-select-checkbox-span'>
-                                        <input type='checkbox' className='checkbox' checked={photo.isSelected ?? false} onChange={event => handleSelectPhoto(event, photo)}/>
-                                    </span>
-                                </div>
-                                <div className='photo-image-wrapper' style={{zIndex:1}} onClick={() => handlePhotoModalOpen(photo.public_id)}>
-                                    <PhotoImage src={photo.secure_url} style={photo.isSelected? {maxHeight:'290px', maxWidth:'290px'} : {}} />
-                                </div>       
-                            </PhotoTile>
-                            <p style={{wordBreak:'break-word'}}>{(photo.filename ?? photo.original_filename ?? photo.public_id.substring(0, photo.public_id.lastIndexOf('/') + 1)) + "." + photo.format}</p>
-                        </PhotoContainer>
-                    )) : null
-                }
-            </Content>
+            <PhotoGrid photos={photos} setSelectedPhotos={setSelectedPhotos} setIsSelected={setIsSelected} />
             <PhotoInfo visible={isPhotoModalOpen} photoId={activePhotoId} onClose={handlePhotoModalClose} /> 
         </Wrapper>
 
