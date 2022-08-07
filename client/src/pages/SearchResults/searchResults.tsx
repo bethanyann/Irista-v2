@@ -30,13 +30,89 @@ const SearchResults = () => {
 
     const { searchResults, loading, error, errorMessage } = useSearchResultsFetch(searchTerm!, userTest);
  
-    
+
+    if(loading) {
+        return (
+            <Wrapper>
+                <Header>
+                    <div>
+                        <h2>Search Results for "{searchTerm}"</h2>  
+                        <h3> </h3>
+                    </div>
+                    <div style={{marginTop:'40px'}}>
+                        <Space>
+                            {
+                                <>
+                                    <Tooltip title="Add to folder" placement="bottomRight">
+                                        <Button className="album-button" disabled={true} icon={<FolderAddOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
+                                    </Tooltip>
+                                    <Tooltip title="Toggle Favorite" placement="bottomRight">
+                                        <Button className="album-button" disabled={true} icon={<HeartOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
+                                    </Tooltip>
+                                    <Tooltip title="Download" placement="bottomRight">
+                                        <Button className="album-button" disabled={true} icon={<DownloadOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
+                                    </Tooltip>
+                                    <Tooltip title="Delete" placement="bottom">
+                                        <Button className="album-button" disabled={!isSelected} onClick={() =>{}} icon={<DeleteOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
+                                    </Tooltip>
+                                </>
+                            }     
+                        </Space>
+                    </div>
+                </Header>
+            <div className='divider'></div>
+            <div> Loading .. .. ..</div>  
+            </Wrapper>  
+        )
+    } 
+    if (error) {
+        return (
+            <Wrapper>
+                <Header>
+                    <div>
+                        <h2>Search Results for "{searchTerm}"</h2>  
+                        <h3> </h3>
+                    </div>
+                    <div style={{marginTop:'40px'}}>
+                        <Space>
+                            {
+                                <>
+                                    <Tooltip title="Add to folder" placement="bottomRight">
+                                        <Button className="album-button" disabled={true} icon={<FolderAddOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
+                                    </Tooltip>
+                                    <Tooltip title="Toggle Favorite" placement="bottomRight">
+                                        <Button className="album-button" disabled={true} icon={<HeartOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
+                                    </Tooltip>
+                                    <Tooltip title="Download" placement="bottomRight">
+                                        <Button className="album-button" disabled={true} icon={<DownloadOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
+                                    </Tooltip>
+                                    <Tooltip title="Delete" placement="bottom">
+                                        <Button className="album-button" disabled={!isSelected} onClick={() =>{}} icon={<DeleteOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
+                                    </Tooltip>
+                                </>
+                            }     
+                        </Space>
+                    </div>
+                </Header>
+                <div className='divider'></div> 
+                <div>{error}</div> 
+            </Wrapper>
+        )  
+    } 
+ 
     return (
         <Wrapper>
             <Header>
-                <h2>Search Results for "{searchTerm}"</h2>
-                <h3>{searchResults?.total_count ?? 0} matching photos found.</h3>
                 <div>
+                    <h2>Search Results for "{searchTerm}"</h2>
+                    
+                        {
+                            loading ? 
+                            <div> loading </div> : <h3>{searchResults?.total_count ?? 0} matching photos found </h3>
+                        }
+                   
+                </div>
+                <div style={{marginTop:'40px'}}>
                     <Space>
                         {
                             <>
@@ -58,9 +134,7 @@ const SearchResults = () => {
                 </div>
             </Header>
             <div className='divider'></div>
-            { loading ? <div>Loading .. .. .. </div> : null } 
-            { error || errorMessage !== '' ?  <div></div> : null}
-            { searchResults && searchResults.total_count > 0 ? 
+            { !loading && !error && searchResults && searchResults.total_count > 0 ? 
                 
                 <PhotoGrid photos={searchResults} setSelectedPhotos={setSelectedPhotos} setIsSelected={setIsSelected}/>
                  :<div> No matching photos found. </div>

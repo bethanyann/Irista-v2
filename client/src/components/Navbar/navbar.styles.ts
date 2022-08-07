@@ -109,8 +109,8 @@ export const NavIcons = styled.div`
         margin-right: 15px;
         /* padding-bottom: 4px; */
         height: 37px;
-        transition: 0.35s; 
-        transition-delay: 0.24s;
+        //transition: 0.35s; 
+        transition-delay: 0.36s;
     }
 
 
@@ -130,12 +130,13 @@ export const NavIcons = styled.div`
         /* padding-bottom: 4px; */
         margin-right: 15px;
         height: 37px;
-        transition: 0.2s;
+        transition: 0.15s;
     }
 
     .search-button:hover {
         border: 1px solid #CC0000;
         color: #CC0000;
+        transition-delay: color 0s;
     }
 
  

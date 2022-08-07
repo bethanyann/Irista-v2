@@ -11,6 +11,7 @@ export const useSearchResultsFetch = (searchText: string, user: User) => {
     useEffect (() => {
         const fetchSearchResults = async() => {
              try {
+                setIsLoading(true);
                 let encodedUsername = encodeURIComponent(user.username);
                 let encodedSearchText = encodeURIComponent(searchText);
     
@@ -20,12 +21,13 @@ export const useSearchResultsFetch = (searchText: string, user: User) => {
                 if(!searchResults) {
                     setErrorMessage( `No results were found that match the search term "${searchText}" `);
                 } else {
-                    setSearchResults(searchResults)
+                    setSearchResults(searchResults);
                 }
-
+                setIsLoading(false);
              } catch(error : any) {
                 setError(true);
                 setErrorMessage(error);
+                setIsLoading(false);
              }
           
         }
