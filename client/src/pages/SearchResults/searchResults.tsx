@@ -7,9 +7,8 @@ import { User } from '../../models/types';
 //hooks
 import { useSearchResultsFetch }  from '../../hooks/useSearchResultsFetch';
 //ant
-import { Modal, Result, Space, Button, Tooltip } from 'antd';
+import { Space, Button, Tooltip } from 'antd';
 import DeleteOutlined from '@ant-design/icons/DeleteOutlined'
-import CloudUploadOutlined from '@ant-design/icons/CloudUploadOutlined';
 import DownloadOutlined from '@ant-design/icons/DownloadOutlined';
 import HeartOutlined from '@ant-design/icons/HeartOutlined';
 import FolderAddOutlined from '@ant-design/icons/FolderAddOutlined';
@@ -39,26 +38,7 @@ const SearchResults = () => {
                         <h2>Search Results for "{searchTerm}"</h2>  
                         <h3> </h3>
                     </div>
-                    <div style={{marginTop:'40px'}}>
-                        <Space>
-                            {
-                                <>
-                                    <Tooltip title="Add to folder" placement="bottomRight">
-                                        <Button className="album-button" disabled={true} icon={<FolderAddOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
-                                    </Tooltip>
-                                    <Tooltip title="Toggle Favorite" placement="bottomRight">
-                                        <Button className="album-button" disabled={true} icon={<HeartOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
-                                    </Tooltip>
-                                    <Tooltip title="Download" placement="bottomRight">
-                                        <Button className="album-button" disabled={true} icon={<DownloadOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
-                                    </Tooltip>
-                                    <Tooltip title="Delete" placement="bottom">
-                                        <Button className="album-button" disabled={!isSelected} onClick={() =>{}} icon={<DeleteOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
-                                    </Tooltip>
-                                </>
-                            }     
-                        </Space>
-                    </div>
+                        <Space>    </Space>
                 </Header>
             <div className='divider'></div>
             <div> Loading .. .. ..</div>  
@@ -73,26 +53,6 @@ const SearchResults = () => {
                         <h2>Search Results for "{searchTerm}"</h2>  
                         <h3> </h3>
                     </div>
-                    <div style={{marginTop:'40px'}}>
-                        <Space>
-                            {
-                                <>
-                                    <Tooltip title="Add to folder" placement="bottomRight">
-                                        <Button className="album-button" disabled={true} icon={<FolderAddOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
-                                    </Tooltip>
-                                    <Tooltip title="Toggle Favorite" placement="bottomRight">
-                                        <Button className="album-button" disabled={true} icon={<HeartOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
-                                    </Tooltip>
-                                    <Tooltip title="Download" placement="bottomRight">
-                                        <Button className="album-button" disabled={true} icon={<DownloadOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
-                                    </Tooltip>
-                                    <Tooltip title="Delete" placement="bottom">
-                                        <Button className="album-button" disabled={!isSelected} onClick={() =>{}} icon={<DeleteOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
-                                    </Tooltip>
-                                </>
-                            }     
-                        </Space>
-                    </div>
                 </Header>
                 <div className='divider'></div> 
                 <div>{error}</div> 
@@ -105,31 +65,25 @@ const SearchResults = () => {
             <Header>
                 <div>
                     <h2>Search Results for "{searchTerm}"</h2>
-                    
-                        {
-                            loading ? 
-                            <div> loading </div> : <h3>{searchResults?.total_count ?? 0} matching photos found </h3>
-                        }
-                   
+                    {
+                        loading ? 
+                        <div> loading </div> : <h3>{searchResults?.total_count ?? 0} matching photos found </h3>
+                    }
                 </div>
                 <div style={{marginTop:'40px'}}>
                     <Space>
-                        {
-                            <>
-                                <Tooltip title="Add to folder" placement="bottomRight">
-                                    <Button className="album-button" disabled={true} icon={<FolderAddOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
-                                </Tooltip>
-                                <Tooltip title="Toggle Favorite" placement="bottomRight">
-                                    <Button className="album-button" disabled={true} icon={<HeartOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
-                                </Tooltip>
-                                <Tooltip title="Download" placement="bottomRight">
-                                    <Button className="album-button" disabled={true} icon={<DownloadOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
-                                </Tooltip>
-                                <Tooltip title="Delete" placement="bottom">
-                                    <Button className="album-button" disabled={!isSelected} onClick={() =>{}} icon={<DeleteOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
-                                </Tooltip>
-                            </>
-                        }     
+                        <Tooltip title="Add to folder" placement="bottomRight">
+                            <Button className="album-button" disabled={true} icon={<FolderAddOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
+                        </Tooltip>
+                        <Tooltip title="Toggle Favorite" placement="bottomRight">
+                            <Button className="album-button" disabled={true} icon={<HeartOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
+                        </Tooltip>
+                        <Tooltip title="Download" placement="bottomRight">
+                            <Button className="album-button" disabled={true} icon={<DownloadOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
+                        </Tooltip>
+                        <Tooltip title="Delete" placement="bottom">
+                            <Button className="album-button" disabled={!isSelected} onClick={() =>{}} icon={<DeleteOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
+                        </Tooltip>  
                     </Space>
                 </div>
             </Header>

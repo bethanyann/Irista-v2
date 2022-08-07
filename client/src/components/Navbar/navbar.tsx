@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect, useRef }from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { isEmpty } from 'lodash';
-import { Tooltip, Input, InputRef } from 'antd';
+import { Tooltip, Input, InputRef, Dropdown, Menu } from 'antd';
 import SearchOutlined from '@ant-design/icons/SearchOutlined';
 import UserOutlined from '@ant-design/icons/UserOutlined';
 import CloseOutlined from '@ant-design/icons/CloseOutlined';
@@ -29,7 +29,8 @@ const Navbar = () => {
         }
       }, [isSearching]);
 
-    const onLogout = () => {
+    const handleLogout = (e : any) => {
+        e.preventDefault();
         logout();
         navigate('/', {replace: true});
     }
@@ -52,6 +53,20 @@ const Navbar = () => {
             // display error? 
         }
     }
+
+    const menu =(
+        <Menu style={{textAlign:'center'}}
+            items={[
+                {
+                    key:'1',
+                    label: (
+                       <p style={{marginBottom: 0, width: '100px'}} onClick={() => handleLogout}>{isUserLoggedOut ? "Log In" : "   Log out   "}</p>
+                    )
+                }
+            ]}
+        >
+        </Menu>
+    )
 
     return (
         <Wrapper>
@@ -93,7 +108,10 @@ const Navbar = () => {
                                         <SearchOutlined style={{fontSize:'1.3em'}}/>
                                     </button>
                             </div>
-                            <button className="user-button"><UserOutlined style={{fontSize:'1.3em'}}/></button>
+                            <Dropdown overlay={menu} trigger={['click']} arrow>
+                                <button className="user-button" onClick={(e) => e.preventDefault()}><UserOutlined style={{fontSize:'1.3em'}}/></button>
+                            </Dropdown>
+                           
                         </NavIcons>  
                     </NavLinks>
                     </div>
