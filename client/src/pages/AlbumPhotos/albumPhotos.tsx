@@ -16,6 +16,7 @@ import './uploadModal.css';
 //components
 import Upload from '../../components/Upload/upload';
 import PhotoInfo from '../PhotoInfo/photoInfo';
+import PhotoGrid from '../../components/PhotoGrid/photoGrid';
 //types
 import { Photo, Photos } from '../../models/types';
 
@@ -43,15 +44,15 @@ const AlbumPhotos = () => {
     //results from hook
     const { photos, setPhotos, loading, error } = useAlbumPhotoFetch(albumName!);
 
-    const handlePhotoModalOpen = (photoId : string) => {
-        setActivePhotoId(photoId);
-        setIsPhotoModalOpen(true);
-    }
+    // const handlePhotoModalOpen = (photoId : string) => {
+    //     setActivePhotoId(photoId);
+    //     setIsPhotoModalOpen(true);
+    // }
 
-    const handlePhotoModalClose = () => {
-        setIsPhotoModalOpen(false);
-        setActivePhotoId('');
-    }
+    // const handlePhotoModalClose = () => {
+    //     setIsPhotoModalOpen(false);
+    //     setActivePhotoId('');
+    // }
 
     const handleModalOpen = () => {
         setSelectedPhotos(initialState);
@@ -72,40 +73,38 @@ const AlbumPhotos = () => {
         //it takes in the totalFiles from the upload, builds a Photos object, and appends that
         //to the photos already displayed on the page
         let newArray = { } as Photos;
+        //will this work if there aren't any photos in the album yet? 
         if(photos)
         {
             newArray.next_cursor = photos.next_cursor;
             newArray.total_count = photos ? photos.resources.length + totalFiles.length : totalFiles.length;
             newArray.resources = [...photos?.resources, ...totalFiles];
-        }
+        } 
        
         setPhotos(newArray);
         setOpenAlertModal(false);
         setIsOpen(false);
     }
 
-    const handleSelectPhoto = (event: any, photo: Photo) => {
-        if(event.target.checked){
-            //add photo id to set
-            photo.isSelected = true;
-            setSelectedPhotos(prev => new Set(prev).add(photo.public_id));
-            setIsSelected(true);
-        } else {
-            //delete photo from set
-            photo.isSelected = false;
-            setSelectedPhotos(prev => {
-                const next = new Set(prev);
-                next.delete(photo.public_id);
-                return next;
-            })
-            setIsSelected(false);
-        }
-    }
+    // const handleSelectPhoto = (event: any, photo: Photo) => {
+    //     if(event.target.checked){
+    //         //add photo id to set
+    //         photo.isSelected = true;
+    //         setSelectedPhotos(prev => new Set(prev).add(photo.public_id));
+    //         setIsSelected(true);
+    //     } else {
+    //         //delete photo from set
+    //         photo.isSelected = false;
+    //         setSelectedPhotos(prev => {
+    //             const next = new Set(prev);
+    //             next.delete(photo.public_id);
+    //             return next;
+    //         })
+    //         setIsSelected(false);
+    //     }
+    // }
 
     const handleDeletePhotos = async () => {
-        //show confirm delete modal
-        //if yes ->
-        //take set of selected photos
         setIsLoading(true);
         if(selectedPhotos.size > 0){
             
@@ -143,9 +142,6 @@ const AlbumPhotos = () => {
 
     //TODO - loading needs some styling help, its displaying in the top left of the page
     //could use a spinner or some simple animation too 
-    if(loading) {
-        return <div> Loading photos ... </div>
-    }
 
     return (
         <>
@@ -172,45 +168,14 @@ const AlbumPhotos = () => {
                                     <Button className="album-button" disabled={!isSelected} onClick={handleDeletePhotos} icon={<DeleteOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
                                 </Tooltip>
                             </>
-                            // :
-                            // <>
-                            //     <FolderAddOutlined  style={{fontSize:'1.6em',color:'#d4d9e8', marginLeft:'5px'}} />
-                            //     <HeartOutlined style={{fontSize:'1.6em',color:'#d4d9e8', marginLeft:'5px'}}/>
-                            //     <CloudUploadOutlined style={{fontSize:'1.6em',color:'#d4d9e8', marginLeft:'5px'}} onClick={handleModalOpen} />
-                            //     <DownloadOutlined style={{fontSize:'1.6em',color:'#d4d9e8', marginLeft:'5px'}} />
-                            //     <DeleteOutlined style={{fontSize:'1.6em',color:'#d4d9e8', marginLeft:'5px'}} />
-
-                            
                         }     
                     </Space>
-                    {/* <img src={DeleteIcon} alt='delete button' onClick={() => setOpenDeleteAlert(true)} style={{marginRight:'20px', height: '30px'}}/> */}
-                    {/* <img src={AddIcon} alt='add button' onClick={handleModalOpen} /> */}
                 </div>
             </Header>
             <div className="divider"></div>
-            <Content>
-                {
-                    photos && photos ? photos.resources.map((photo) => (
-                        <PhotoContainer  key={photo.asset_id}>
-                            <PhotoTile className='photo-tile' style={photo.isSelected ? {backgroundColor:'#f3f4fa', border:'1px solid var(--smoke)'} : { }}>
-                                <div className='tile-select-checkbox'>
-                                    <span className='tile-select-checkbox-span'>
-                                        <input type='checkbox' className='checkbox' checked={photo.isSelected ?? false} onChange={event => handleSelectPhoto(event, photo)}/>
-                                    </span>
-                                </div>
-                                <div className='photo-image-wrapper' style={{zIndex:1}} onClick={() => handlePhotoModalOpen(photo.public_id)}>
-                                    <PhotoImage src={photo.secure_url} style={photo.isSelected? {maxHeight:'290px', maxWidth:'290px'} : {}} />
-                                </div>       
-                            </PhotoTile>
-                            <p style={{wordBreak:'break-word'}}>{(photo.filename ?? photo.original_filename ?? photo.public_id.substring(0, photo.public_id.lastIndexOf('/') + 1)) + "." + photo.format}</p>
-                        </PhotoContainer>
-                    )) : null
-                }
-            </Content>
-            <PhotoInfo visible={isPhotoModalOpen} photoId={activePhotoId} onClose={handlePhotoModalClose} /> 
+            { loading ? < div> Loading .... </div> : null}
+            <PhotoGrid photos={photos} setSelectedPhotos={setSelectedPhotos} setIsSelected={setIsSelected} />
         </Wrapper>
-
-
 
         <Modal className="ant-modal" title="" width={600} visible={openDeleteAlert} onCancel={() => setOpenDeleteAlert(false)} footer={null}>
             <Result

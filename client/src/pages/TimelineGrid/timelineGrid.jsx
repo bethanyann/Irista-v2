@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react';
 import { groupBy } from 'lodash';
 import { AuthContext } from '../../context/authContext';
-import { Wrapper, Content } from './photoGrid.styles';
+import { Wrapper, Content } from './timelineGrid.styles';
 import { usePhotoFetch } from '../../hooks/usePhotoFetch';
 import Moment from 'react-moment';
 //components
 import PhotoThumbnail from '../../components/PhotoThumbnail/photoThumb';
-import PhotoInfo from './../PhotoInfo/photoInfo';
+import PhotoInfo from '../PhotoInfo/photoInfo';
 
 const PhotoGrid = () => {
     const { user } = useContext(AuthContext); 

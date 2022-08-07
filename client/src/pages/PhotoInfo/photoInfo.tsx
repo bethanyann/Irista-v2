@@ -86,8 +86,8 @@ const PhotoInfo = ({visible, photoId, onClose} : Props) => {
                                 </div>    
                             </div>                         
                             <div className='divider'></div>
-                            <h4>LOCATION</h4>
-                            <div className='divider'></div>
+                            {/* <h4>LOCATION</h4>
+                            <div className='divider'></div> */}
                             <h4>EXIF</h4>
                                 <div className="two-column">
                                     <div className='first-column'>
