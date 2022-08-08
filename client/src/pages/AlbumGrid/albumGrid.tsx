@@ -8,7 +8,8 @@ import NewAlbumModal from '../../components/NewAlbumModal/newAlbumModal';
 //hooks
 import { useAlbumFetch } from '../../hooks/useAlbumFetch';
 import { useNavigate } from 'react-router-dom';
-
+//image
+import NoImage from '../../images/no-image.png';
 
 const Album = () => {
     let navigate = useNavigate();
@@ -17,7 +18,6 @@ const Album = () => {
     
     const { albums, loading, errors } = useAlbumFetch(user!);
 
-    debugger;
     const handleModalClose = () => {
         setAlbumModalIsOpen(false);
     }
@@ -35,8 +35,8 @@ const Album = () => {
             <Content>
                 <NewAlbumButton onClick={() => setAlbumModalIsOpen(true)}>New Album<span className='red-plus'>+</span></NewAlbumButton>
                 {
-                    albums ? albums.map((album) => (
-                        <AlbumThumbnail key={album[0].path} image={album[1].secure_url ?? ""} onClick={() => handleOpenAlbum(album[0].path)}>{album[0].name}</AlbumThumbnail>
+                    albums && albums.length > 0 ? albums.map((album) => (
+                        <AlbumThumbnail key={album[0].path} image={album[1].secure_url ?? NoImage} onClick={() => handleOpenAlbum(album[0].path)}>{album[0].name}</AlbumThumbnail>
                     )) : null
                 } 
             </Content>
