@@ -13,11 +13,22 @@ export const useAlbumFetch =  (user: User) => {
         try {
             setLoading(true);
             setErrors(false);
+
             if(user.username)
             {
-                const albums = await fetch(`/api/getAllAlbums/${user.username}`);
-                const results = await albums.json();
-                setAlbums(results);
+                let encodedUsername = encodeURIComponent(user.username);
+                await fetch(`/api/getAllAlbums/${encodedUsername}`).then(async(response) => {
+                    if(response.ok){
+                        const data = await response.json();
+                        setAlbums(data);
+                    } else {
+                        const err = await response.json();
+                        throw new Error(err.error.message);
+                    }  
+                }).catch(error => {
+                    console.log(error);
+                    setErrors(error);
+                });
             }
         } catch(error) {
             setLoading(false);

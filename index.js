@@ -134,9 +134,8 @@ app.get('/api/fetchSearchResults/:username/:searchText', async (req,res) => {
     try {
         let username = req.params.username;
         let searchText = req.params.searchText;
-        //console.log(searchText);
+
         const results = await cloudinary.search.expression(`context.username=${username} AND tags:${searchText}* OR ${searchText} OR filename:${searchText} OR public_id:${searchText}`).sort_by('created_at', 'desc').max_results(30).execute();
-        // console.log(results);
         res.send(results);
     } catch(error) {
         console.log(error);
@@ -169,22 +168,33 @@ app.get('/api/getAllAlbums/:username', async (req, res) => {
         let userName = req.params.username;
         //get all of the user's albums
         const albums = await cloudinary.api.sub_folders(`${userName}`);
+        //console.log(albums.folders); - for testing errors
         
         //for each album, get the first photo uploaded and assign that to an array with the album
-        await Promise.all(albums.folders.map(async (album) => {
-            const photo =  await cloudinary.search.expression(`folder:"${album.path}" AND resource_type:image`).max_results(1).execute();
-           
-            albumList.push([
-                album,
-                photo.resources[0]
-            ]);
-        }));
+        if(albums)
+        {
+            await Promise.all(albums.folders.map(async (album) => {
+                const photo =  await cloudinary.search.expression(`folder:"${album.path}" AND resource_type:image`).max_results(1).execute();
 
+                if(photo.total_count > 0) {
+                    albumList.push([
+                        album,
+                        photo.resources[0]
+                    ]);
+                }
+                else {
+                    albumList.push([
+                        album,
+                        {}
+                    ])
+                }
+            }));
+        }
         //return list of album/cover image pairs 
         res.send(albumList);
     } catch(error) {
         console.log(error);
-        res.status(500).json({ error: "Something went wrong"});
+        res.status(500).json({ error: error.error});
     }
 })
 
@@ -192,6 +202,7 @@ app.get('/api/getAllAlbums/:username', async (req, res) => {
 app.get('/api/getAlbumPhotos/:albumName', async (req, res) => {
     try {
         let albumName = req.params.albumName;
+        
         //need to put album name in additional quotes in case it has spaces in the name
         const photoList  = await cloudinary.search.expression(`folder:"${albumName}" AND resource_type:image`).max_results(100).execute();
         res.send(photoList);
