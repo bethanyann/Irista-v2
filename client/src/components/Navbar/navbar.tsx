@@ -60,7 +60,7 @@ const Navbar = () => {
                 {
                     key:'1',
                     label: (
-                       <p style={{marginBottom: 0, width: '100px'}} onClick={() => handleLogout}>{isUserLoggedOut ? "Log In" : "   Log out   "}</p>
+                       <p style={{marginBottom: 0, width: '100px'}} onClick={(e) => handleLogout(e)}>{isUserLoggedOut ? "Log In" : "   Log out   "}</p>
                     )
                 }
             ]}

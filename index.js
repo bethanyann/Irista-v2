@@ -167,7 +167,6 @@ app.get('/api/getAllAlbums/:username', async (req, res) => {
         let albumList = [];
         let userName = req.params.username;
         //get all of the user's albums
-        //const albums = await cloudinary.api.sub_folders('user'); - for testing errors
         const albums = await cloudinary.api.sub_folders(`${userName}`);
         //console.log(albums.folders); - for testing errors
         
@@ -176,7 +175,7 @@ app.get('/api/getAllAlbums/:username', async (req, res) => {
         {
             await Promise.all(albums.folders.map(async (album) => {
                 const photo =  await cloudinary.search.expression(`folder:"${album.path}" AND resource_type:image`).max_results(1).execute();
-                console.log(photo);
+
                 if(photo.total_count > 0) {
                     albumList.push([
                         album,
