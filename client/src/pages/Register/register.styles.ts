@@ -24,7 +24,8 @@ export const FormStyle = styled.div`
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
     margin:auto;
-    padding: 7px 50px;
+    padding: 12px 93px;
+    width: 500px; 
 
     h2 {
         text-align: center;
@@ -81,7 +82,7 @@ export const FormStyle = styled.div`
 export const ImageContainer = styled.img`
     display: grid;
     margin:auto;
-    height: 608px;
+    height: 618px;
     border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
+    border-bottom-right-radius: 5px; 
 `;

@@ -79,7 +79,7 @@ const Login = ( props:any ) => {
                         <button onClick={onSubmit}>Log In</button>
                         <p>No account yet?  Sign up for a new one <Link to='/register' style={{textDecoration:'underline', color:'#CC0000'}}>here</Link>.</p>
                         {Object.keys(errors).length > 0 && (
-                            <Alert type="error" showIcon description={
+                            <Alert type="error" showIcon style={{width:'300px'}}description={
                                 Object.values(errors).map(value => (
                                     value + "   "
                                 ))
