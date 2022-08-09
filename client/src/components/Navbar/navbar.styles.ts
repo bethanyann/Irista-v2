@@ -74,22 +74,19 @@ export const NavLinks = styled.div`
         padding-bottom: 16px;
         font-weight: 410;
     }
-
-    /* login and search icons section*/
   
-      
-    /* img {
-        width: 35px;
-        @media screen and (max-width: 720px) {
-            width: 40px;
-        }
-    } */
 `;
 
 export const NavIcons = styled.div`
-    border-left: 2px solid var(--fog);
-    padding-left: 20px; 
+    /* border-left: 2px solid var(--fog); */
+    /* padding-left: 20px;  */
     display:flex;
+    height: 40px;
+
+    .divider {
+        border: 1px solid var(--fog);
+        margin-right: 15px;
+    }
 
     .search-box {
         display:flex;
@@ -112,8 +109,6 @@ export const NavIcons = styled.div`
         //transition: 0.35s; 
         transition-delay: 0.36s;
     }
-
-
 
     .search-button-active {
         border: none;
@@ -139,7 +134,6 @@ export const NavIcons = styled.div`
         transition-delay: color 0s;
     }
 
- 
     .search-text {
         border: none;
         border: 1px solid white;

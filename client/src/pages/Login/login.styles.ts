@@ -12,33 +12,20 @@ export const Content = styled.div`
     display: flex;
     justify-content: center;
     align-content: center;
+    height: 95vh;
 
-    background-color: var(--silver);
+    background-color: var(--fog);
 `;
 
 export const FormStyle = styled.div`
     //background-color: #f07122;
     display: grid;
     background-color: var(--snow);
-    position: absolute;
-    align-items: center;
-    justify-content: center;
-    //text-align: center;
-    border-radius: 5px;
-    //height: 300px; // take off once i have data in here 
-    top:40%;
-    left:50%;
-    width:32%;//change accordingly or even not necessary to define
-    height:34%;//change accordingly or even not necessary to define
-    //margin-top: 50px;
-    transform:translate(-50%,-50%);
-    -moz-transform:translate(-50%,-50%);
-    -ms-transform:translate(-50%,-50%);
-    -webkit-transform:translate(-50%,-50%);
-    -o-transform:translate(-50%,-50%);
-    border-radius: 5px;
-    margin-bottom: 50px;
-    //overflow: auto;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    margin:auto;
+    padding: 50px;
+
     h2 {
         text-align: center;
         padding-top: 20px;
@@ -89,4 +76,12 @@ export const FormStyle = styled.div`
             margin: 10px 0 4px 0;
         } */
     }
+`;
+
+export const ImageContainer = styled.img`
+    display: grid;
+    margin:auto;
+    height: 502px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 `;
