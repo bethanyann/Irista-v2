@@ -6,9 +6,9 @@ import { AuthContext } from '../../context/authContext';
 import { User } from '../../models/types';
 //styles
 import { Wrapper, Content, Text, Header, LogoImg } from './landing.styles';
-
+//images
 import CanonLogo from '../../images/Canon_wordmark_white.png';
-
+import  BackgroundImg  from '../../images/background3.jpg';
 
 const Landing = () => {
     let navigate = useNavigate();
@@ -29,10 +29,10 @@ const Landing = () => {
     }
 
     return (
-        <Wrapper className='home-slide'>
-                <Content>
+        <Wrapper>
+                <Content image={BackgroundImg}>
                     <Header>
-                        <div>
+                        <div style={{display:'flex', alignItems:'center'}}>
                             <LogoImg src={CanonLogo} /> <span className="irista-text"> Irista </span>
                         </div>
                         <div className='button-div'>

@@ -1,24 +1,25 @@
 import styled from 'styled-components';
 
+interface Props {
+    image: any
+}
 
 export const Wrapper = styled.div`
     color: var(--snow);
     display:flex;
     justify-content: center;
     align-items:center;
+    height: 100vh;
 `;
 
-export const Content = styled.div`
+export const Content = styled.div<Props>`
     transition: opacity .3s linear,visibility .3s linear;
     visibility: visible;
     opacity: 1;
     align-self: center;
-
-    background: url("https://web.archive.org/web/20190417224026/https://d2gbfimz0vwl0i.cloudfront.net/assets/images/homepage/hero/1.4-Hero-Image.jpg") no-repeat center center fixed;
-    //background: url("https://web.archive.org/web/20190417150753im_/https://d2gbfimz0vwl0i.cloudfront.net/assets/images/homepage/9-Start-Free.0402f1c73618b798.jpg") no-repeat center center fixed;
-    height: 100%;
-    max-height: 1300px;
-    min-height: 1270px;
+    height: 100vh;
+    background: url(${props => props.image}), var(--slate);
+    background-position: center;
     top: 0;
     background-size: cover;
     flex: 1;
@@ -29,24 +30,34 @@ export const Content = styled.div`
         font-weight: 420; 
         padding-left: 20px;
         color: white;
-        position: absolute !important;
-        top: 90px;
+        /* position: absolute !important;
+        top: 90px; */
+        margin-top: 5px;
+
+        @media screen and (max-width:1100px){
+            font-size: 1.8rem;
+            margin-top: 3px;;
+        }
     }
 `;
 
 export const Text = styled.div`
 
     text-align: center;
-    padding: 0 40px;
+    padding: 160px 40px;
     display: block;
     max-width: 870px;
-    margin: 15% auto 42px;
+    margin: auto;
 
     h1 {
         font-size: 4.3rem;
         font-weight: 700;
         line-height: 1.14;
         letter-spacing: .5px;
+
+        @media screen and (max-width: 1100px) {
+            font-size:2.1rem;
+        }
     }
 
     h3 {
@@ -55,6 +66,11 @@ export const Text = styled.div`
         font-weight: 400;
         line-height: 1.68;
         color: var(--snow);
+
+        @media screen and (max-width: 1100px) {
+            font-size: 1.1rem;
+            margin-top: 50px;
+        }
     }
 
     button {
@@ -73,6 +89,19 @@ export const Text = styled.div`
         cursor: pointer;
         text-transform: uppercase;
         letter-spacing: 1px;
+
+        @media screen and (max-width:1100px){
+            padding: 10px;
+          
+        }
+    }
+
+    button:hover {
+        background-color: var(--fog);
+    }
+
+    @media screen and (max-width:1100px) {
+        margin: 30% auto 42px;
     }
 `;
 
@@ -88,8 +117,8 @@ export const Header = styled.div`
     margin-top: 30px;
 
     .button-1 {
-        padding: 12px;
-        width: 150px;
+        padding: 6px;
+        width: 120px;
         margin: auto;
         margin-top: 50px;
         margin-bottom: 50px;
@@ -101,6 +130,12 @@ export const Header = styled.div`
         letter-spacing: 1px;
         background: transparent;
         border: 1px solid var(--snow);
+
+        @media screen and (max-width:765px) {
+            padding: 6px;
+            width: 120px;
+            font-size: small;
+        }
     }
 
     .button-1:hover{
@@ -121,6 +156,12 @@ export const Header = styled.div`
         border: none;
         background: transparent;
         color: var(--snow);
+
+        @media screen and (max-width:765px) {
+            padding: 9px;
+            width: 95px;
+            font-size: small;
+        }
     }
 
     .button-2:hover{
@@ -157,7 +198,7 @@ export const LogoImg = styled.img`
     width: 170px;
 
     //when the screen size is less than 720px
-    @media screen and (max-width: 968px){
+    @media screen and (max-width: 1100px){
         width: 120px; 
     }
 `;
