@@ -76,10 +76,12 @@ const Navbar = () => {
                 </Link>
                 <div>
                 <NavLinks>
-                    { !isUserLoggedOut ?  
+                    
                         <span className="nav-links" onClick={() => setIsSearching(false)}>
+                        { !isUserLoggedOut ? 
+                            <>
                             <NavLink to='/photos' className='nav-link'>
-                                Photos
+                            Photos
                             </NavLink>
                             <span style={{paddingLeft:'25px'}}></span>
                             <NavLink to='/albums' className='nav-link'>
@@ -89,10 +91,14 @@ const Navbar = () => {
                             <NavLink to='/upload' className='nav-link'>
                                 Upload
                             </NavLink>
-                            <span style={{paddingRight:'10px'}}></span>
+                            </>            
+                         : null}
                         </span>
-                    : null } 
+                        
                         <NavIcons>
+                       { !isUserLoggedOut ? 
+                            <>
+                            <div className='divider'></div>
                             <div className={isSearching ? "search-box-active" : "search-box"}>
                                 <Input ref={inputRef} type="text" 
                                     prefix={<CloseOutlined hidden={!isSearching} onClick={() => setIsSearching(false)}/>} 
@@ -104,15 +110,17 @@ const Navbar = () => {
                                     onChange={handleInputChange}
                                     onPressEnter={handleInputSubmit}
                                 />
-                                    <button className={isSearching ? "search-button-active" : "search-button"} onClick={showSearchInput}>
-                                        <SearchOutlined style={{fontSize:'1.3em'}}/>
-                                    </button>
+                                <button className={isSearching ? "search-button-active" : "search-button"} onClick={showSearchInput}>
+                                    <SearchOutlined style={{fontSize:'1.3em'}}/>
+                                </button>
                             </div>
                             <Dropdown overlay={menu} trigger={['click']} arrow>
                                 <button className="user-button" onClick={(e) => e.preventDefault()}><UserOutlined style={{fontSize:'1.3em'}}/></button>
-                            </Dropdown>
+                            </Dropdown>    
+                            </>
+                        : null }
                            
-                        </NavIcons>  
+                        </NavIcons>
                     </NavLinks>
                     </div>
                 </Content>

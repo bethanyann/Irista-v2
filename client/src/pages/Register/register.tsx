@@ -4,7 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
 //styles
-import { Wrapper, Content, FormStyle } from './register.styles';
+import { Wrapper, Content, FormStyle, ImageContainer } from './register.styles';
+import { Alert } from 'antd';
+import BckImage from '../../images/login_image2_copy.jpg';
 //authContext
 import { AuthContext } from '../../context/authContext';
 //hooks
@@ -75,33 +77,31 @@ const Register = ( props:any ) => {
     return (
         <Wrapper>
             <Content>
+                <div style={{display:'flex'}}>
                 <FormStyle>
-                    {/* {
-                        errors ? errors.map((error:any, i) => (
-                            <p key={i}>{error.message}</p>
-                        )) : null
-                    } */}
                     <h2> Register </h2>
                     <label> Username </label>
-                        <input type='text' name='username' placeholder='Choose a username'  onChange={onChange} />
+                        <input type='text' name='username' placeholder=''  onChange={onChange} />
                     <label> Email Address </label>
-                        <input type='email' name='email' placeholder='Email Address' onChange={onChange} />
+                        <input type='email' name='email' placeholder='' onChange={onChange} />
                     <label> Password </label>
-                        <input type='password' name='password' placeholder='Password' onChange={onChange} />
+                        <input type='password' name='password' placeholder='' onChange={onChange} />
                     <label> Confirm Password </label>
-                        <input type='password' name='confirmPassword' placeholder='Confirm Password'  onChange={onChange} />
+                        <input type='password' name='confirmPassword' placeholder=''  onChange={onChange} />
 
                     <button onClick={onSubmit}>Create Account</button>
-                    <p>Already have an account? Sign in <Link to='/login'>here</Link>.</p>
+                    <p>Already have an account? Sign in <Link to='/login' style={{textDecoration:'underline', color:'#CC0000'}}>here</Link>.</p>
                     {Object.keys(errors).length > 0 && (
-                        <div className="">
-                            {Object.values(errors).map(value => (
-                                // <Alert key={value} variant="danger">{value}</Alert>
-                                <p key={value} style={{color: 'red'}}>{value}</p>
-                            ))}
-                        </div>
+                        <Alert type="error" showIcon description={
+                            Object.values(errors).map(value => (
+                                value + "   "
+                            ))
+                        }>
+                        </Alert>
                     )}
                 </FormStyle>
+                <ImageContainer src={BckImage} alt="image of person with canon camera"/>
+                </div>
             </Content>
         </Wrapper>
     );

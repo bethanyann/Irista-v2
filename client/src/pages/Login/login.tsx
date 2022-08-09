@@ -3,7 +3,9 @@ import { gql } from 'graphql-tag';
 import { useNavigate, Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 //styles
-import { Wrapper, Content, FormStyle } from './login.styles';
+import { Wrapper, Content, FormStyle, ImageContainer } from './login.styles';
+import { Alert } from 'antd';
+import BckImage from '../../images/login_image1_copy.jpg';
 //authContext
 import { AuthContext } from '../../context/authContext';
 //hooks
@@ -67,23 +69,26 @@ const Login = ( props:any ) => {
     return (
         <Wrapper>
             <Content>
-                <FormStyle>
-                    <h2> Log in to your Account</h2>
-                    <label> Username </label>
-                        <input type='text' name='username' placeholder='Choose a username' onChange={onChange}/>
-                    <label> Password </label>
-                        <input type='password' name='password' placeholder='Password' onChange={onChange}/>
-                    <button onClick={onSubmit}>Log In</button>
-                    <p>No account yet?  Sign up for a new one <Link to='/register'>here</Link>.</p>
-                    {Object.keys(errors).length > 0 && (
-                        <div className="">
-                            {Object.values(errors).map(value => (
-                                // <Alert key={value} variant="danger">{value}</Alert>
-                                <p key={value} style={{color: 'red'}}>{value}</p>
-                            ))}
-                        </div>
-                    )}
-                </FormStyle>
+                <div style={{display:'flex'}}>
+                    <FormStyle>
+                        <h2> Log in to your Account</h2>
+                        <label> Username </label>
+                            <input type='text' name='username' placeholder='' onChange={onChange}/>
+                        <label> Password </label>
+                            <input type='password' name='password' placeholder='' onChange={onChange}/>
+                        <button onClick={onSubmit}>Log In</button>
+                        <p>No account yet?  Sign up for a new one <Link to='/register' style={{textDecoration:'underline', color:'#CC0000'}}>here</Link>.</p>
+                        {Object.keys(errors).length > 0 && (
+                            <Alert type="error" showIcon description={
+                                Object.values(errors).map(value => (
+                                    value + "   "
+                                ))
+                            }>
+                            </Alert>
+                        )}
+                    </FormStyle>
+                    <ImageContainer src={BckImage} alt="image of person with canon camera"/>
+                </div>
             </Content>
         </Wrapper>
     );
