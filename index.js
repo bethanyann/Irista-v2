@@ -5,7 +5,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const typeDefs = require('./graphql/typeDefs');
 const resolvers = require('./graphql/resolvers');
-const { MONGODB } = require('./config');
 const cors = require('cors');
 const http = require('http');
 //cloudinary
@@ -249,7 +248,7 @@ const server = new ApolloServer({
 
 
 //Mongoose Connection here 
-mongoose.connect(MONGODB, {useNewUrlParser: true})
+mongoose.connect(process.env.MONGODB, {useNewUrlParser: true})
     .then(() => { //this will wait for the connection to the db to be established 
         console.log("MongoDB Connected");
         startApolloServer();

@@ -159,13 +159,13 @@ const AlbumPhotos = () => {
                                     <Button className="album-button" disabled={true} icon={<HeartOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
                                 </Tooltip>
                                 <Tooltip title="Upload Images" placement="bottomRight">
-                                    <Button className="album-button" disabled={!isSelected} onClick={handleModalOpen} icon={<CloudUploadOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
+                                    <Button className="album-button"  onClick={handleModalOpen} icon={<CloudUploadOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
                                 </Tooltip>
                                 <Tooltip title="Download" placement="bottomRight">
                                     <Button className="album-button" disabled={true} icon={<DownloadOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
                                 </Tooltip>
                                 <Tooltip title="Delete" placement="bottom">
-                                    <Button className="album-button" disabled={!isSelected} onClick={handleDeletePhotos} icon={<DeleteOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
+                                    <Button className="album-button" disabled={!isSelected} onClick={() => setOpenDeleteAlert(true)} icon={<DeleteOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
                                 </Tooltip>
                             </>
                         }     

@@ -3,8 +3,6 @@ const User = require('../../models/User');
 const { ApolloError, UserInputError } = require('apollo-server-errors');
 //helpers
 const { validateRegisterInput, validateLoginInput } = require('../../utilities/userValidation');
-//key
-const { REACT_APP_JSON_WEB_TOKEN } = require('../../config');
 //password hashing
 const bcrypt = require('bcryptjs'); 
 //web token
@@ -120,7 +118,7 @@ function generateToken(user) {
             email: user.email,
             username: user.username
         }, 
-        REACT_APP_JSON_WEB_TOKEN,
+        process.env.REACT_APP_JSON_WEB_TOKEN,
         {
             expiresIn: "12h"
         });
