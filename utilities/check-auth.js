@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const { REACT_APP_JSON_WEB_TOKEN } = require('../config');
 
 const { AuthenticationError } = require('apollo-server');
 
@@ -11,7 +10,7 @@ module.exports = (context) => {
         const token = authHeader.split('Bearer ')[1];
         if(token){
             try {
-                const user = jwt.verify(token, REACT_APP_JSON_WEB_TOKEN);
+                const user = jwt.verify(token, process.env.REACT_APP_JSON_WEB_TOKEN);
                 return user;
             } catch(err){
                 throw new AuthenticationError('Invalid/Expired token');
