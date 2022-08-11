@@ -1,6 +1,7 @@
 import { useState, useEffect} from 'react';
 import { Photo, Photos, User  } from '../models/types';
 import { Dictionary, groupBy } from 'lodash';
+import { BASE_URL } from '../config';
 const moment = require('moment');
 
 // type AlbumPhotos = {
@@ -23,7 +24,7 @@ export const useAlbumPhotoFetch =  (albumName:string) => {
             if(albumName)
             {
                 albumName = encodeURIComponent(albumName);
-                const photos = await fetch(`/api/getAlbumPhotos/${albumName}`);
+                const photos = await fetch(`${BASE_URL}/api/getAlbumPhotos/${albumName}`);
                 const results = await photos.json();
                 
                 setPhotos(results);
