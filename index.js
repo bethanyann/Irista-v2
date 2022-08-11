@@ -16,18 +16,6 @@ const app = express();
 //to fix a 'payload too large' error i was getting with the post requests
 app.use(express.json({limit: '50mb'}));
 
-// Express only serves static assets in production
-if (process.env.NODE_ENV === "production") {
-    // app.use(express.static("client/build"));
-    console.log = function() {};
-
-    app.use(express.static(path.join(__dirname, "/client/build")));
-
-    app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '/client/build', 'index.html'));
-    });
-}
-
 
 
 //////////////////////////////////
@@ -285,6 +273,18 @@ mongoose.connect(process.env.MONGODB, {useNewUrlParser: true})
 
 // }
 
+// Express only serves static assets in production
+if (process.env.NODE_ENV === "production") {
+    // app.use(express.static("client/build"));
+    console.log = function() {};
+
+    app.use(express.static(path.join(__dirname, "client/build")));
+
+    app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+    });
+}
+
 
 async function startApolloServer()
 {
@@ -297,6 +297,4 @@ async function startApolloServer()
         console.log(`Process ENV port is ${PORT}`);
         console.log(`🚀 Server ready at http://localhost:5000${server.graphqlPath}`);
     }).catch(error => console.log(error));
-    
-    // console.log(`🚀 Server ready at http://localhost:5000${server.graphqlPath}`);
 }

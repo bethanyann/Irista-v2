@@ -59,5 +59,6 @@
   "proxy": "http://localhost:5000",
   "devDependencies": {
     "@types/jwt-decode": "^3.1.0"
-  }
+  },
+  "homepage":"https://nodejs-irista-app.herokuapp.com"
 }
