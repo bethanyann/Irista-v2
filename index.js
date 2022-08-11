@@ -20,7 +20,7 @@ app.use(express.json({limit: '50mb'}));
 if (process.env.NODE_ENV === "production") {
     // app.use(express.static("client/build"));
     console.log = function() {};
-    
+
     app.use(express.static(path.join(__dirname, "/client/build")));
 
     app.get('*', (req, res) => {
@@ -47,7 +47,8 @@ app.get('/api/getPhotos/:username', async (req, res) => {
        console.log(resources);
        res.send(resources);
     } catch(error) {
-        console.log(error);
+       // console.log(error);
+       res.send(500).json(error);
     }
 })
 
