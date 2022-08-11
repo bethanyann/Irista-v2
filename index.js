@@ -19,7 +19,8 @@ app.use(express.json({limit: '50mb'}));
 // Express only serves static assets in production
 if (process.env.NODE_ENV === "production") {
     // app.use(express.static("client/build"));
-
+    console.log = function() {};
+    
     app.use(express.static(path.join(__dirname, "/client/build")));
 
     app.get('*', (req, res) => {

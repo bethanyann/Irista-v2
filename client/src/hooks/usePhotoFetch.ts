@@ -25,22 +25,20 @@ export const usePhotoFetch =  (user: User) => {
             if(user.username)
             {
                 let encodedUsername = encodeURIComponent(user.username);
-                const photos = await fetch(`${BASE_URL}/api/getPhotos/${encodedUsername}`)
-                // .then(response => response.text()).then(text => console.log(text));
-                
+                const photos = await fetch(`/api/getPhotos/${encodedUsername}`);
                 const results = await photos.json();
-                
+
                 const sortedResults = groupBy(results,  (photo:any) => { 
                     let date = moment(photo.created_at);
                     return date.format("MM-DD-YYYY");
                 });
-
+                // debugger;
                 setState(sortedResults);
             }
            
 
         } catch(error) {
-            debugger;
+            // debugger;
             setLoading(false);
             setError(true);
             console.log(error);
