@@ -10,7 +10,6 @@ import BckImage from '../../images/login_image1_copy.jpg';
 import { AuthContext } from '../../context/authContext';
 //hooks
 import { useForm } from '../../hooks/useFormHook';
-import { BASE_URL } from '../../config';
 
 const LOGIN_USER = gql`
     mutation login( $loginInput: LoginInput ) {
