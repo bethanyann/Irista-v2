@@ -252,26 +252,14 @@ const server = new ApolloServer({
 
 //Mongoose Connection here 
 mongoose.connect(process.env.MONGODB, {useNewUrlParser: true})
-    .then(() => { //this will wait for the connection to the db to be established 
+    .then(() => {
+         //this will wait for the connection to the db to be established 
         console.log("MongoDB Connected");
         startApolloServer();
     }).catch(error => {
         console.log(error);
     });
 
-
-
-// async function startApolloServer()
-// {
-//     await server.start();
-//     server.applyMiddleware({app, path: '/'} );
-//     const PORT = process.env.PORT || 5000;
-   
-//     app.listen(PORT, () => {
-//         console.log(`App listening on port ${PORT}`);
-//     })
-
-// }
 
 // Express only serves static assets in production
 if (process.env.NODE_ENV === "production") {
@@ -292,8 +280,8 @@ async function startApolloServer()
     server.applyMiddleware({app, path: '/'} );
 
     const PORT = process.env.PORT || 5000;
+
     await new Promise(resolve => httpServer.listen({port: process.env.PORT || 5000}, resolve)).then((resolve) => {
-        // console.log(` Server listening at ${resolve}`);
         console.log(`Process ENV port is ${PORT}`);
         console.log(`🚀 Server ready at http://localhost:5000${server.graphqlPath}`);
     }).catch(error => console.log(error));
