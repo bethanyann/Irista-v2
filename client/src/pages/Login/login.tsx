@@ -10,7 +10,7 @@ import BckImage from '../../images/login_image1_copy.jpg';
 import { AuthContext } from '../../context/authContext';
 //hooks
 import { useForm } from '../../hooks/useFormHook';
-
+import { BASE_URL } from '../../config';
 
 const LOGIN_USER = gql`
     mutation login( $loginInput: LoginInput ) {
@@ -76,7 +76,7 @@ const Login = ( props:any ) => {
                             <input type='text' name='username' placeholder='' onChange={onChange}/>
                         <label> Password </label>
                             <input type='password' name='password' placeholder='' onChange={onChange}/>
-                        <button onClick={onSubmit}>Log In</button>
+                        <button type='submit' onClick={onSubmit}>Log In</button>
                         <p>No account yet?  Sign up for a new one <Link to='/register' style={{textDecoration:'underline', color:'#CC0000'}}>here</Link>.</p>
                         {Object.keys(errors).length > 0 && (
                             <Alert type="error" showIcon style={{width:'300px'}}description={

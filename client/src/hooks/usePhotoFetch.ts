@@ -1,6 +1,7 @@
 import { useState, useEffect} from 'react';
 import { Photo, Photos, User  } from '../models/types';
 import { Dictionary, groupBy } from 'lodash';
+import { BASE_URL } from '../config';
 const moment = require('moment');
 
 const initialState = {
@@ -15,7 +16,7 @@ export const usePhotoFetch =  (user: User) => {
     const [ loading, setLoading ] = useState(false);
     const [ error, setError ] = useState(false);
     const [ isLoadingMore, setIsLoadingMore ] = useState(false);
-
+    
     const fetchPhotos = async (user: User) => {
         try {
             setLoading(true);
@@ -23,7 +24,10 @@ export const usePhotoFetch =  (user: User) => {
 
             if(user.username)
             {
-                const photos = await fetch(`/api/getPhotos/${user.username}`);
+                let encodedUsername = encodeURIComponent(user.username);
+                const photos = await fetch(`${BASE_URL}/api/getPhotos/${encodedUsername}`)
+                // .then(response => response.text()).then(text => console.log(text));
+                
                 const results = await photos.json();
                 
                 const sortedResults = groupBy(results,  (photo:any) => { 
@@ -36,6 +40,7 @@ export const usePhotoFetch =  (user: User) => {
            
 
         } catch(error) {
+            debugger;
             setLoading(false);
             setError(true);
             console.log(error);

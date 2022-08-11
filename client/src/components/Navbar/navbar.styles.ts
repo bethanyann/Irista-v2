@@ -28,7 +28,7 @@ export const Content = styled.div`
         padding-left: 10px;
         color: black;
         position: absolute !important;
-        top: 15px;
+        top: 16px;
     }
   
     @media screen and (max-width: 720px){

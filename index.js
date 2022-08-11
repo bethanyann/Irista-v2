@@ -7,12 +7,26 @@ const typeDefs = require('./graphql/typeDefs');
 const resolvers = require('./graphql/resolvers');
 const cors = require('cors');
 const http = require('http');
+const path = require('path');
 //cloudinary
 const { cloudinary } = require('./utilities/cloudinary');
+
 
 const app = express();
 //to fix a 'payload too large' error i was getting with the post requests
 app.use(express.json({limit: '50mb'}));
+
+// Express only serves static assets in production
+if (process.env.NODE_ENV === "production") {
+    // app.use(express.static("client/build"));
+
+    app.use(express.static(path.join(__dirname, "/client/build")));
+
+    app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '/client/build', 'index.html'));
+    });
+}
+
 
 
 //////////////////////////////////
@@ -23,11 +37,13 @@ app.use(express.json({limit: '50mb'}));
 app.get('/api/getPhotos/:username', async (req, res) => {
     try{
        let username = req.params.username;
+       debugger;
+       console.log(username);
        //AdminAPI 
        //const { resources } = await cloudinary.api.resources({ type: 'upload', prefix: 'test', resource_type: 'image', max_results: 30, direction: 'desc'});
        //SearchAPI using context
        const { resources } = await cloudinary.search.expression(`context.username=${username}`).sort_by('created_at', 'desc').max_results(30).execute();
-
+       console.log(resources);
        res.send(resources);
     } catch(error) {
         console.log(error);
@@ -231,11 +247,8 @@ app.post('/api/deletePhotos', async (req,res) => {
 
 });
 
-
-
-
+// const httpServer = http.createServer(app);
 const httpServer = http.createServer(app);
-
 const server = new ApolloServer({
     typeDefs,
     resolvers,
@@ -258,13 +271,30 @@ mongoose.connect(process.env.MONGODB, {useNewUrlParser: true})
 
 
 
+// async function startApolloServer()
+// {
+//     await server.start();
+//     server.applyMiddleware({app, path: '/'} );
+//     const PORT = process.env.PORT || 5000;
+   
+//     app.listen(PORT, () => {
+//         console.log(`App listening on port ${PORT}`);
+//     })
+
+// }
+
+
 async function startApolloServer()
 {
     await server.start();
     server.applyMiddleware({app, path: '/'} );
-    await new Promise(resolve => httpServer.listen((process.env.PORT || 5000), resolve));
+
+    const PORT = process.env.PORT || 5000;
+    await new Promise(resolve => httpServer.listen({port: process.env.PORT || 5000}, resolve)).then((resolve) => {
+        // console.log(` Server listening at ${resolve}`);
+        console.log(`Process ENV port is ${PORT}`);
+        console.log(`🚀 Server ready at http://localhost:5000${server.graphqlPath}`);
+    }).catch(error => console.log(error));
     
-    console.log(`🚀 Server ready at http://localhost:5000${server.graphqlPath}`);
+    // console.log(`🚀 Server ready at http://localhost:5000${server.graphqlPath}`);
 }
-
-
