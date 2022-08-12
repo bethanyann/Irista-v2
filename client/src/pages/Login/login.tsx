@@ -70,7 +70,7 @@ const Login = ( props:any ) => {
     return (
         <Wrapper>
             <Content>
-                <div style={{display:'flex', margin:'auto',width:'38%', maxWidth:'52%', flexDirection:'row'}}>
+                <div style={{display:'flex', margin:'auto', maxWidth:'52%', flexDirection:'row'}}>
                     <FormStyle>
                         <Form
                             form={form}

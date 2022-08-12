@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
 export const Content = styled.div`
     //center on the page
     display: flex;
-    flex-direction: row;
+    /* flex-direction: row; */
     justify-content: center;
     /* align-content: center; */
     height: 95vh;
@@ -85,9 +85,6 @@ export const FormStyle = styled.div`
 
 export const ImageContainer = styled.img`
     flex: 1;
-    /* margin: auto;
-    height: auto; */
-    /* height: 502px; */
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 `;
