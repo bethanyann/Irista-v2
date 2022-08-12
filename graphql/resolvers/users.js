@@ -115,7 +115,7 @@ function generateToken(user) {
     return jwt.sign(
         { 
             id: user._id, 
-            email: user.email,
+            // email: user.email,
             username: user.username
         }, 
         process.env.REACT_APP_JSON_WEB_TOKEN,

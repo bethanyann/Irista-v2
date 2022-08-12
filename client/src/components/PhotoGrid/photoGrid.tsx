@@ -64,7 +64,7 @@ const PhotoGrid = ({ photos, setSelectedPhotos, setIsSelected }: any) => {
                             <PhotoImage src={photo.secure_url} style={photo.isSelected? {maxHeight:'290px', maxWidth:'290px'} : {}} />
                         </div>       
                     </PhotoTile>
-                    <p style={{wordBreak:'break-word'}}>{(photo.filename ?? photo.original_filename ?? photo.public_id.substring(0, photo.public_id.lastIndexOf('/') + 1)) + "." + photo.format}</p>
+                    <p style={{wordBreak:'break-word'}}>{(photo.filename ?? photo.original_filename ?? photo.public_id.substring(photo.public_id.lastIndexOf('/') + 1)) + "." + photo.format}</p>
                 </PhotoContainer>
             )) : null
             }

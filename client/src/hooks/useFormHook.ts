@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 
 interface IValues {
     username: string,
-    email?: string,
+    email?: string | undefined,
     password: string,
-    confirmPassword?: string
+    confirmPassword?: string | undefined
 }
 
 export const useForm = (callback: any, initialState: IValues) => {
