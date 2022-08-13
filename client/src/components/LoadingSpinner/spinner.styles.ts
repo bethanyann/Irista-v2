@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
-export const Spinner = styled.div`
-    border: 5px solid var(--lightGray);
-    border-top: 5px solid var(--medGray);
+export const Loading = styled.div`
+    border: 5px solid black;
+    border-top: 5px solid gray;
     border-radius: 50%;
     width: 50px;
     height: 50px;
-    margin: 20px auto;
+    margin-left: 50px;
     animation: spin 0.8s linear infinite;
 
     @keyframes spin {
@@ -17,4 +17,5 @@ export const Spinner = styled.div`
             transform: rotate(360deg);
         }
     }
+
 `;

@@ -1,23 +1,25 @@
 import React, { useContext, useState } from 'react';
-import { groupBy } from 'lodash';
+import { useParams } from 'react-router-dom';
 import { AuthContext } from '../../context/authContext';
-import { Wrapper, Content } from './timelineGrid.styles';
+import { Wrapper, Content, FullPageContainer, EmptyAlbum, Error } from './timelineGrid.styles';
 import { usePhotoFetch } from '../../hooks/usePhotoFetch';
 import Moment from 'react-moment';
+//icon
+import AlbumIcon from '../../images/icons/photo_album.png';
 //components
 import PhotoThumbnail from '../../components/PhotoThumbnail/photoThumb';
 import PhotoInfo from '../PhotoInfo/photoInfo';
+import LoadingSpinner from '../../components/LoadingSpinner/spinner';
+
 
 const PhotoGrid = () => {
     const { user } = useContext(AuthContext); 
-    
+   
     const [ isOpen, setIsOpen ] = useState(false);
     const [ activePhotoId, setActivePhotoId ] = useState("");
     
     const { state, loading, error, setIsLoadingMore } =  usePhotoFetch(user); 
 
-    if(error) return <div> Something went wrong...</div>;
-   
     const handleModalOpen = (photoId) => {
         setActivePhotoId(photoId);
         setIsOpen(true);
@@ -27,6 +29,31 @@ const PhotoGrid = () => {
         setIsOpen(false);
     }
 
+    if(false) {
+        return(
+            <FullPageContainer>
+                <h2> Error Fetching Content </h2>
+            </FullPageContainer>
+        )
+    };
+    if(loading) {
+        return (
+            <FullPageContainer>
+                <LoadingSpinner />
+            </FullPageContainer>
+        )
+    } 
+    if(!state) {
+        return (
+            <FullPageContainer>
+                <EmptyAlbum>
+                    <h2>Looks like you don't have any photos uploaded yet!</h2>
+                    <p>Go to the Uploads page to get started, or head to the Albums page to create albums and organize your photos. </p>
+                    <img src={AlbumIcon} alt="empty album icon"/>
+                </EmptyAlbum>
+            </FullPageContainer>
+        );
+    } 
     return(
         <Wrapper>
             <h3>Timeline</h3>
@@ -59,6 +86,6 @@ const PhotoGrid = () => {
             </Content>
         </Wrapper>
     )
-}
+ }
 
 export default PhotoGrid;

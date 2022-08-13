@@ -54,7 +54,7 @@ export const GlobalStyle = createGlobalStyle`
         width: 100%;
     }
 
-    body {
+    body, html {
         margin: 0;
         padding: 0;
         height: 100%;

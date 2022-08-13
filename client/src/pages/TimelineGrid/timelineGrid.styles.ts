@@ -37,3 +37,27 @@ export const Content = styled.div`
     }
 `;
 
+export const FullPageContainer = styled.div`
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: var(--fog);
+    z-index: -1;
+`;
+
+export const EmptyAlbum = styled.div`
+    img {
+        width: 300px;
+        opacity: 70%;
+    }
+`; 
+
+export const Error = styled.div``;
+
+

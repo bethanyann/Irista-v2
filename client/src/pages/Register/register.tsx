@@ -53,7 +53,9 @@ const Register = ( props:any ) => {
             console.log(userData);
             context.login(userData);
 
-            navigate('/photos', {replace:true});
+            // navigate(`/photos/${true}`, {replace:true});
+            navigate(`/photos`, {replace: true});
+
         }, 
         onError({ graphQLErrors }) {
             if(graphQLErrors.length > 0)
