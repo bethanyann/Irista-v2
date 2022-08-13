@@ -2,9 +2,10 @@ import React, { useState, useContext } from 'react';
 //context
 import { AuthContext } from '../../context/authContext';
 //styles
-import { Wrapper, Content, NewAlbumButton, AlbumThumbnail } from './albumGrid.styles';
+import { Wrapper, Content, NewAlbumButton, AlbumThumbnail, FullPageContainer } from './albumGrid.styles';
 //components
 import NewAlbumModal from '../../components/NewAlbumModal/newAlbumModal';
+import LoadingSpinner from '../../components/LoadingSpinner/spinner';
 //hooks
 import { useAlbumFetch } from '../../hooks/useAlbumFetch';
 import { useNavigate } from 'react-router-dom';
@@ -27,6 +28,23 @@ const Album = () => {
         const albumName = encodeURIComponent(path);
         navigate(`/album/${albumName}`, {replace: true});
     }
+
+    if(errors) {
+        return(
+            <FullPageContainer>
+                <h2> Error Fetching Content </h2>
+            </FullPageContainer>
+        )
+    }
+
+    if(loading) {
+        return (
+            <FullPageContainer>
+                <h2 style={{marginBottom:'50px'}}>Loading Albums</h2>
+                <LoadingSpinner />
+            </FullPageContainer>
+        )
+    } 
 
     return (
         <Wrapper>

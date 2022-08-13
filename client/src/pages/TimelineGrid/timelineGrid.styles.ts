@@ -58,6 +58,6 @@ export const EmptyAlbum = styled.div`
     }
 `; 
 
-export const Error = styled.div``;
+
 
 

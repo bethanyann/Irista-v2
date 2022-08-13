@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { AuthContext } from '../../context/authContext';
-import { Wrapper, Content, FullPageContainer, EmptyAlbum, Error } from './timelineGrid.styles';
+import { Wrapper, Content, FullPageContainer, EmptyAlbum } from './timelineGrid.styles';
 import { usePhotoFetch } from '../../hooks/usePhotoFetch';
 import Moment from 'react-moment';
 //icon
@@ -39,6 +39,7 @@ const PhotoGrid = () => {
     if(loading) {
         return (
             <FullPageContainer>
+                <h2 style={{marginBottom:'50px'}}>Loading Photos</h2>
                 <LoadingSpinner />
             </FullPageContainer>
         )
