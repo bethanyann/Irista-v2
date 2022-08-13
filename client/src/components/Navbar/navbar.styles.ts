@@ -66,12 +66,12 @@ export const NavLinks = styled.div`
     .nav-link:hover {
         color: var(--slate);
         border-bottom: 2px solid var(--darkRed);
-        padding-bottom: 16px;
+        padding-bottom: 19px;
     }
     .active {
         color: var(--slate);
-        border-bottom: 3px solid var(--darkRed);
-        padding-bottom: 16px;
+        border-bottom: 4px solid var(--darkRed);
+        padding-bottom: 18px;
         font-weight: 410;
     }
   

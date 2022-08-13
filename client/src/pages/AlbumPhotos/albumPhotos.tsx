@@ -44,16 +44,6 @@ const AlbumPhotos = () => {
     //results from hook
     const { photos, setPhotos, loading, error } = useAlbumPhotoFetch(albumName!);
 
-    // const handlePhotoModalOpen = (photoId : string) => {
-    //     setActivePhotoId(photoId);
-    //     setIsPhotoModalOpen(true);
-    // }
-
-    // const handlePhotoModalClose = () => {
-    //     setIsPhotoModalOpen(false);
-    //     setActivePhotoId('');
-    // }
-
     const handleModalOpen = () => {
         setSelectedPhotos(initialState);
         setIsOpen(true);
@@ -73,6 +63,7 @@ const AlbumPhotos = () => {
         //it takes in the totalFiles from the upload, builds a Photos object, and appends that
         //to the photos already displayed on the page
         let newArray = { } as Photos;
+        debugger;
         //will this work if there aren't any photos in the album yet? 
         if(photos)
         {
@@ -85,24 +76,6 @@ const AlbumPhotos = () => {
         setOpenAlertModal(false);
         setIsOpen(false);
     }
-
-    // const handleSelectPhoto = (event: any, photo: Photo) => {
-    //     if(event.target.checked){
-    //         //add photo id to set
-    //         photo.isSelected = true;
-    //         setSelectedPhotos(prev => new Set(prev).add(photo.public_id));
-    //         setIsSelected(true);
-    //     } else {
-    //         //delete photo from set
-    //         photo.isSelected = false;
-    //         setSelectedPhotos(prev => {
-    //             const next = new Set(prev);
-    //             next.delete(photo.public_id);
-    //             return next;
-    //         })
-    //         setIsSelected(false);
-    //     }
-    // }
 
     const handleDeletePhotos = async () => {
         setIsLoading(true);
@@ -120,14 +93,15 @@ const AlbumPhotos = () => {
             }).then(data => {
                 let newArray = { } as Photos;
                 newArray.resources = photos!.resources.filter(photo => !selectedPhotoArr.find(em => (em === photo.public_id)));
-                //close modal
-                setOpenDeleteAlert(false);
+                
                 //set photo state to new array 
                 setPhotos(newArray);
                 //setSelectedPhoto array to []
                 setSelectedPhotos(initialState);
+
                 setIsSelected(false);
                 setIsLoading(false);
+                setOpenDeleteAlert(false);
             }).catch(error => {
                 console.log(error);
                 setIsLoading(false);
@@ -184,36 +158,41 @@ const AlbumPhotos = () => {
                 subTitle="This is a permanent delete and the files will not be recoverable!"
                 extra={[
                    
-                    <Button key={5678} style={{ 
-                        backgroundColor: '#d4d9e8',
-                        color: '#848c9e',
-                        border: 'none',
-                        borderRadius: '5px',
-                        textTransform: 'uppercase',
-                        cursor: 'pointer',
-                        fontSize: 'medium',
-                        padding: '6px 12px',
-                        marginRight: '40px',
-                        marginTop:'40px'
+                    <Button key={5678}
+                        style={{ 
+                            backgroundColor: '#d4d9e8',
+                            color: '#848c9e',
+                            border: 'none',
+                            borderRadius: '5px',
+                            textTransform: 'uppercase',
+                            cursor: 'pointer',
+                            fontSize: 'medium',
+                            padding: '5px 19px',
+                            marginRight: '40px',
+                            marginTop:'40px',
+                            height: '40px'
                         }}
                         onClick={() => setOpenDeleteAlert(false)}
-                    > Cancel</Button>,
-                    <Button key={1234} style={{ 
-                        backgroundColor: '#CC0000',
-                        color: '#fcfdff',
-                        border: 'none',
-                        borderRadius: '5px',
-                        textTransform: 'uppercase',
-                        cursor: 'pointer',
-                        fontSize: 'medium',
-                        padding: '6px 12px'
-                        }}
                         disabled={loading}
+                    > Cancel</Button>,
+                    <Button key={1234} 
+                        style={{ 
+                            backgroundColor: '#CC0000',
+                            color: '#fcfdff',
+                            border: 'none',
+                            borderRadius: '5px',
+                            textTransform: 'uppercase',
+                            cursor: 'pointer',
+                            fontSize: 'medium',
+                            padding: '5px 19px',
+                            height: '40px'
+                        }}
+                        loading={loading}
                         onClick={handleDeletePhotos}
-                    > Delete</Button>
+                    >{loading ? "Deleting..." : "Delete Photos"}</Button>
                 ]}
            />
-
+{/* <Button className='accept-button' onClick={handlePhotoUpload} loading={loading}>{loading ? "Uploading..." : "Upload Photos"}</Button> */}
 
             
         </Modal>

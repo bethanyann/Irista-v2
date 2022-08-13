@@ -68,11 +68,12 @@ module.exports = {
         async loginUser(_, {loginInput: {username, password}}) {
             //validate input
             const {valid, errors} = validateLoginInput(username, password);
+
             if(!valid){
                 throw new UserInputError('errors', {errors});
             }
 
-             //see if user exists with that username
+            //see if user exists with that username
             const user = await User.findOne({ username });
             if(!user) {
                 throw new UserInputError('USER_NOT_FOUND', {
@@ -89,8 +90,8 @@ module.exports = {
                 user.token = token;
 
                 return {
-                    id: user._id,
                     ...user._doc,
+                    id: user._id,
                     token
                 }
             }

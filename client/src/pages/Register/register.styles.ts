@@ -4,14 +4,14 @@ export const Wrapper = styled.div`
     max-width: var(--maxWidth);
     //max-width: 2000px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0;
 `;
 
 export const Content = styled.div`
     //center on the page
     display: flex;
     justify-content: center;
-    align-content: center;
+    /* align-content: center; */
     height: 95vh;
 
     background-color: var(--fog);
@@ -19,13 +19,13 @@ export const Content = styled.div`
 
 export const FormStyle = styled.div`
      //background-color: #f07122;
-    display: grid;
+    flex: 1;
     background-color: var(--snow);
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
-    margin:auto;
-    padding: 12px 93px;
-    width: 500px; 
+    /* margin:auto; */
+    padding: 30px;
+
 
     h2 {
         text-align: center;
@@ -80,9 +80,8 @@ export const FormStyle = styled.div`
 `;
 
 export const ImageContainer = styled.img`
-    display: grid;
-    margin:auto;
-    height: 618px;
+    flex: 1;
+    object-fit: cover;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px; 
 `;

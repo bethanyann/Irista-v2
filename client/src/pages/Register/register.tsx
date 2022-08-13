@@ -5,7 +5,7 @@ import { useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
 //styles
 import { Wrapper, Content, FormStyle, ImageContainer } from './register.styles';
-import { Alert } from 'antd';
+import { Alert, Form, Input } from 'antd';
 import BckImage from '../../images/login_image2_copy.jpg';
 //authContext
 import { AuthContext } from '../../context/authContext';
@@ -50,14 +50,14 @@ const Register = ( props:any ) => {
     const [ registerUser, { error, loading } ] = useMutation(REGISTER_USER, {
         update(proxy, {data: {registerUser: userData}}) {
             // define the update function here 
-            //console.log(userData);
+            console.log(userData);
             context.login(userData);
 
-            //redirect to homepage after successful register and login
-            navigate('/photos', {replace:true});
+            // navigate(`/photos/${true}`, {replace:true});
+            navigate(`/photos`, {replace: true});
+
         }, 
         onError({ graphQLErrors }) {
-
             if(graphQLErrors.length > 0)
             {
                 var errors = graphQLErrors[0].extensions.errors as [];
@@ -69,7 +69,7 @@ const Register = ( props:any ) => {
     });
 
     function registerUserCallback() {
-        //console.log("register user callback");
+        console.log("register user callback");
         registerUser();
     }
     
@@ -77,28 +77,56 @@ const Register = ( props:any ) => {
     return (
         <Wrapper>
             <Content>
-                <div style={{display:'flex'}}>
+                <div style={{display:'flex', margin:'auto', flexDirection:'row'}}>
                 <FormStyle>
-                    <h2> Register </h2>
-                    <label> Username </label>
-                        <input type='text' name='username' placeholder=''  onChange={onChange} />
-                    <label> Email Address </label>
-                        <input type='email' name='email' placeholder='' onChange={onChange} />
-                    <label> Password </label>
-                        <input type='password' name='password' placeholder='' onChange={onChange} />
-                    <label> Confirm Password </label>
-                        <input type='password' name='confirmPassword' placeholder=''  onChange={onChange} />
-
-                    <button onClick={onSubmit}>Create Account</button>
-                    <p>Already have an account? Sign in <Link to='/login' style={{textDecoration:'underline', color:'#CC0000'}}>here</Link>.</p>
-                    {Object.keys(errors).length > 0 && (
-                        <Alert type="error" showIcon description={
-                            Object.values(errors).map(value => (
-                                value + "   "
-                            ))
-                        }>
-                        </Alert>
-                    )}
+                    <Form
+                        layout="vertical"
+                        style={{textAlign:'center'}}
+                    >
+                        <h2 style={{marginBottom:'15px'}}>Register</h2>
+                        <div style={{display:'block', margin:'auto', width: '350px'}}>
+                        <Form.Item
+                            label="Username"
+                            name="username"
+                            rules={[{ required: true, message: '' }]}
+                        >
+                            <Input type='text' name='username' placeholder='' onChange={onChange}/>
+                        </Form.Item>
+                        <Form.Item
+                            label="Email"
+                            name="email"
+                            rules={[{ required: true, message: '' }]}
+                        >
+                            <Input type='email' name='email' placeholder='' onChange={onChange} />
+                        </Form.Item>
+                        <Form.Item
+                            label="Password"
+                            name="password"
+                            rules={[{ required: true, message: '' }]}
+                        >
+                            <Input type='password' name='password' placeholder='' onChange={onChange}/> 
+                        </Form.Item>
+                        <Form.Item
+                            label="Confirm Password"
+                            name="confirmPassword"
+                            rules={[{ required: true, message: '' }]}
+                        >
+                            <Input type='password' name='confirmPassword' placeholder='' onChange={onChange}/> 
+                        </Form.Item>
+                        </div>
+                        <button onClick={onSubmit}>Create Account</button>
+                        <p>Already have an account? Sign in <Link to='/login' style={{textDecoration:'underline', color:'#CC0000'}}>here</Link>.</p>
+                        <div style={{width:'400px'}}>
+                            {Object.keys(errors).length > 0 && (
+                                <Alert type="error" showIcon description={
+                                    Object.values(errors).map(value => (
+                                        value + "   "
+                                    ))
+                                }>
+                                </Alert>
+                            )}
+                        </div>
+                    </Form>
                 </FormStyle>
                 <ImageContainer src={BckImage} alt="image of person with canon camera"/>
                 </div>

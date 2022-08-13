@@ -1,3 +1,13 @@
-import {Spinner} from './spinner.styles';
+import {Loading} from './spinner.styles';
+
+const Spinner = () => {
+
+
+    return (
+        <div>
+            <Loading/>
+        </div>
+    );
+}
 
 export default Spinner;
