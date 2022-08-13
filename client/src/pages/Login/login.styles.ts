@@ -29,7 +29,13 @@ export const FormStyle = styled.div`
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
     /* margin:auto; */
-    padding: 50px;
+    padding: 10px 45px 25px 45px;
+
+    p {
+        word-wrap: none;
+        margin-bottom: 0;
+        margin-top: 50px;
+    }
 
     h2 {
         text-align: center;
@@ -84,7 +90,8 @@ export const FormStyle = styled.div`
 `;
 
 export const ImageContainer = styled.img`
-    flex: 1;
+    flex: 2;
+    object-fit: cover;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 `;

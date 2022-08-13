@@ -15,7 +15,6 @@ const LOGIN_USER = gql`
     mutation login( $loginInput: LoginInput ) {
         loginUser( loginInput: $loginInput ) {
             username
-            email
             token
         }
     }
@@ -52,9 +51,9 @@ const Login = ( props:any ) => {
             {
                 //TODO - see if its a frontend or backend error as the backend errors come back differently and are messing this up
                 //backend = graphQLErrors[0].message = "A user with that email already exists"
-                var backendError = error?.message;
+                // var backendError = error?.message;
                 var errors = graphQLErrors[0].extensions.errors as [];
-                setErrors(errors ?? backendError);
+                setErrors(errors);
                 //console.log(errors);
             }
         },
@@ -63,6 +62,7 @@ const Login = ( props:any ) => {
 
     //very helpful if you remember to call the mutation
     function loginUserCallback() {
+        console.log("login user callback");
         loginUser();
     }
   
@@ -95,17 +95,21 @@ const Login = ( props:any ) => {
                                 </Form.Item>
                             </div>
                             <button type='submit' onClick={onSubmit}>Log In</button>
+                            <div>
+                                { errors && Object.keys(errors).length > 0 && (
+                                    <Alert type="error" showIcon description={
+                                        Object.values(errors).map(value => (
+                                            value + "   "
+                                        ))
+                                    }>
+                                    </Alert>
+                                )}
+                            </div>
+
                             <p>No account yet?  Sign up for a new one <Link to='/register' style={{textDecoration:'underline', color:'#CC0000'}}>here</Link>.</p>
                         </Form>
                       
-                        {Object.keys(errors).length > 0 && (
-                            <Alert type="error" showIcon description={
-                                Object.values(errors).map(value => (
-                                    value + "   "
-                                ))
-                            }>
-                            </Alert>
-                        )}
+                       
                     </FormStyle>
                     <ImageContainer src={BckImage} alt="image of person with canon camera"/>
                 </div>
@@ -116,15 +120,6 @@ const Login = ( props:any ) => {
 
 export default Login; 
 
-// const LOGIN_USER = gql`
-//     mutation login( $loginInput: LoginInput ) {
-//         loginUser( loginInput: $loginInput ) {
-//             email
-//             username
-//             token
-//         }
-//     }
-// `;
 
 
 

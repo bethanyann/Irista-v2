@@ -81,7 +81,7 @@ export const FormStyle = styled.div`
 
 export const ImageContainer = styled.img`
     flex: 1;
-
+    object-fit: cover;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px; 
 `;

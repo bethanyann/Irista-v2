@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 //styles
 import { Wrapper, Content, FormStyle, ImageContainer } from './register.styles';
 import { Alert, Form, Input } from 'antd';
-import BckImage from '../../images/login_image2.jpg';
+import BckImage from '../../images/login_image2_copy.jpg';
 //authContext
 import { AuthContext } from '../../context/authContext';
 //hooks
@@ -50,14 +50,12 @@ const Register = ( props:any ) => {
     const [ registerUser, { error, loading } ] = useMutation(REGISTER_USER, {
         update(proxy, {data: {registerUser: userData}}) {
             // define the update function here 
-            //console.log(userData);
+            console.log(userData);
             context.login(userData);
 
-            //redirect to homepage after successful register and login
             navigate('/photos', {replace:true});
         }, 
         onError({ graphQLErrors }) {
-
             if(graphQLErrors.length > 0)
             {
                 var errors = graphQLErrors[0].extensions.errors as [];
@@ -69,7 +67,7 @@ const Register = ( props:any ) => {
     });
 
     function registerUserCallback() {
-        //console.log("register user callback");
+        console.log("register user callback");
         registerUser();
     }
     

@@ -36,7 +36,7 @@ module.exports.validateRegisterInput = (username, email, password, confirmPasswo
 
 module.exports.validateLoginInput = (username, password) => {
     const errors = {};
-    debugger;
+    
     if(username.trim() === '' && password === '') {
         errors.all = 'Fill out both fields to log in.'
     } else {

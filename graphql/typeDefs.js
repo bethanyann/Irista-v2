@@ -35,19 +35,19 @@ module.exports = gql`
 
     #create an input type for when a user logs in
     input LoginInput {
-        username: String
-        password: String 
+        username: String!
+        password: String! 
     }
 
     # get message by id query
     type Query {
-        message(id: ID!): Message
-        user(id: ID!): User
+        message(id: ID!): Message!
+        user(id: ID!): User!
     }
     
     type Mutation {
         createMessage(messageInput: MessageInput): Message!
-        registerUser(registerInput: RegisterInput): User!
-        loginUser(loginInput: LoginInput): User
+        registerUser(registerInput: RegisterInput!): User!
+        loginUser(loginInput: LoginInput!): User!
     }
 `;
