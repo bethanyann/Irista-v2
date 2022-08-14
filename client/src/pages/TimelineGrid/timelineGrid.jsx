@@ -39,8 +39,7 @@ const PhotoGrid = () => {
     if(loading) {
         return (
             <FullPageContainer>
-                <h2 style={{marginBottom:'50px'}}>Loading Photos</h2>
-                <LoadingSpinner />
+                <LoadingSpinner title="Loading Photos" />
             </FullPageContainer>
         )
     } 

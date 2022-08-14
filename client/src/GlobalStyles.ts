@@ -97,4 +97,27 @@ export const GlobalStyle = createGlobalStyle`
         }
     }
 
+    .ant-form-item {
+        margin-bottom: 0 !important;
+    }
+
+    .p-link {
+        word-wrap: none;
+        margin-bottom: 0;
+        margin-top: 50px;
+        width: 400px;
+    }
+
+    .p-error {
+        text-align: left;
+        font-size: smaller;
+        color: var(--red);
+        margin-bottom: 0;
+    }
+
+    .error-wrap{
+        display: inline-block;
+        width: 300px; 
+    }
+
 `

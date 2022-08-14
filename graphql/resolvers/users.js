@@ -97,7 +97,11 @@ module.exports = {
             }
             else {
                 //if passwords do not match
-                throw new ApolloError('Incorrect password.', 'INCORRECT_PASSWORD');
+                throw new UserInputError('INCORRECT_PASSWORD', {
+                    errors:{
+                        password: `Password is incorrect.`
+                    }
+                });
             }
         }
     },

@@ -38,11 +38,15 @@ const initialState = {
     confirmPassword:'',
 }
 
+interface ErrorInterface {
+    [error : string] : string
+}
+
 const Register = ( props:any ) => {
     //gives us access to anything in our context, like the login functions 
     const context = useContext(AuthContext);
     let navigate = useNavigate();
-    const [errors, setErrors] = useState([]);
+    const [errors, setErrors] = useState<ErrorInterface>({});
 
     //call useform hook and get the form values here to be submitted in the register user mutation
     const { onChange, onSubmit, values } = useForm(registerUserCallback, initialState);
@@ -50,17 +54,14 @@ const Register = ( props:any ) => {
     const [ registerUser, { error, loading } ] = useMutation(REGISTER_USER, {
         update(proxy, {data: {registerUser: userData}}) {
             // define the update function here 
-            console.log(userData);
             context.login(userData);
 
-            // navigate(`/photos/${true}`, {replace:true});
             navigate(`/photos`, {replace: true});
-
         }, 
         onError({ graphQLErrors }) {
             if(graphQLErrors.length > 0)
             {
-                var errors = graphQLErrors[0].extensions.errors as [];
+                var errors = graphQLErrors[0].extensions.errors as ErrorInterface;
                 setErrors(errors);
             }
         },
@@ -84,48 +85,61 @@ const Register = ( props:any ) => {
                         style={{textAlign:'center'}}
                     >
                         <h2 style={{marginBottom:'15px'}}>Register</h2>
-                        <div style={{display:'block', margin:'auto', width: '350px'}}>
-                        <Form.Item
-                            label="Username"
-                            name="username"
-                            rules={[{ required: true, message: '' }]}
-                        >
-                            <Input type='text' name='username' placeholder='' onChange={onChange}/>
-                        </Form.Item>
-                        <Form.Item
-                            label="Email"
-                            name="email"
-                            rules={[{ required: true, message: '' }]}
-                        >
-                            <Input type='email' name='email' placeholder='' onChange={onChange} />
-                        </Form.Item>
-                        <Form.Item
-                            label="Password"
-                            name="password"
-                            rules={[{ required: true, message: '' }]}
-                        >
-                            <Input type='password' name='password' placeholder='' onChange={onChange}/> 
-                        </Form.Item>
-                        <Form.Item
-                            label="Confirm Password"
-                            name="confirmPassword"
-                            rules={[{ required: true, message: '' }]}
-                        >
-                            <Input type='password' name='confirmPassword' placeholder='' onChange={onChange}/> 
-                        </Form.Item>
+                        <div style={{display:'block', margin:'auto', width: '300px'}}>
+                            <Form.Item
+                                label="Username"
+                                name="username"
+                                rules={[{ required: true, message: '' }]}
+                            >
+                                <Input type='text' name='username' placeholder='' onChange={onChange}/>
+                            </Form.Item>
+                            <div className="error-wrap">
+                                <p className='p-error'>
+                                    { ('username' in errors) ?  errors['username'] : '' }
+                                </p>
+                            </div>
+                            <Form.Item
+                                label="Email"
+                                name="email"
+                                rules={[{ required: true, message: '' }]}
+                            >
+                                <Input type='email' name='email' placeholder='' onChange={onChange} />
+                            </Form.Item>
+                            <div className="error-wrap">
+                                <p className='p-error'>
+                                    { ('email' in errors) ?  errors['email'] : '' }
+                                </p>
+                            </div>
+                            <Form.Item
+                                label="Password"
+                                name="password"
+                                rules={[{ required: true, message: '' }]}
+                            >
+                                <Input type='password' name='password' placeholder='' onChange={onChange}/> 
+                            </Form.Item>
+                            <div className="error-wrap">
+                                <p className='p-error'>
+                                    { ('password' in errors) ?  errors['password'] : '' }
+                                </p>
+                            </div>
+                            <Form.Item
+                                label="Confirm Password"
+                                name="confirmPassword"
+                                rules={[{ required: true, message: '' }]}
+                            >
+                                <Input type='password' name='confirmPassword' placeholder='' onChange={onChange}/> 
+                            </Form.Item>
+                            <div className="error-wrap">
+                                <p className='p-error'>
+                                { ('confirmPassword' in errors) ?  errors['confirmPassword'] : '' }
+                                </p>
+                                <p className='p-error'>
+                                    { ('all' in errors) ?  errors['all'] : '' }
+                                </p>
+                            </div>
                         </div>
                         <button onClick={onSubmit}>Create Account</button>
-                        <p>Already have an account? Sign in <Link to='/login' style={{textDecoration:'underline', color:'#CC0000'}}>here</Link>.</p>
-                        <div style={{width:'400px'}}>
-                            {Object.keys(errors).length > 0 && (
-                                <Alert type="error" showIcon description={
-                                    Object.values(errors).map(value => (
-                                        value + "   "
-                                    ))
-                                }>
-                                </Alert>
-                            )}
-                        </div>
+                        <p style={{marginTop:'50px'}}>Already have an account? Sign in <Link to='/login' style={{textDecoration:'underline', color:'#CC0000'}}>here</Link>.</p>
                     </Form>
                 </FormStyle>
                 <ImageContainer src={BckImage} alt="image of person with canon camera"/>
@@ -136,27 +150,6 @@ const Register = ( props:any ) => {
 }
 
 export default Register;
-
-//graphQL query: 
-// const REGISTER_USER = gql`
-//     mutation Mutation(
-//         $registerInput: RegisterInput  
-//     ) {
-//         # this is calling the actual mutation here 
-//         regusterUser(
-//             # takes in the variable we passed in above: 
-//             registerInput: $registerInput
-//         )
-//         {
-//             # returns this data: 
-//             id
-//             email
-//             username
-//             createdAt
-//             token
-//         }
-//     }
-// `;
 
 
 
