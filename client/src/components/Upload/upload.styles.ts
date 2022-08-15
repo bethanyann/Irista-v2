@@ -61,6 +61,17 @@ export const Wrapper = styled.div`
         border:none;
         border-radius: 5px;
     }
+
+    .error-list {
+        margin-bottom: 0;
+        font-size: small;
+        color: var(--red);
+    }
+
+    .error-icon {
+        color: var(--red);
+        margin-right: 5px;
+    }
 `;
 
 export const Content = styled.div`
