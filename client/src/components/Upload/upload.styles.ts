@@ -61,6 +61,17 @@ export const Wrapper = styled.div`
         border:none;
         border-radius: 5px;
     }
+
+    .error-list {
+        margin-bottom: 0;
+        font-size: small;
+        color: var(--red);
+    }
+
+    .error-icon {
+        color: var(--red);
+        margin-right: 5px;
+    }
 `;
 
 export const Content = styled.div`
@@ -108,7 +119,6 @@ export const ThumbsContainer = styled.aside`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    //margin-top: 16px;
 
     h4{
         margin: 0;

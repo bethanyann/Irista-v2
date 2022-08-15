@@ -8,6 +8,7 @@ import { AuthContext } from '../../context/authContext';
 //styles
 import {Wrapper, Content, UploadImage, ThumbsContainer } from './upload.styles';
 import DropzoneImage from '../../images/upload.png';
+import { ExclamationCircleFilled } from '@ant-design/icons';
 
 
 const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) => {
@@ -16,7 +17,7 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
     const [ files, setFiles ] = useState([]);
     const [ loading, setLoading ] = useState(false);
     const [ error, setError ] = useState('');
-    //const [ fileString, setFileString ] = useState('');
+    const [ fileErrors, setFileErrors ] = useState([]);
 
     useEffect(() => {
         // Make sure to revoke the data uris to avoid memory leaks
@@ -32,33 +33,46 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
         }
     }
 
-    const handleDrop = (acceptedFiles) => {
-
-        if(!acceptedFiles)
+    const handleDrop = (acceptedFiles, rejectedFiles) => {
+        setFileErrors([]);
+        setError('');
+        if(rejectedFiles.length > 0)
         {
-            //filesize is out of bounds so display an error
-            setError('This file is to large to be uploaded.');
-        }            
-            setError('');
+            let errorList = [];
+
+            rejectedFiles.forEach(err => {
+                errorList.push([
+                    err.file.path,
+                    err.errors[0].message
+                ]);
+            });  
+            setFileErrors(errorList);
+        }    
+        if(acceptedFiles.length > 0) 
+        {       
             const newFiles = (acceptedFiles.map((file) => Object.assign(file, {
                 preview: URL.createObjectURL(file),
             })));
-
+          
             newFiles.forEach((file) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                //this is an async function that runs after the reader is done loading the file
-                reader.onloadend = () => { 
-                   Object.assign(file, {
-                        fileString: reader.result
-                    })
+                //see if file exists in file array already to prevent duplicates
+                let fileExists = files.find(f => f.path === file.path && f.size === file.size);
+                if(!fileExists)
+                {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    //this is an async function that runs after the reader is done loading the file
+                    reader.onloadend = () => { 
+                       Object.assign(file, {
+                            fileString: reader.result
+                        })
 
-                    setFiles(prev => {
-                        return [...prev, file]
-                    })
+                        setFiles(prev => {
+                            return [...prev, file]
+                        })
+                    }
                 }
             });
-
             //TODO - handle exif data in db once photo upload is working 
             // acceptedFiles.forEach(function(file) {
             //     if (file && file.name) {
@@ -82,6 +96,7 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
             //         });
             //     }
             // })  
+        }
     }
 
 
@@ -138,7 +153,7 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
     return(
         <Wrapper>
             <Dropzone 
-                onDrop={acceptedFiles => handleDrop(acceptedFiles)} 
+                onDrop={(acceptedFiles, rejectedFiles) => handleDrop(acceptedFiles, rejectedFiles)} 
                 multiple={true}  
                 accept={{'image/*': ['.jpeg', '.png', '.tiff', '.gif', '.heic']}}
                 maxFiles={10}
@@ -173,6 +188,16 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
                     </section>
                 )}
             </Dropzone>
+            <p className="error-list">
+                { fileErrors.length > 0 ? <span className="error-icon"><ExclamationCircleFilled /></span> : null}
+                {
+                    fileErrors && fileErrors.length > 0 ? 
+                        fileErrors.map(error => (
+                            `File ${error[0]} could not be uploaded. ${error[1]}.  `
+                        ))
+                    : null
+                } 
+            </p>
             <div className="button-container">
                {error ? <Alert style={{marginRight:'20px'}} message={error} type="error"/> : null}
                 <Button className='cancel-button'  onClick={handleCancelUpload} disabled={loading}> Cancel </Button>
