@@ -119,7 +119,6 @@ export const ThumbsContainer = styled.aside`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    //margin-top: 16px;
 
     h4{
         margin: 0;
