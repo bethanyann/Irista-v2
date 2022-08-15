@@ -26,11 +26,15 @@ const initialState = {
     password:'',
 }
 
+interface ErrorInterface {
+    [error: string] : string
+}
+
 const Login = ( props:any ) => {
     //gives us access to anything in our context, like the login functions 
     const context = useContext(AuthContext);
     let navigate = useNavigate();
-    const [errors, setErrors] = useState([]);
+    const [errors, setErrors] = useState<ErrorInterface>({});
     const [ form ] = Form.useForm();
 
     //call useform hook and get the form values here to be submitted in the register user mutation
@@ -39,22 +43,15 @@ const Login = ( props:any ) => {
     //mutation here
     const [ loginUser, {error, loading} ] = useMutation(LOGIN_USER, {
         update(proxy, { data: { loginUser: userData }}) {
-            debugger;
             context.login(userData);
-
-            //redirect to homepage after successful login
-            // navigate(`/photos/${false}`, {replace: true});
             navigate(`/photos`, {replace: true});
-
         }, 
         onError({graphQLErrors}) {
             debugger;
             if(graphQLErrors.length > 0)
             {
-                //TODO - see if its a frontend or backend error as the backend errors come back differently and are messing this up
-                //backend = graphQLErrors[0].message = "A user with that email already exists"
                 // var backendError = error?.message;
-                var errors = graphQLErrors[0].extensions.errors as [];
+                var errors = graphQLErrors[0].extensions.errors as ErrorInterface;
                 setErrors(errors);
                 //console.log(errors);
             }
@@ -62,7 +59,7 @@ const Login = ( props:any ) => {
         variables: { loginInput: values }
     })
 
-    //very helpful if you remember to call the mutation
+    //very helpful if you remember to call the mutation :|
     function loginUserCallback() {
         console.log("login user callback");
         loginUser();
@@ -88,30 +85,34 @@ const Login = ( props:any ) => {
                                 >
                                     <Input type='text' name='username' placeholder='' onChange={onChange}/>
                                 </Form.Item>
+                                <div className="error-wrap">
+                                    <p className='p-error'>
+                                        { ('username' in errors) ?  errors['username'] : '' }
+                                    </p>
+                                </div>
                                 <Form.Item
                                     label="Password"
                                     name="password"
                                     rules={[{ required: true, message: '' }]}
                                 >
-                                    <Input type='password' name='password' placeholder='' onChange={onChange}/> 
+                                    <Input type='password' name='password' placeholder='' onChange={onChange}/>
                                 </Form.Item>
+                                <div className="error-wrap">
+                                        <p className='p-error'>
+                                            {
+                                                ('password' in errors) ?  errors['password'] : ''
+                                            }
+                                        </p>
+                                        <p className='p-error'>
+                                            {
+                                                ('all' in errors) ?  errors['all'] : ''
+                                            }
+                                        </p>
+                                </div>
                             </div>
                             <button type='submit' onClick={onSubmit}>Log In</button>
-                            <div>
-                                { errors && Object.keys(errors).length > 0 && (
-                                    <Alert type="error" showIcon description={
-                                        Object.values(errors).map(value => (
-                                            value + "   "
-                                        ))
-                                    }>
-                                    </Alert>
-                                )}
-                            </div>
-
-                            <p>No account yet?  Sign up for a new one <Link to='/register' style={{textDecoration:'underline', color:'#CC0000'}}>here</Link>.</p>
+                            <p className='p-link'>No account yet?  Sign up for a new one <Link to='/register' style={{textDecoration:'underline', color:'#CC0000'}}>here</Link>.</p>
                         </Form>
-                      
-                       
                     </FormStyle>
                     <ImageContainer src={BckImage} alt="image of person with canon camera"/>
                 </div>

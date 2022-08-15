@@ -24,7 +24,7 @@ export const FormStyle = styled.div`
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
     /* margin:auto; */
-    padding: 30px;
+    padding: 30px 45px 25px 45px;
 
 
     h2 {
@@ -60,7 +60,7 @@ export const FormStyle = styled.div`
         letter-spacing: 1px;
     }
 
-    .button:hover {
+    button:hover {
         color: var(--slate);
         background-color: var(--lightRed);
     }

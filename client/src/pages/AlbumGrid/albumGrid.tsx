@@ -40,8 +40,7 @@ const Album = () => {
     if(loading) {
         return (
             <FullPageContainer>
-                <h2 style={{marginBottom:'50px'}}>Loading Albums</h2>
-                <LoadingSpinner />
+                <LoadingSpinner title="Loading Albums" />
             </FullPageContainer>
         )
     } 
