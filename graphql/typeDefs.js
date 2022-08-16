@@ -3,11 +3,11 @@ const { gql } = require('apollo-server');
 
 module.exports = gql`
     # defining a type 
-    type Message {
-        text: String
-        createdAt: String
-        createdBy: String
-    }
+    # type Message {
+    #     text: String
+    #     createdAt: String
+    #     createdBy: String
+    # }
 
     type User {
         id: ID!
@@ -20,10 +20,10 @@ module.exports = gql`
 
     #can also create input types
     #this will go into apolloserver just like a plain javascript object
-    input MessageInput {
-        text: String
-        username: String
-    }
+    # input MessageInput {
+    #     text: String
+    #     username: String
+    # }
 
     #create an input type for when a user registers on the site
     input RegisterInput {
@@ -41,12 +41,12 @@ module.exports = gql`
 
     # get message by id query
     type Query {
-        message(id: ID!): Message!
+        # message(id: ID!): Message!
         user(id: ID!): User!
     }
     
     type Mutation {
-        createMessage(messageInput: MessageInput): Message!
+        # createMessage(messageInput: MessageInput): Message!
         registerUser(registerInput: RegisterInput): User!
         loginUser(loginInput: LoginInput): User!
     }
