@@ -24,15 +24,11 @@ app.use(express.json({limit: '50mb'}));
 
 // GET ALL USER PHOTOS FOR HOMEPAGE PHOTO TIMELINE GRID 
 app.get('/api/getPhotos/:username', async (req, res) => {
-    try{
+    try {
        let username = req.params.username;
-       debugger;
-       console.log(username);
-       //AdminAPI 
-       //const { resources } = await cloudinary.api.resources({ type: 'upload', prefix: 'test', resource_type: 'image', max_results: 30, direction: 'desc'});
+       
        //SearchAPI using context
        const { resources } = await cloudinary.search.expression(`context.username=${username}`).sort_by('created_at', 'desc').max_results(30).execute();
-       console.log(resources);
        res.send(resources);
     } catch(error) {
        // console.log(error);
@@ -47,7 +43,7 @@ app.get('/api/getPhotoInfo/:encodedPhotoId', async (req,res) => {
         const photo = await cloudinary.api.resource(photoId, {resource_type: 'image', colors: true, image_metadata: true});
         res.send(photo);
     } catch(error){
-        console.log(error);
+        res.send(500).json(error);
     }
 })
 
@@ -129,7 +125,6 @@ app.get('/api/renamePhoto/:encodedOldFileName/:encodedNewFilename', async (req, 
         });
 
     } catch(error) {
-        console.log(error);
         res.status(500).json({error: "something went wrong with renaming a file"});
     }
 });
@@ -143,7 +138,6 @@ app.get('/api/fetchSearchResults/:username/:searchText', async (req,res) => {
         const results = await cloudinary.search.expression(`context.username=${username} AND tags:${searchText}* OR ${searchText} OR filename:${searchText} OR public_id:${searchText}`).sort_by('created_at', 'desc').max_results(30).execute();
         res.send(results);
     } catch(error) {
-        console.log(error);
         res.status(500).json({error: "Search fetch was unsuccessful"});
     }
 });
@@ -161,7 +155,6 @@ app.get('/api/createAlbum/:username/:albumname', async (req, res) => {
         const createAlbumResponse = await cloudinary.api.create_folder(`${userName}/${albumName}`)
         res.send(createAlbumResponse);
     } catch(error) {
-        console.log(error);
         res.status(500).json({ error: "Something went wrong"});
     }
 })
@@ -198,7 +191,6 @@ app.get('/api/getAllAlbums/:username', async (req, res) => {
         //return list of album/cover image pairs 
         res.send(albumList);
     } catch(error) {
-        console.log(error);
         res.status(500).json({ error: error.error});
     }
 })
@@ -212,7 +204,6 @@ app.get('/api/getAlbumPhotos/:albumName', async (req, res) => {
         const photoList  = await cloudinary.search.expression(`folder:"${albumName}" AND resource_type:image`).max_results(100).execute();
         res.send(photoList);
     } catch(error) {
-        console.log(error);
         res.status(500).json({error: "something went wrong with the fetch request"});
     }
 });
@@ -230,9 +221,7 @@ app.post('/api/deletePhotos', async (req,res) => {
         );
 
     } catch(error) {
-        console.log(error);
         res.status(500).json({error: "something went wrong when deleting the photo list"});
-
     }
 
 });
