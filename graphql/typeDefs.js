@@ -9,6 +9,23 @@ module.exports = gql`
     #     createdBy: String
     # }
 
+    type Photo {
+        id: ID!
+        photoId: String!
+        photoLatitude: Float #should this be Int? float? 
+        photoLongitude: Float #same here.. is float ok? 
+        isFavorite: Boolean!
+        createdAt: String!
+    }
+
+    type Album {
+        id: ID!
+        albumId: String!
+        albumName: String!
+        albumCreatedAt: String!
+        albumCreatedBy: String!
+    }
+
     type User {
         id: ID!
         username: String!
@@ -39,15 +56,29 @@ module.exports = gql`
         password: String! 
     }
 
+    input PhotoUpdateInput {
+        newPhotoName: String!
+        oldPhotoName: String!
+    }
+
+    input AlbumUpdateInput {
+        newAlbumName: String!
+        oldAlbumName: String!
+    }
+
     # get message by id query
     type Query {
         # message(id: ID!): Message!
         user(id: ID!): User!
+        photo(id: ID!): Photo!
+        album(id: ID!): Album!
     }
     
     type Mutation {
         # createMessage(messageInput: MessageInput): Message!
         registerUser(registerInput: RegisterInput): User!
         loginUser(loginInput: LoginInput): User!
+        updatePhotoName(photoUpdateInput: PhotoUpdateInput): Photo!
+        
     }
 `;
