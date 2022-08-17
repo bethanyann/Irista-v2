@@ -50,8 +50,6 @@ module.exports = {
         },
         async getAlbum(_, { albumId }) {
             try {
-                // const filter = { albumId: albumId };
-                // const album = await Album.find(filter);
                 const album = await Album.findOne({albumId: albumId}).exec();
 
                 if(album) {

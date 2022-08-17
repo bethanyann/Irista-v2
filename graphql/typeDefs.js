@@ -1,4 +1,6 @@
 //assign gql to a const; the keyword allows you to write gql syntax inside of javascript
+import PhotoFilename from './../client/src/components/PhotoFilename/photoFilename';
+import { FolderAddOutlined } from '@ant-design/icons/FolderAddOutlined';
 const { gql } = require('apollo-server');
 
 module.exports = gql`
@@ -19,6 +21,25 @@ module.exports = gql`
         createdAt: String!
         photoSecureUrl: String
     }
+
+    input PhotoInput {
+        photoName: String!
+        albumId: String! #this is not meant to be a fk, just a way to pull out what photos are in an album
+        photoLatitude: Float
+        photoLongitude: Float
+        photoSecureUrl: String!
+    }
+
+    input PhotoNameInput {
+        photoId: String!
+        newPhotoName: String!
+        oldPhotoName: String!
+    }
+
+    input PhotoFavoriteInput {
+        isFavorite: boolean!
+    }
+
 
     type Album {
         id: ID!
@@ -68,16 +89,6 @@ module.exports = gql`
         password: String! 
     }
 
-    input PhotoNameInput {
-        photoId: String!
-        newPhotoName: String!
-        oldPhotoName: String!
-    }
-
-    input PhotoFavoriteInput {
-        isFavorite: boolean!
-    }
-
     # get message by id query
     type Query {
         # message(id: ID!): Message!
@@ -86,6 +97,9 @@ module.exports = gql`
         
         getAlbum(albumId: String!): Album
         getAlbums(username: String!): [Album]
+
+        getPhoto(photoId: String!): Photo
+        getPhotos(albumId: String!): [Photo]
     }
     
     type Mutation {
@@ -93,10 +107,11 @@ module.exports = gql`
         registerUser(registerInput: RegisterInput): User!
         loginUser(loginInput: LoginInput): User!
 
-        createPhoto(photoInput: Photo): Photo!
+        createPhoto(photoInput: PhotoInput): Photo!
         updatePhotoName(photoNameInput: PhotoNameInput): String! #return new name of photo
         updatePhotoFavorite(photoFavoriteInput: PhotoFavoriteInput): boolean!  #return true/false
-        
+        #updatePhotoAlbum(albumId: String, photoIds: String[], newAlbumName: String): [Photo] #unsure of what to return atm
+
         createAlbum(albumInput: AlbumInput): Album!
         updateAlbum(updateAlbumInput: UpdateAlbumInput): String! #return new name of album
     }
