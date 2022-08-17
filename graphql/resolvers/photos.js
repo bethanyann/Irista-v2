@@ -21,6 +21,12 @@ module.exports = {
                 id: result.id,
                 ...result._doc
             }
+        },
+        async updatePhotoName(_, { updatePhotoInput: { photoId, newPhotoName}}) {
+            
+        },
+        async updatePhotoFavorite(_, { photoId }) {
+
         }
     },
     Query: {
