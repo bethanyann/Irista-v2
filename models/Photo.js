@@ -7,4 +7,5 @@ const photoSchema = new Schema({
     photoLongitude: number,
     isFavorite: boolean,
     createdAt: Date,
+    photoSecureUrl: String //storing the cloudinary url in case I want it later
 })

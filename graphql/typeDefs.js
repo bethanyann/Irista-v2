@@ -11,19 +11,31 @@ module.exports = gql`
 
     type Photo {
         id: ID!
-        photoId: String!
+        photoId: String! #this will be the photo's original filename in cloudinary
+        photoName: String! #this will be the photo's display name to user
         photoLatitude: Float #should this be Int? float? 
         photoLongitude: Float #same here.. is float ok? 
         isFavorite: Boolean!
         createdAt: String!
+        photoSecureUrl: String
     }
 
     type Album {
         id: ID!
+        albumId: String! #this will be the album's name in cloudinary
+        albumName: String! #this will be the album's display name to user
+        createdAt: String!
+        createdBy: String!
+    }
+
+    input AlbumInput {
+       albumName: String!
+       username: String!
+    }
+
+    input UpdateAlbumInput {
         albumId: String!
-        albumName: String!
-        albumCreatedAt: String!
-        albumCreatedBy: String!
+        newAlbumName: String!
     }
 
     type User {
@@ -56,14 +68,14 @@ module.exports = gql`
         password: String! 
     }
 
-    input PhotoUpdateInput {
+    input PhotoNameInput {
+        photoId: String!
         newPhotoName: String!
         oldPhotoName: String!
     }
 
-    input AlbumUpdateInput {
-        newAlbumName: String!
-        oldAlbumName: String!
+    input PhotoFavoriteInput {
+        isFavorite: boolean!
     }
 
     # get message by id query
@@ -71,14 +83,21 @@ module.exports = gql`
         # message(id: ID!): Message!
         user(id: ID!): User!
         photo(id: ID!): Photo!
-        album(id: ID!): Album!
+        
+        getAlbum(albumId: String!): Album
+        getAlbums(username: String!): [Album]
     }
     
     type Mutation {
         # createMessage(messageInput: MessageInput): Message!
         registerUser(registerInput: RegisterInput): User!
         loginUser(loginInput: LoginInput): User!
-        updatePhotoName(photoUpdateInput: PhotoUpdateInput): Photo!
+
+        createPhoto(photoInput: Photo): Photo!
+        updatePhotoName(photoNameInput: PhotoNameInput): String! #return new name of photo
+        updatePhotoFavorite(photoFavoriteInput: PhotoFavoriteInput): boolean!  #return true/false
         
+        createAlbum(albumInput: AlbumInput): Album!
+        updateAlbum(updateAlbumInput: UpdateAlbumInput): String! #return new name of album
     }
 `;
