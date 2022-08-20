@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import Dropzone from 'react-dropzone';
 import { Alert, Button } from 'antd';
 import axios from 'axios';
