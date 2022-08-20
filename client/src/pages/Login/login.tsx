@@ -50,10 +50,8 @@ const Login = ( props:any ) => {
             debugger;
             if(graphQLErrors.length > 0)
             {
-                // var backendError = error?.message;
                 var errors = graphQLErrors[0].extensions.errors as ErrorInterface;
                 setErrors(errors);
-                //console.log(errors);
             }
         },
         variables: { loginInput: values }

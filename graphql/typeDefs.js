@@ -1,6 +1,4 @@
 //assign gql to a const; the keyword allows you to write gql syntax inside of javascript
-import PhotoFilename from './../client/src/components/PhotoFilename/photoFilename';
-import { FolderAddOutlined } from '@ant-design/icons/FolderAddOutlined';
 const { gql } = require('apollo-server');
 
 module.exports = gql`
@@ -23,7 +21,7 @@ module.exports = gql`
         photoSecureUrl: String!
     }
 
-    input updatePhotoInput {
+    input UpdatePhotoInput {
         photoId: String!
         newPhotoName: String!
     }
@@ -84,7 +82,7 @@ module.exports = gql`
 
         createPhoto(photoInput: PhotoInput): Photo!
         updatePhotoName(updatePhotoInput: UpdatePhotoInput): String! #return new name of photo
-        updatePhotoFavorite(photoId: String!): boolean!  #return true/false
+        updatePhotoFavorite(photoId: String!): Boolean!  #return true/false
         #updatePhotoAlbum(albumId: String, photoIds: String[], newAlbumName: String): [Photo] #unsure of what to return atm
 
         createAlbum(albumInput: AlbumInput): Album!
