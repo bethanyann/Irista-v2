@@ -3,6 +3,7 @@ import Dropzone from 'react-dropzone';
 import { Alert, Button } from 'antd';
 import axios from 'axios';
 import { gql } from 'graphql-tag';
+import { useMutation } from '@apollo/client';
 // import EXIF from 'exif-js';
 //context
 import { AuthContext } from '../../context/authContext';
@@ -176,7 +177,7 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
             {
             
                 var errors = graphQLErrors[0].extensions.errors;
-                setErrors(errors);
+                setError(errors);
                 console.log(errors);
             }
         },
