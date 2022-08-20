@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import Dropzone from 'react-dropzone';
 import { Alert, Button } from 'antd';
 import axios from 'axios';
+import { gql } from 'graphql-tag';
 // import EXIF from 'exif-js';
 //context
 import { AuthContext } from '../../context/authContext';
@@ -10,6 +11,16 @@ import {Wrapper, Content, UploadImage, ThumbsContainer } from './upload.styles';
 import DropzoneImage from '../../images/upload.png';
 import { ExclamationCircleFilled } from '@ant-design/icons';
 
+const CREATE_PHOTO = gql`
+    mutation create($photoInput: PhotoInput) {
+        createPhoto(photoInput: $photoInput) {
+            photoName
+            photoLongitude
+            photoLatitude
+            isFavorite
+        }
+    }
+`;
 
 const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) => {
     const { user } = useContext(AuthContext); 
@@ -18,7 +29,7 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
     const [ loading, setLoading ] = useState(false);
     const [ error, setError ] = useState('');
     const [ fileErrors, setFileErrors ] = useState([]);
-
+    const [ photoInputData, setPhotoInputData ] = useState({});
     useEffect(() => {
         // Make sure to revoke the data uris to avoid memory leaks
         return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
@@ -99,7 +110,6 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
         }
     }
 
-
     const handlePhotoUpload = () => {
         let uploadedPhotoList = [];
 
@@ -121,6 +131,12 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
 
                     return axios.post(url, {data: file.fileString}).then(response => {
                         uploadedPhotoList = [...uploadedPhotoList, response.data];
+
+                        //after the photo is successfully uploaded to cloudinary without error, i need to also take each photo and send 
+                        //to the database
+                        debugger;
+                        //see what the structure of response.data is here so i know how to assign it to the mutation
+                        createPhotoCallback(response.data);
                     }).catch(error => {
                         setLoading(false);
                         setError("api error: " + error.message);
@@ -148,6 +164,37 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
                 console.log('axios error');
             })
         }
+    }
+
+    const [ createPhoto, {errors, loadingData}] = useMutation(CREATE_PHOTO, {
+        update(proxy, {data: {creatPhoto: photoData}}){
+            console.log(photoData);
+        },
+        onError({graphQLErrors}) {
+            debugger;
+            if(graphQLErrors.length > 0)
+            {
+            
+                var errors = graphQLErrors[0].extensions.errors;
+                setErrors(errors);
+                console.log(errors);
+            }
+        },
+        variables: { photoInput: photoInputData }
+        
+    })
+
+    function createPhotoCallback(file) {
+        let photoData = {
+            photoName: file.filename,
+            albumId: albumName ?? "",
+            photoLatitude: 0,
+            photoLongitude: 0,
+            photoSecureUrl: file.secureUrl
+        }
+
+        setPhotoInputData(photoData);
+        createPhoto();
     }
 
     return(
