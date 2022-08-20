@@ -11,12 +11,9 @@ const path = require('path');
 //cloudinary
 const { cloudinary } = require('./utilities/cloudinary');
 
-
 const app = express();
 //to fix a 'payload too large' error i was getting with the post requests
 app.use(express.json({limit: '50mb'}));
-
-
 
 //////////////////////////////////
 ////     PHOTO API CALLS  ////////
