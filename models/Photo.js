@@ -10,3 +10,5 @@ const photoSchema = new Schema({
     createdAt: Date,
     photoSecureUrl: String //storing the cloudinary url in case I want it later
 })
+
+module.exports = model('Photo', photoSchema);
