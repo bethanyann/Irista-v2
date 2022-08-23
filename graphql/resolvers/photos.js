@@ -15,7 +15,7 @@ module.exports = {
                 photoSecureUrl: photoSecureUrl ?? ""
             });
 
-            console.log(newPhoto);
+            //console.log(newPhoto);
             const result = await newPhoto.save();
 
             console.log(result);

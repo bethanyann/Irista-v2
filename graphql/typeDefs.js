@@ -16,10 +16,11 @@ module.exports = gql`
     input PhotoInput {
         photoId: String! #this will be the immutable filename and will not change
         photoName: String! #this will be the original filename on first upload but can change 
-        # albumId: String! #this is not meant to be a fk, just a way to pull out what photos are in an album
-        # photoLatitude: Float
-        # photoLongitude: Float
-        # photoSecureUrl: String!
+        albumId: String! #this is not meant to be a fk, just a way to pull out what photos are in an album
+        photoLatitude: Float
+        photoLongitude: Float
+        photoSecureUrl: String!
+        isFavorite: Boolean
     }
 
     input UpdatePhotoInput {
