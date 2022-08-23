@@ -4,21 +4,23 @@ const { gql } = require('apollo-server');
 module.exports = gql`
     type Photo {
         id: ID!
-        photoId: String! #this will be the photo's original filename in cloudinary
-        photoName: String! #this will be the photo's display name to user
-        photoLatitude: Float #should this be Int? float? 
-        photoLongitude: Float #same here.. is float ok? 
-        isFavorite: Boolean!
-        createdAt: String!
-        photoSecureUrl: String
+        photoId: String #this will be the photo's original filename in cloudinary
+        photoName: String #this will be the photo's display name to user
+        # photoLatitude: Float #should this be Int? float? 
+        # photoLongitude: Float #same here.. is float ok? 
+        # isFavorite: Boolean
+        # createdAt: String
+        # photoSecureUrl: String
     }
 
     input PhotoInput {
-        photoName: String!
+        photoId: String! #this will be the immutable filename and will not change
+        photoName: String! #this will be the original filename on first upload but can change 
         albumId: String! #this is not meant to be a fk, just a way to pull out what photos are in an album
         photoLatitude: Float
         photoLongitude: Float
         photoSecureUrl: String!
+        isFavorite: Boolean
     }
 
     input UpdatePhotoInput {
@@ -35,8 +37,8 @@ module.exports = gql`
     }
 
     input AlbumInput {
-       albumName: String!
-       username: String!
+        albumName: String!
+        username: String!
     }
 
     input UpdateAlbumInput {
@@ -80,7 +82,7 @@ module.exports = gql`
         registerUser(registerInput: RegisterInput): User!
         loginUser(loginInput: LoginInput): User!
 
-        createPhoto(photoInput: PhotoInput): Photo!
+        createPhoto(photoInput: PhotoInput): Photo
         updatePhotoName(updatePhotoInput: UpdatePhotoInput): String! #return new name of photo
         updatePhotoFavorite(photoId: String!): Boolean!  #return true/false
         #updatePhotoAlbum(albumId: String, photoIds: String[], newAlbumName: String): [Photo] #unsure of what to return atm
