@@ -6,11 +6,11 @@ module.exports = gql`
         id: ID!
         photoId: String #this will be the photo's original filename in cloudinary
         photoName: String #this will be the photo's display name to user
-        # photoLatitude: Float #should this be Int? float? 
-        # photoLongitude: Float #same here.. is float ok? 
-        # isFavorite: Boolean
-        # createdAt: String
-        # photoSecureUrl: String
+        photoLatitude: Float #should this be Int? float? 
+        photoLongitude: Float #same here.. is float ok? 
+        isFavorite: Boolean
+        createdAt: String
+        photoSecureUrl: String
     }
 
     input PhotoInput {
