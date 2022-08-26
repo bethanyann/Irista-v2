@@ -36,10 +36,15 @@ export const Content = styled.div`
 export const Metadata = styled.div`
     width: 370px;
     margin-left: 20px;
-    padding: 10px;
-    /* position: relative; */
-    /* top: -50px; */
+    padding: 10px 0 10px 10px;
     color: var(--snow);
+    margin-top: 20px;
+
+    .info-row {
+        max-height: 89vh;
+        height: 89vh;
+        padding-right: 20px;
+    }
 
     h2 {
         color: var(--snow);
@@ -56,8 +61,12 @@ export const Metadata = styled.div`
 
     .smaller-font {
         font-size: small;
-        //text-transform: uppercase;
         margin-top: 10px;
+        color: #999999;
+    }
+
+    .camera-lens {
+        font-size: small;
         color: #999999;
     }
 
@@ -100,20 +109,20 @@ interface Props {
 }
 
 export const ColorButton = styled.button<Props>`
-        width:65px;
-        height:65px;
-        border:none;
-        padding:0;
-        border-radius:5px;
-        margin-right:5px;
+        width: 70px;
+        height: 70px;
+        border: none;
+        padding: 0;
+        border-radius: 5px;
+        margin-right: 5px;
         margin-bottom: 5px;
         background-color: ${(props) => props.color};
         cursor: default;
 
         .colorName {
             color: transparent;
-            width:65px;
-            height:65px;
+            width:70px;
+            height:70px;
             font-size: .6rem;
             font-weight: 500;
         }

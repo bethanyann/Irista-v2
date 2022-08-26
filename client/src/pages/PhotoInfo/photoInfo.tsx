@@ -9,6 +9,8 @@ import { Content, Metadata, ColorButton } from './photoInfo.styles';
 import './modal.css';
 //components
 import TagList from '../../components/TagList/taglist';
+import Scrollbar from '../../components/shadowScrollbar';
+import GoogleMap from '../../components/GoogleMap/map';
 //images
 import aperture from '../../images/icons/aperture.png';
 import whitebalance from '../../images/icons/whitebalance.png';
@@ -44,13 +46,14 @@ const PhotoInfo = ({visible, photoId, onClose} : Props) => {
         formattedDate = date.replace(/:/g,"-")
     }
 
+
     return (
         
             <Modal
             className='ant-modal-large'
             onCancel={() => onClose()}
             visible={visible}
-            bodyStyle={{overflowY:'scroll'}}
+            // bodyStyle={{overflowY:'scroll'}}
             >
             { loading ? <div> loading. .. . . .. </div> : 
                 <Content>
@@ -58,6 +61,12 @@ const PhotoInfo = ({visible, photoId, onClose} : Props) => {
                         <img className={photo.height > photo.width ? "img-vertical" : "img-horizontal"} alt={photo.public_id} src={photo.secure_url}/>
                     </div>
                     <Metadata>
+                    <Scrollbar 
+                        autoHide 
+                        // renderThumbVertical={}
+                        thumbMinSize={30}
+                        style={{height: "89vh", right: 0}}
+                    >
                         <div className="info-row">
                             <h2>Information</h2>
                             <p className='smaller-font'>Filename</p>   
@@ -65,29 +74,30 @@ const PhotoInfo = ({visible, photoId, onClose} : Props) => {
                             <p className='smaller-font'> Date Created</p>
                                 <p><Moment date={formattedDate ?? photo.created_at} format="MM/DD/YYYY"/></p>
                                 <div className="three-column">
-                                    <p className='smaller-font' style={{width:'50px'}}>Format</p>
+                                    <p className='smaller-font' style={{width:'55px'}}>Format</p>
                                     <p className='smaller-font' style={{width:'110px', marginLeft:'10px'}}>Size</p>
                                     <p className='smaller-font' style={{width:'120px', marginLeft:'10px'}}>Dimensions</p>
                                 </div>
                                 <div className="three-column">
-                                    <p style={{width:'50px', textTransform:'uppercase'}}>{photo.format}</p>
+                                    <p style={{width:'55px', textTransform:'uppercase'}}>{photo.format}</p>
                                     <p style={{width:'110px', marginLeft:'10px'}}>{Math.round(photo.bytes / 1000)} KB</p>
                                     <p style={{width:'120px', marginLeft:'10px'}}>{photo.width + " x " + photo.height}</p>
                                 </div>
                             <div className='divider'></div>
                             <div className="two-column">
                                 <div>
-                                    <p className='smaller-font'>Camera</p>
+                                    <p className='camera-lens'>Camera</p>
                                     <p>{photo.image_metadata?.Model ?? "----"}</p>  
                                 </div>
                                 <div>
-                                    <p className='smaller-font'>Lens</p>
+                                    <p className='camera-lens'>Lens</p>
                                     <p>{photo.image_metadata?.LensInfo ? photo.image_metadata.LensInfo + ( photo.image_metadata.LensMake ? ", " + photo.image_metadata.LensMake  : ""  ) : "----"}</p> 
                                 </div>    
                             </div>                         
                             <div className='divider'></div>
-                            {/* <h4>LOCATION</h4>
-                            <div className='divider'></div> */}
+                            <h4>LOCATION</h4>
+                            {/* <GoogleMap /> */}
+                            <div className='divider'></div> 
                             <h4>EXIF</h4>
                                 <div className="two-column">
                                     <div className='first-column'>
@@ -148,6 +158,7 @@ const PhotoInfo = ({visible, photoId, onClose} : Props) => {
                                 <ColorButton key={color} color={color}><span className='colorName'>{color.toString()}</span></ColorButton>
                             )): null } 
                         </div>
+                    </Scrollbar> 
                     </Metadata>
                 </Content>
                 }

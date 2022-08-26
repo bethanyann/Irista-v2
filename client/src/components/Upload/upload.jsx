@@ -31,6 +31,8 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
     const [ error, setError ] = useState('');
     const [ fileErrors, setFileErrors ] = useState([]);
     const [ photoInputData, setPhotoInputData ] = useState({});
+
+    
     useEffect(() => {
         // Make sure to revoke the data uris to avoid memory leaks
         return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
@@ -132,17 +134,12 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
 
                     return axios.post(url, {data: file.fileString}).then(response => {
                         uploadedPhotoList = [...uploadedPhotoList, response.data];
-
-                        //after the photo is successfully uploaded to cloudinary without error, i need to also take each photo and send 
-                        //to the database
-                        debugger;
-                        //see what the structure of response.data is here so i know how to assign it to the mutation
+                        //after the photo is successfully uploaded to cloudinary, add photo info to db
                         createPhotoCallback(response.data);
                     }).catch(error => {
                         setLoading(false);
                         setError("api error: " + error.message);
                     })
-
                 } catch(error) {
                     setError("internal error" + error);
                 }
@@ -172,13 +169,11 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
             console.log(photoData);
         },
         onError({graphQLErrors}) {
-            debugger;
-            if(graphQLErrors.length > 0)
+            if(graphQLErrors.length > 0 || errors )
             {
-            
-                var errors = graphQLErrors[0].extensions.errors;
-                setError(errors);
-                console.log(errors);
+                let apolloErrors = graphQLErrors[0].extensions;
+                setError(apolloErrors);
+                console.log(apolloErrors);
             }
         },
         variables: { photoInput: photoInputData }
@@ -187,11 +182,12 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
 
     function createPhotoCallback(file) {
         let photoData = {
-            photoName: file.filename,
-            albumId: albumName ?? "",
+            photoId: file.public_id,
+            photoName: file.public_id,
+            albumId: file.folder ?? "",
             photoLatitude: 0,
             photoLongitude: 0,
-            photoSecureUrl: file.secureUrl
+            photoSecureUrl: file.secure_url
         }
 
         setPhotoInputData(photoData);
