@@ -40,6 +40,9 @@ export const GlobalStyle = createGlobalStyle`
         --fontMed: 1.2rem;
         --fontSmedium: 1.1rem;
         --fontSmall: 1rem;
+        //extra colors
+        /* --medGray: #353535;
+        --darkGray: #1c1c1c; */
     }
 
     //resetting some stuff - targets whole application styles

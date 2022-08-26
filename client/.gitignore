@@ -10,7 +10,6 @@
 
 # production
 /build
-/client/src/apolloClient.js
 
 # misc
 .DS_Store
