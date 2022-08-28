@@ -4,8 +4,6 @@ export const Wrapper = styled.div`
     max-width: var(--maxWidthDesktop);  //control the width of the grid only displaying 5 in a row, maybe play with this if I decide to go full-screen with it
     margin: 0 auto;
     padding: 50px 20px 20px 20px;
-    /* width: 40%; */
-    //min-width: 800px; 
 
     .button-container{
         display: flex;
@@ -17,7 +15,6 @@ export const Wrapper = styled.div`
         display:inline-block;
         height: 40px;
         color: white;
-        /* background-color: var(--red); */
         border: none;
         font-size: medium;
         border-radius: 5px;
@@ -150,5 +147,27 @@ export const ThumbsContainer = styled.aside`
         height: 100%;
     }
 
+    .remove-checkbox {
+        position: absolute;
+    }
+
+    .remove-checkbox-span {
+        position: relative;
+        left: 45px;
+        top: -9px;
+    }
+
+    .checkbox {
+        font-weight: bolder;
+        background-color: #eaeaea;
+        border-radius: 20px;
+        padding: 1px 6px;
+        font-size: smaller;
+    }
+
+    .checkbox:hover {
+        cursor: pointer;
+        background-color: #bdbdbd;
+    }
 `;
 

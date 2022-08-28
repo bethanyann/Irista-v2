@@ -38,6 +38,10 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
         return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
     }, [files]);
 
+    const handleDeletePhoto = (filename) => { 
+        setFiles(files.filter(f => f.path !== filename));
+    }
+
     const handleCancelUpload = () => {
         setFiles([]);
         setLoading(false);
@@ -221,6 +225,11 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
                         <ThumbsContainer>
                             { files ? files.map(file => (
                             <div className='thumb' key={file.name}>
+                                <div className="remove-checkbox">
+                                    <div className="remove-checkbox-span">
+                                        <div className="checkbox" onClick={() => handleDeletePhoto(file.name)}>X</div>
+                                    </div>
+                                </div>
                                 <div className='thumb-inner'>
                                     <img className='thumb-image' src={file.preview} alt='thumbnail of the images to upload' onLoad={() => {URL.revokeObjectURL(file.preview)}}/>
                                 </div>
