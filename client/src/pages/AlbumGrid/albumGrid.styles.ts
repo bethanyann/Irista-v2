@@ -86,7 +86,7 @@ export const AlbumThumbnail = styled.div<AlbumThumbnailProps>`
     url(${props => props.image}), var(--steam);
 
     /* background: url(${props => props.image}), var(--steam); */
-    background-size: 300px;
+    background-size: cover;
     background-position: center;
     
 
