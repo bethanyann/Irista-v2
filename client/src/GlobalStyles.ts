@@ -141,7 +141,7 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     .accept-button {
-        background-color: var(--red) !important;
+        background-color: var(--darkRed) !important;
         color: var(--snow) !important;
         border: none !important;
         border-radius: 5px !important;
@@ -153,7 +153,7 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     .accept-button:hover {
-        background-color: var(--darkRed)  !important;
+        background-color: var(--red)  !important;
     }
 
 `
