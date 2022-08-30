@@ -157,36 +157,13 @@ const AlbumPhotos = () => {
                 title={`Delete ${selectedPhotos.size} photo${selectedPhotos.size > 1 ? 's' : ''} from your account?` }
                 subTitle="This is a permanent delete and the files will not be recoverable!"
                 extra={[
-                   
                     <Button key={5678}
-                        style={{ 
-                            backgroundColor: '#d4d9e8',
-                            color: '#848c9e',
-                            border: 'none',
-                            borderRadius: '5px',
-                            textTransform: 'uppercase',
-                            cursor: 'pointer',
-                            fontSize: 'medium',
-                            padding: '5px 19px',
-                            marginRight: '40px',
-                            marginTop:'40px',
-                            height: '40px'
-                        }}
+                        className="cancel-button"
                         onClick={() => setOpenDeleteAlert(false)}
                         disabled={loading}
                     > Cancel</Button>,
                     <Button key={1234} 
-                        style={{ 
-                            backgroundColor: '#CC0000',
-                            color: '#fcfdff',
-                            border: 'none',
-                            borderRadius: '5px',
-                            textTransform: 'uppercase',
-                            cursor: 'pointer',
-                            fontSize: 'medium',
-                            padding: '5px 19px',
-                            height: '40px'
-                        }}
+                        className="accept-button"
                         loading={loading}
                         onClick={handleDeletePhotos}
                     >{loading ? "Deleting..." : "Delete Photos"}</Button>

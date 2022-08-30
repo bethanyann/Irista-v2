@@ -11,11 +11,11 @@ import PhotoInfo from '../../pages/PhotoInfo/photoInfo';
 
 interface Props {
     photos : any,
-    setIsSelected?: React.Dispatch<React.SetStateAction<boolean>>,
-    setSelectedPhotos?: React.Dispatch<React.SetStateAction<Set<string>>>
+    setIsSelected: React.Dispatch<React.SetStateAction<boolean>>,
+    setSelectedPhotos: React.Dispatch<React.SetStateAction<Set<string>>>
 }
 
-const PhotoGrid = ({ photos, setSelectedPhotos, setIsSelected }: any) => {
+const PhotoGrid = ({ photos, setSelectedPhotos, setIsSelected }: Props) => {
 
     const [ activePhotoId, setActivePhotoId ] = useState('');
     const [ isPhotoModalOpen, setIsPhotoModalOpen ] = useState(false);

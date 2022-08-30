@@ -43,7 +43,7 @@ export const Wrapper = styled.div`
     }
 
     .thumb-wrapper{
-        padding: 10px 0 5px 10px;
+        padding: 15px 0 8px 10px;
         min-height: 40px;
         border: 1px solid var(--fog);
     }
@@ -153,16 +153,18 @@ export const ThumbsContainer = styled.aside`
 
     .remove-checkbox-span {
         position: relative;
-        left: 45px;
-        top: -9px;
+        left: 50px;
+        top: -15px;
     }
 
     .checkbox {
         font-weight: bolder;
-        background-color: #eaeaea;
+        background-color: var(--snow);
         border-radius: 20px;
+        border: 1px solid #eaeaea;
         padding: 1px 6px;
         font-size: smaller;
+        color: var(--steel);
     }
 
     .checkbox:hover {

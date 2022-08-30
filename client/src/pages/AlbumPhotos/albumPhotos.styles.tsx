@@ -17,10 +17,11 @@ export const Header = styled.div`
     justify-content: space-between;
     align-items: center;
     margin-top: 20px;
-    h3{
+
+    h3 {
         color: var(--slate);
         font-weight: 500;
-        @media screen and (max-width: 768px){
+        @media screen and (max-width: 768px) {
 
         }
         font-size: 1.3em;
@@ -30,25 +31,24 @@ export const Header = styled.div`
         height: 25px;
     }
 
-    img:hover{
+    img:hover {
         cursor: pointer;
     }
 
 `;
-
 
 export const Content = styled.div`
     display: grid;
     // set to repeat the columns, and then set it to auto fill, and then when its 200px wide it cant' go lower so it removes 1 column instead to make it responsive for mobile
     grid-template-columns: repeat(auto-fill, minmax(275px, 1fr)); //css grid syntax here for a responsive grid
     grid-gap: 1.5rem;
-  
 `;
 
 export const PhotoContainer = styled.div`
     height: 300px;
     width: 300px;
     margin-top: 20px;
+
     p {
         margin-top: 10px;
         font-size: smaller;
@@ -103,10 +103,6 @@ export const PhotoTile = styled.div`
     .photo-image-wrapper:hover {
         cursor: pointer;
     }
-
-    /* :hover{
-        border: 1px solid var(--smoke);
-    } */
 `;
 
 export const PhotoImage = styled.img`
@@ -114,10 +110,4 @@ export const PhotoImage = styled.img`
     max-width: 300px;
     border-radius: 2px;
     transition: .3s;
-    
-    /* :hover {   
-        max-height: 290px;
-        max-width: 290px;
-    } */
-
 `

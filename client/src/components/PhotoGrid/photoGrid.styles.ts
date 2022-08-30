@@ -68,9 +68,6 @@ export const PhotoTile = styled.div`
         cursor: pointer;
     }
 
-    /* :hover{
-        border: 1px solid var(--smoke);
-    } */
 `;
 
 export const PhotoImage = styled.img`
@@ -78,10 +75,5 @@ export const PhotoImage = styled.img`
     max-width: 300px;
     border-radius: 2px;
     transition: .3s;
-    
-    /* :hover {   
-        max-height: 290px;
-        max-width: 290px;
-    } */
 
 `
