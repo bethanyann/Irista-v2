@@ -123,4 +123,37 @@ export const GlobalStyle = createGlobalStyle`
         width: 300px; 
     }
 
+   .cancel-button {
+        background-color: var(--smoke) !important;
+        color: var(--steel) !important;
+        border: none !important;
+        border-radius: 5px !important;
+        text-transform: uppercase !important;
+        cursor: pointer !important;
+        font-size: medium !important;
+        padding: 5px 19px !important;
+        margin-top: 40px !important;
+        height: 40px !important;
+    }
+
+    .cancel-button:hover {
+        background-color: var(--silver) !important;
+    }
+
+    .accept-button {
+        background-color: var(--red) !important;
+        color: var(--snow) !important;
+        border: none !important;
+        border-radius: 5px !important;
+        text-transform: uppercase !important;
+        cursor: pointer !important;
+        font-size: medium !important;
+        padding: 5px 19px !important;
+        height: 40px !important;
+    }
+
+    .accept-button:hover {
+        background-color: var(--darkRed)  !important;
+    }
+
 `
