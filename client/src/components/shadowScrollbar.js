@@ -1,35 +1,23 @@
+import css from 'dom-css';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Scrollbars } from 'react-custom-scrollbars-2';
 
-class ShadowScrollbar extends Component {
+class ShadowScrollbars extends Component {
+
     constructor(props, ...rest) {
         super(props, ...rest);
-        this.state = { top: 0 };
+        this.state = {
+            scrollTop: 0,
+            scrollHeight: 0,
+            clientHeight: 0
+        };
         this.handleUpdate = this.handleUpdate.bind(this);
-        this.renderView = this.renderView.bind(this);
         this.renderThumb = this.renderThumb.bind(this);
     }
 
     handleUpdate(values) {
-        const { top } = values;
-        this.setState({ top });
-    }
-
-    renderView({ style, ...props }) {
-        const viewStyle = {
-            paddingTop: 0,
-            paddingRight: 20,
-            paddingLeft: 0,
-            paddingBottom: 5,
-            top: 20
-        };
-        return (
-            <div
-                className="box"
-                style={{ ...style, ...viewStyle, inset:'8px 0px 0px' }}
-                {...props}/>
-        );
+      
     }
 
     renderThumb({ style, ...props }) {
@@ -44,20 +32,28 @@ class ShadowScrollbar extends Component {
         );
     }
 
+
     render() {
+        const { style, ...props } = this.props;
+        const containerStyle = {
+            ...style,
+            position: 'relative'
+        };
         return (
-            <Scrollbars
-                renderView={this.renderView}
-                renderThumbHorizontal={this.renderThumb}
-                renderThumbVertical={this.renderThumb}
-                onUpdate={this.handleUpdate}
-                {...this.props}/>
+            <div style={containerStyle}>
+                <Scrollbars
+                    ref="scrollbars"
+                    renderThumbVertical={this.renderThumb}
+                    onUpdate={this.handleUpdate}
+                    {...props}/>
+            </div>
         );
     }
 }
 
-ShadowScrollbar.propTypes = {
+ShadowScrollbars.propTypes = {
     style: PropTypes.object
 };
 
-export default ShadowScrollbar;
+export default ShadowScrollbars;
+
