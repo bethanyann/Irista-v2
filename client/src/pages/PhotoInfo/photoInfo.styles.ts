@@ -109,8 +109,8 @@ interface Props {
 }
 
 export const ColorButton = styled.button<Props>`
-        width: 70px;
-        height: 70px;
+        width: 75px;
+        height: 75px;
         border: none;
         padding: 0;
         border-radius: 5px;
@@ -121,9 +121,9 @@ export const ColorButton = styled.button<Props>`
 
         .colorName {
             color: transparent;
-            width:70px;
-            height:70px;
-            font-size: .6rem;
+            width:75px;
+            height:75px;
+            font-size: .8rem;
             font-weight: 500;
         }
 
@@ -131,7 +131,7 @@ export const ColorButton = styled.button<Props>`
             opacity: 0.7;
             .colorName{
                 color: ${(props) => setTextColor(props.color)};
-                font-size: .6rem;
+                font-size: .8rem;
                 font-weight: 500;
             } 
         }
