@@ -70,7 +70,7 @@ const TagList = ({photoTags, photoId} : IProps) => {
       return (
         <Wrapper>
             <Content>
-                <TweenOneGroup enter={{scale: 0.8,opacity: 0,type: 'from',duration: 100}} leave={{opacity:0, width:0, scale:0, duration: 200}} appear={false}
+                <TweenOneGroup enter={{scale: 0.8, opacity: 0, type:'from', duration: 100}} leave={{opacity:0, width:0, scale:0, duration: 200}} appear={false}
                     onEnd={e => {
                         if(e.type==='appear' || e.type==='enter') {
                             (e.target as any).style = 'display: inline-block';
@@ -87,14 +87,14 @@ const TagList = ({photoTags, photoId} : IProps) => {
 
                 </TweenOneGroup>
             </Content>
-            { inputVisible ? (
-                <Input ref={inputRef} type="text" size="small" placeholder='new tag' style={{width:130, height:27}} value={inputValue} onChange={handleInputChange} onBlur={handleInputConfirm} onPressEnter={handleInputConfirm} />
-            ) : null}
-            { !inputVisible ? (
-                <Tag onClick={showInput} className="site-tag-plus add-tag-button">
-                    <PlusOutlined /> Add Tag
-                </Tag>
-            ) : null}
+                { inputVisible ? (
+                    <Input ref={inputRef} type="text" size="small" placeholder='new tag' style={{width:130, height:27}} value={inputValue} onChange={handleInputChange} onBlur={handleInputConfirm} onPressEnter={handleInputConfirm} />
+                ) : null}
+                { !inputVisible ? (
+                    <Tag onClick={showInput} className="site-tag-plus add-tag-button">
+                        <PlusOutlined /> Add Tag
+                    </Tag>
+                ) : null}
         </Wrapper>
       )
 }

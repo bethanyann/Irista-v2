@@ -18,6 +18,7 @@ export const GlobalStyle = createGlobalStyle`
         --steam: #f3f4fa;
         --snow: #fcfdff;
         //reds
+        --darkestRed: #a30101;
         --darkRed: #CC0000;
         --red: #FF4B44;
         --lightRed: #ffa098;
@@ -132,12 +133,13 @@ export const GlobalStyle = createGlobalStyle`
         cursor: pointer !important;
         font-size: medium !important;
         padding: 5px 19px !important;
-        margin-top: 40px !important;
+       // margin-top: 40px !important;
         height: 40px !important;
     }
 
     .cancel-button:hover {
         background-color: var(--silver) !important;
+        color: var(--slate) !important;
     }
 
     .accept-button {
@@ -149,11 +151,12 @@ export const GlobalStyle = createGlobalStyle`
         cursor: pointer !important;
         font-size: medium !important;
         padding: 5px 19px !important;
+        margin-left: 15px;
         height: 40px !important;
     }
 
     .accept-button:hover {
-        background-color: var(--red)  !important;
+        background-color: var(--darkestRed)  !important;
     }
 
 `

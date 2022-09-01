@@ -45,6 +45,8 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
     const handleCancelUpload = () => {
         setFiles([]);
         setLoading(false);
+        setError('');
+        setFileErrors([]);
         if(setOpenModal)
         {
             setOpenModal(false);
