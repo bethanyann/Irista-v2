@@ -13,6 +13,8 @@ export const PhotoContainer = styled.div`
     height: 300px;
     width: 300px;
     margin-top: 20px;
+    transition: 1s;
+
     p {
         margin-top: 10px;
         font-size: smaller;
@@ -63,48 +65,38 @@ export const PhotoTile = styled.div`
     align-items: center;
     justify-content: center;
     cursor: default;
-    
     .photo-image-wrapper:hover {
         cursor: pointer;
     }
-
 `;
 
-// export const PhotoImage = styled.img`
-//     max-height: 300px;
-//     max-width: 300px;
-//     border-radius: 2px;
-//     transition: .3s;
-
-// `
-interface AlbumThumbnailProps {
+interface PhotoThumbnailProps {
     imageURL: string,
     height: number,
-    width: number
+    width: number,
+    selected: boolean
 }
 
-export const PhotoImage = styled.div<AlbumThumbnailProps>`
-    width: ${props => props.width + "px"};
-    height: ${props => props.height + "px"};
+export const PhotoImage = styled.div<PhotoThumbnailProps>`
+    //passing in the dimensions of the photo to determine the layout
+    width: ${props => props.selected ? (props.width - 10) + "px" : (props.width) + "px"};
+    height: ${props => props.selected? (props.height -10) + "px" : (props.height) + "px"};
     background-color: var(--steam);
     display: flex;
     justify-content: start;
     align-items: flex-end;
     color: white;
-    transition: 1s;
     cursor: pointer;
-
-    background: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0) 46%,
-        rgba(0, 0, 0, 0.9) 89%
-    ),
-    url(${props => props.imageURL}), var(--steam);
+    border: none;
+    background: url(${props => props.imageURL}), var(--steam);
 
     background-size: cover;
     background-position: center;
     
+    transition: .3s;
+
     :hover {
         background-color: var(--smoke);
+        cursor: pointer; 
     }
 `;
