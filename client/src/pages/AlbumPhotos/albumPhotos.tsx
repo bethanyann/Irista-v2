@@ -9,16 +9,15 @@ import CloudUploadOutlined from '@ant-design/icons/CloudUploadOutlined';
 import DownloadOutlined from '@ant-design/icons/DownloadOutlined';
 import HeartOutlined from '@ant-design/icons/HeartOutlined';
 import FolderAddOutlined from '@ant-design/icons/FolderAddOutlined';
-import { Wrapper, Header, Content, PhotoContainer, PhotoTile, PhotoImage} from './albumPhotos.styles';
+import { Wrapper, Header } from './albumPhotos.styles';
 // import AddIcon from '../../images/icons/add.png';
 // import DeleteIcon from '../../images/icons/delete.png';
 import './uploadModal.css';
 //components
 import Upload from '../../components/Upload/upload';
-import PhotoInfo from '../PhotoInfo/photoInfo';
 import PhotoGrid from '../../components/PhotoGrid/photoGrid';
 //types
-import { Photo, Photos } from '../../models/types';
+import { Photos } from '../../models/types';
 
 //TODO - this component is getting cluttered - turn some of the modals into their own components 
 
@@ -45,7 +44,7 @@ const AlbumPhotos = () => {
     const { photos, setPhotos, loading, error } = useAlbumPhotoFetch(albumName!);
 
     const handleModalOpen = () => {
-        setSelectedPhotos(initialState);
+       // setSelectedPhotos(initialState);
         setIsOpen(true);
     }
 
@@ -60,11 +59,12 @@ const AlbumPhotos = () => {
 
     const handleConfirmModal = () => {
         //this fires when new photos have been uploaded through the upload modal
+        //and the user clicks on 'view uploaded photos'
         //it takes in the totalFiles from the upload, builds a Photos object, and appends that
         //to the photos already displayed on the page
         let newArray = { } as Photos;
         debugger;
-        //will this work if there aren't any photos in the album yet? 
+        //will this work if there aren't any photos in the album yet?- yes?
         if(photos)
         {
             newArray.next_cursor = photos.next_cursor;
@@ -133,7 +133,7 @@ const AlbumPhotos = () => {
                                     <Button className="album-button" disabled={true} icon={<HeartOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
                                 </Tooltip>
                                 <Tooltip title="Upload Images" placement="bottomRight">
-                                    <Button className="album-button"  onClick={handleModalOpen} icon={<CloudUploadOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
+                                    <Button className="album-button"  onClick={() => handleModalOpen()} icon={<CloudUploadOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
                                 </Tooltip>
                                 <Tooltip title="Download" placement="bottomRight">
                                     <Button className="album-button" disabled={true} icon={<DownloadOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
@@ -148,7 +148,7 @@ const AlbumPhotos = () => {
             </Header>
             <div className="divider"></div>
             { loading ? < div> Loading .... </div> : null}
-            <PhotoGrid photos={photos} setSelectedPhotos={setSelectedPhotos} setIsSelected={setIsSelected} />
+           <PhotoGrid photos={photos} setSelectedPhotos={setSelectedPhotos} setIsSelected={setIsSelected} /> 
         </Wrapper>
 
         <Modal className="ant-modal" title="" width={600} visible={openDeleteAlert} onCancel={() => setOpenDeleteAlert(false)} footer={null}>

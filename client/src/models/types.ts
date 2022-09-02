@@ -9,7 +9,7 @@ export type User = {
 
 export type Photos = {
     resources: Photo[];
-    next_cursor: string;
+    next_cursor?: string;
     total_count?: number;
 }
 
