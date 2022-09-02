@@ -70,10 +70,41 @@ export const PhotoTile = styled.div`
 
 `;
 
-export const PhotoImage = styled.img`
-    max-height: 300px;
-    max-width: 300px;
-    border-radius: 2px;
-    transition: .3s;
+// export const PhotoImage = styled.img`
+//     max-height: 300px;
+//     max-width: 300px;
+//     border-radius: 2px;
+//     transition: .3s;
 
-`
+// `
+interface AlbumThumbnailProps {
+    imageURL: string,
+    height: number,
+    width: number
+}
+
+export const PhotoImage = styled.div<AlbumThumbnailProps>`
+    width: ${props => props.width + "px"};
+    height: ${props => props.height + "px"};
+    background-color: var(--steam);
+    display: flex;
+    justify-content: start;
+    align-items: flex-end;
+    color: white;
+    transition: 1s;
+    cursor: pointer;
+
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) 46%,
+        rgba(0, 0, 0, 0.9) 89%
+    ),
+    url(${props => props.imageURL}), var(--steam);
+
+    background-size: cover;
+    background-position: center;
+    
+    :hover {
+        background-color: var(--smoke);
+    }
+`;

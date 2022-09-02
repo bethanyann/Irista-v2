@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 //types
-import { Photo } from '../../models/types';
+import { Photo, Photos } from '../../models/types';
 // styles
 import { Content, PhotoContainer, PhotoTile, PhotoImage } from './photoGrid.styles';
 // component
@@ -10,17 +10,17 @@ import PhotoInfo from '../../pages/PhotoInfo/photoInfo';
 // TODO put the select box onclick and handlers in here too 
 
 interface Props {
-    photos : any,
+    photos: Photos | undefined,
     setIsSelected: React.Dispatch<React.SetStateAction<boolean>>,
     setSelectedPhotos: React.Dispatch<React.SetStateAction<Set<string>>>
 }
 
 const PhotoGrid = ({ photos, setSelectedPhotos, setIsSelected }: Props) => {
-
+    debugger;
+    //see what the structure of photos/photo is here
     const [ activePhotoId, setActivePhotoId ] = useState('');
     const [ isPhotoModalOpen, setIsPhotoModalOpen ] = useState(false);
  
-
     const handlePhotoModalOpen = (photoId : string) => {
         setActivePhotoId(photoId);
         setIsPhotoModalOpen(true);
@@ -60,9 +60,10 @@ const PhotoGrid = ({ photos, setSelectedPhotos, setIsSelected }: Props) => {
                                 <input type='checkbox' className='checkbox' checked={photo.isSelected ?? false} onChange={event => handleSelectPhoto(event, photo)}/>
                             </span>
                         </div>
-                        <div className='photo-image-wrapper' style={{zIndex:1}} onClick={() => handlePhotoModalOpen(photo.public_id)}>
+                        {/* <div className='photo-image-wrapper' style={{zIndex:1}} onClick={() => handlePhotoModalOpen(photo.public_id)}>
                             <PhotoImage src={photo.secure_url} style={photo.isSelected? {maxHeight:'290px', maxWidth:'290px'} : {}} />
-                        </div>       
+                        </div>        */}
+                            <PhotoImage imageURL={photo.secure_url} width={photo.height > photo.width ? 200 : 300} height={photo.height > photo.width ? 300 : 200} style={photo.isSelected? {maxHeight:'290px', maxWidth:'290px'}:{}}/>
                     </PhotoTile>
                     <p style={{wordBreak:'break-word'}}>{(photo.filename ?? photo.original_filename ?? photo.public_id.substring(photo.public_id.lastIndexOf('/') + 1)) + "." + photo.format}</p>
                 </PhotoContainer>

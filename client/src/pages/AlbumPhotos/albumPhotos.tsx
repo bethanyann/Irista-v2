@@ -9,16 +9,15 @@ import CloudUploadOutlined from '@ant-design/icons/CloudUploadOutlined';
 import DownloadOutlined from '@ant-design/icons/DownloadOutlined';
 import HeartOutlined from '@ant-design/icons/HeartOutlined';
 import FolderAddOutlined from '@ant-design/icons/FolderAddOutlined';
-import { Wrapper, Header, Content, PhotoContainer, PhotoTile, PhotoImage} from './albumPhotos.styles';
+import { Wrapper, Header } from './albumPhotos.styles';
 // import AddIcon from '../../images/icons/add.png';
 // import DeleteIcon from '../../images/icons/delete.png';
 import './uploadModal.css';
 //components
 import Upload from '../../components/Upload/upload';
-import PhotoInfo from '../PhotoInfo/photoInfo';
 import PhotoGrid from '../../components/PhotoGrid/photoGrid';
 //types
-import { Photo, Photos } from '../../models/types';
+import { Photos } from '../../models/types';
 
 //TODO - this component is getting cluttered - turn some of the modals into their own components 
 
@@ -149,7 +148,7 @@ const AlbumPhotos = () => {
             </Header>
             <div className="divider"></div>
             { loading ? < div> Loading .... </div> : null}
-            <PhotoGrid photos={photos} setSelectedPhotos={setSelectedPhotos} setIsSelected={setIsSelected} />
+           <PhotoGrid photos={photos} setSelectedPhotos={setSelectedPhotos} setIsSelected={setIsSelected} /> 
         </Wrapper>
 
         <Modal className="ant-modal" title="" width={600} visible={openDeleteAlert} onCancel={() => setOpenDeleteAlert(false)} footer={null}>
