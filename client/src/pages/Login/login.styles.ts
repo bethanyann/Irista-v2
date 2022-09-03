@@ -47,7 +47,7 @@ export const FormStyle = styled.div`
         font-weight: 100;
     }
 
-    button {
+    /* button {
         display: block;
         padding: 12px;
         width: 300px;
@@ -62,12 +62,12 @@ export const FormStyle = styled.div`
         cursor: pointer;
         text-transform: uppercase;
         letter-spacing: 1px;
-    }
+    } */
 
-    button:hover {
+    /* button:hover {
         color: black;
         background-color: var(--lightRed);
-    }
+    } */
 
     input:focus{
         border: 1px solid var(--silver); //#b5b3b3 

@@ -1,7 +1,11 @@
 import React, { useRef, useState, useEffect } from 'react';
 import Moment from 'react-moment';
-import { Modal, Input, InputRef } from 'antd';
+import { Modal, Space, Tooltip, Button } from 'antd';
 import { EditTwoTone, EditOutlined } from '@ant-design/icons';
+import DeleteOutlined from '@ant-design/icons/DeleteOutlined'
+import DownloadOutlined from '@ant-design/icons/DownloadOutlined';
+import HeartOutlined from '@ant-design/icons/HeartOutlined';
+import FolderAddOutlined from '@ant-design/icons/FolderAddOutlined';
 //hooks
 import { usePhotoInfoFetch, PhotoState } from '../../hooks/usePhotoInfoFetch';
 //styling
@@ -28,7 +32,8 @@ interface Props {
 const PhotoInfo = ({visible, photoId, onClose} : Props) => {
 
     const { photo, setPhoto, loading, error} = usePhotoInfoFetch(photoId!);
-    
+    const [ openDeleteAlert, setOpenDeleteAlert ] = useState(false);
+
     let formattedDate = null;
 
     //only allow top 20 colors to be displayed 
@@ -46,14 +51,12 @@ const PhotoInfo = ({visible, photoId, onClose} : Props) => {
         formattedDate = date.replace(/:/g,"-")
     }
 
-
     return (
         
             <Modal
             className='ant-modal-large'
             onCancel={() => onClose()}
             visible={visible}
-            // bodyStyle={{overflowY:'scroll'}}
             >
             { loading ? <div> loading. .. . . .. </div> : 
                 <Content>
@@ -61,15 +64,11 @@ const PhotoInfo = ({visible, photoId, onClose} : Props) => {
                         <img className={photo.height > photo.width ? "img-vertical" : "img-horizontal"} alt={photo.public_id} src={photo.secure_url}/>
                     </div>
                     <Metadata>
-                    <Scrollbar 
-                        autoHide 
-                        // renderThumbVertical={}
-                        thumbMinSize={30}
+                    <Scrollbar
                         style={{height: "89vh", right: 0}}
                     >
                         <div className="info-row">
-                            <h2>Information</h2>
-                            <p className='smaller-font'>Filename</p>   
+                          <p className='smaller-font'>Filename</p>   
                             <p>{ photo.public_id?.substring(photo.public_id.lastIndexOf('/') + 1) + "." + photo.format}</p>
                             <p className='smaller-font'> Date Created</p>
                                 <p><Moment date={formattedDate ?? photo.created_at} format="MM/DD/YYYY"/></p>
@@ -83,6 +82,25 @@ const PhotoInfo = ({visible, photoId, onClose} : Props) => {
                                     <p style={{width:'110px', marginLeft:'10px'}}>{Math.round(photo.bytes / 1000)} KB</p>
                                     <p style={{width:'120px', marginLeft:'10px'}}>{photo.width + " x " + photo.height}</p>
                                 </div>
+                                <p className='smaller-font'>Actions</p>
+                                <Space>
+                                    {
+                                        <>
+                                            <Tooltip title="Add to folder" placement="bottomRight">
+                                                <Button className="album-button" disabled={true} icon={<FolderAddOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
+                                            </Tooltip>
+                                            <Tooltip title="Toggle Favorite" placement="bottomRight">
+                                                <Button className="album-button" disabled={true} icon={<HeartOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
+                                            </Tooltip>
+                                            <Tooltip title="Download" placement="bottomRight">
+                                                <Button className="album-button" disabled={true} icon={<DownloadOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
+                                            </Tooltip>
+                                            <Tooltip title="Delete" placement="bottom">
+                                                <Button className="album-button"  onClick={() => setOpenDeleteAlert(true)} icon={<DeleteOutlined className="action-icon" />} size="large"/>
+                                            </Tooltip>
+                                        </>
+                                    }     
+                                </Space>      
                             <div className='divider'></div>
                             <div className="two-column">
                                 <div>
