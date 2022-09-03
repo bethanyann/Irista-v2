@@ -5,13 +5,12 @@ import { useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
 //styles
 import { Wrapper, Content, FormStyle, ImageContainer } from './register.styles';
-import { Alert, Form, Input } from 'antd';
+import { Button, Form, Input } from 'antd';
 import BckImage from '../../images/login_image2_copy.jpg';
 //authContext
 import { AuthContext } from '../../context/authContext';
 //hooks
 import { useForm } from '../../hooks/useFormHook';
-
 
 
 const REGISTER_USER = gql`
@@ -138,7 +137,7 @@ const Register = ( props:any ) => {
                                 </p>
                             </div>
                         </div>
-                        <button onClick={onSubmit}>Create Account</button>
+                        <Button className="accept-button" onClick={onSubmit}>Create Account</Button>
                         <p style={{marginTop:'50px'}}>Already have an account? Sign in <Link to='/login' style={{textDecoration:'underline', color:'#CC0000'}}>here</Link>.</p>
                     </Form>
                 </FormStyle>

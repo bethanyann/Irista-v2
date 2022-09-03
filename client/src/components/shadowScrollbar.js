@@ -23,7 +23,6 @@ class ShadowScrollbars extends Component {
     renderThumb({ style, ...props }) {
         const thumbStyle = {
             backgroundColor: `rgb(238,238,238,0.2)`,
-           // maxHeight: 50
         };
         return (
             <div
@@ -42,6 +41,9 @@ class ShadowScrollbars extends Component {
         return (
             <div style={containerStyle}>
                 <Scrollbars
+                    thumbSize={100}
+                    thumbMinSize={50}
+                    autoHide
                     ref="scrollbars"
                     renderThumbVertical={this.renderThumb}
                     onUpdate={this.handleUpdate}

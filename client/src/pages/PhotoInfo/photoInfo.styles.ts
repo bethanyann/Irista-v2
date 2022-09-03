@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const Content = styled.div`
-
     display: flex;
     justify-content: space-evenly;
     align-items: flex-start;
@@ -15,8 +14,6 @@ export const Content = styled.div`
     }
 
     .photo-vertical {
-        /* width: 70%; */
-       // height: 100%;
         margin: auto;
     }
 
@@ -28,7 +25,6 @@ export const Content = styled.div`
     }
 
     .img-vertical {
-        //height: 100%;
         max-height: 90vh;
     }
 `; 
@@ -75,16 +71,15 @@ export const Metadata = styled.div`
         margin: 15px 0;
     }
 
-    .three-column{
+    .three-column {
         display: flex;
         justify-content: space-between;
     }
 
-    .two-column{
+    .two-column {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        //margin-top: 10px;
     }
     
     .first-column, .second-column {
@@ -101,6 +96,15 @@ export const Metadata = styled.div`
         /* @media screen and (max-width: 720px) {
             width: 40px;
         } */
+    }
+
+    .action-icon {
+        font-size: 1.3em;
+        color: var(--darkTeal);
+    }
+
+    .action-icon:hover {
+        color: var(--lightTeal);
     }
 `;
 
@@ -129,7 +133,7 @@ export const ColorButton = styled.button<Props>`
 
         :hover {
             opacity: 0.7;
-            .colorName{
+            .colorName {
                 color: ${(props) => setTextColor(props.color)};
                 font-size: .8rem;
                 font-weight: 500;

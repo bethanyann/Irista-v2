@@ -37,6 +37,12 @@
 .ant-modal-large
 .ant-modal-close-x {
     color: var(--snow);
-    font-size:23px;
+    font-size: 23px;
+}
+
+.ant-modal-large
+.ant-modal-close-x:hover {
+    color: var(--snow);
+    font-size: 1.7rem;
 }
  

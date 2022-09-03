@@ -4,7 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 //styles
 import { Wrapper, Content, FormStyle, ImageContainer } from './login.styles';
-import { Alert, Form, Input } from 'antd';
+import { Form, Input, Button } from 'antd';
 import BckImage from '../../images/login_image1_copy.jpg';
 //authContext
 import { AuthContext } from '../../context/authContext';
@@ -108,7 +108,7 @@ const Login = ( props:any ) => {
                                         </p>
                                 </div>
                             </div>
-                            <button type='submit' onClick={onSubmit}>Log In</button>
+                            <Button className="accept-button" onClick={onSubmit} style={{width:'300px', margin:0, marginTop:'20px' }}>Log In</Button>
                             <p className='p-link'>No account yet?  Sign up for a new one <Link to='/register' style={{textDecoration:'underline', color:'#CC0000'}}>here</Link>.</p>
                         </Form>
                     </FormStyle>
