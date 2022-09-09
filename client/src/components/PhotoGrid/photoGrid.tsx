@@ -16,7 +16,6 @@ interface Props {
 }
 
 const PhotoGrid = ({ photos, setSelectedPhotos, setIsSelected }: Props) => {
-    //see what the structure of photos/photo is here
     const [ activePhotoId, setActivePhotoId ] = useState('');
     const [ isPhotoModalOpen, setIsPhotoModalOpen ] = useState(false);
  
@@ -51,7 +50,7 @@ const PhotoGrid = ({ photos, setSelectedPhotos, setIsSelected }: Props) => {
     return (
         <>
         <Content>
-            { photos ? photos.resources.map((photo: any) => (
+            { photos ? photos.resources.map((photo: Photo) => (
                 <PhotoContainer  key={photo.asset_id}>
                     <PhotoTile className='photo-tile' style={photo.isSelected ? {backgroundColor:'#f3f4fa', border:'1px solid var(--smoke)'} : {border:'1px solid var(--snow)'}}>
                         <div className='tile-select-checkbox'>
@@ -59,7 +58,9 @@ const PhotoGrid = ({ photos, setSelectedPhotos, setIsSelected }: Props) => {
                                 <input type='checkbox' className='checkbox' checked={photo.isSelected ?? false} onChange={event => handleSelectPhoto(event, photo)}/>
                             </span>
                         </div>
-                        <PhotoImage imageURL={photo.secure_url} selected={photo.isSelected} width={photo.height > photo.width ? 200 : 300} height={photo.height > photo.width ? 300 : 200} /> {/*style={photo.isSelected? {maxHeight:'290px', maxWidth:'290px', transition:'10s'}:{transition: '1s'}} */}
+                        <div onClick={() => handlePhotoModalOpen(photo.public_id)} className="photo-image-wrapper">
+                            <PhotoImage imageURL={photo.secure_url} selected={photo.isSelected} width={photo.height > photo.width ? 200 : 300} height={photo.height > photo.width ? 300 : 200} /> {/*style={photo.isSelected? {maxHeight:'290px', maxWidth:'290px', transition:'10s'}:{transition: '1s'}} */}
+                        </div>
                     </PhotoTile>
                     <p style={{wordBreak:'break-word'}}>{(photo.filename ?? photo.original_filename ?? photo.public_id.substring(photo.public_id.lastIndexOf('/') + 1)) + "." + photo.format}</p>
                 </PhotoContainer>
