@@ -34,7 +34,20 @@ export const Header = styled.div`
     img:hover {
         cursor: pointer;
     }
+`;
 
+export const FullPageContainer = styled.div`
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: var(--fog);
+    z-index: -1;
 `;
 
 

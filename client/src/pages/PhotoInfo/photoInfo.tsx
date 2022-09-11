@@ -168,7 +168,7 @@ const PhotoInfo = ({visible, photoId, onClose} : Props) => {
                             <div className='divider'></div>
                             <h4>TAGS</h4>
                             {
-                                 <TagList photoTags={photo.tags} photoId={photo.public_id} />
+                                <TagList photoTags={photo.tags} photoId={photo.public_id} />
                             }
                             <div className='divider'></div>
                             <h4>COLORS</h4>

@@ -9,13 +9,12 @@ import CloudUploadOutlined from '@ant-design/icons/CloudUploadOutlined';
 import DownloadOutlined from '@ant-design/icons/DownloadOutlined';
 import HeartOutlined from '@ant-design/icons/HeartOutlined';
 import FolderAddOutlined from '@ant-design/icons/FolderAddOutlined';
-import { Wrapper, Header } from './albumPhotos.styles';
-// import AddIcon from '../../images/icons/add.png';
-// import DeleteIcon from '../../images/icons/delete.png';
+import { Wrapper, Header, FullPageContainer } from './albumPhotos.styles';
 import './uploadModal.css';
 //components
 import Upload from '../../components/Upload/upload';
 import PhotoGrid from '../../components/PhotoGrid/photoGrid';
+import LoadingSpinner from '../../components/LoadingSpinner/spinner';
 //types
 import { Photos } from '../../models/types';
 
@@ -78,10 +77,10 @@ const AlbumPhotos = () => {
     }
 
     const handleDeletePhotos = async () => {
+        debugger;
         setIsLoading(true);
         if(selectedPhotos.size > 0){
-            
-            console.log(selectedPhotos);
+            //console.log(selectedPhotos);
             let selectedPhotoArr = Array.from(selectedPhotos);
 
             await fetch(`/api/deletePhotos`, {
@@ -96,9 +95,7 @@ const AlbumPhotos = () => {
                 
                 //set photo state to new array 
                 setPhotos(newArray);
-                //setSelectedPhoto array to []
                 setSelectedPhotos(initialState);
-
                 setIsSelected(false);
                 setIsLoading(false);
                 setOpenDeleteAlert(false);
@@ -113,10 +110,13 @@ const AlbumPhotos = () => {
             console.log(selectedPhotos);
         }
     }
-
-    //TODO - loading needs some styling help, its displaying in the top left of the page
-    //could use a spinner or some simple animation too 
-
+    if(loading) {
+        return (
+            <FullPageContainer>
+                <LoadingSpinner title="Loading Photos" />
+            </FullPageContainer>
+        )
+    } 
     return (
         <>
         <Wrapper>
@@ -147,7 +147,6 @@ const AlbumPhotos = () => {
                 </div>
             </Header>
             <div className="divider"></div>
-            { loading ? < div> Loading .... </div> : null}
            <PhotoGrid photos={photos} setSelectedPhotos={setSelectedPhotos} setIsSelected={setIsSelected} /> 
         </Wrapper>
 
@@ -160,11 +159,11 @@ const AlbumPhotos = () => {
                     <Button key={5678}
                         className="cancel-button"
                         onClick={() => setOpenDeleteAlert(false)}
-                        disabled={loading}
+                        disabled={isLoading}
                     > Cancel</Button>,
                     <Button key={1234} 
                         className="accept-button"
-                        loading={loading}
+                        loading={isLoading}
                         onClick={handleDeletePhotos}
                     >{loading ? "Deleting..." : "Delete Photos"}</Button>
                 ]}

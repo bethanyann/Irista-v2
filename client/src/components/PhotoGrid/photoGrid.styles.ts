@@ -65,8 +65,12 @@ export const PhotoTile = styled.div`
     align-items: center;
     justify-content: center;
     cursor: default;
-    .photo-image-wrapper:hover {
-        cursor: pointer;
+
+    .photo-image-wrapper {
+        z-index: 1;
+    }
+    .photo-image-wrapper:hover{
+        /* cursor: pointer; */
     }
 `;
 
@@ -86,7 +90,6 @@ export const PhotoImage = styled.div<PhotoThumbnailProps>`
     justify-content: start;
     align-items: flex-end;
     color: white;
-    cursor: pointer;
     border: none;
     background: url(${props => props.imageURL}), var(--steam);
 
@@ -96,7 +99,6 @@ export const PhotoImage = styled.div<PhotoThumbnailProps>`
     transition: .3s;
 
     :hover {
-        background-color: var(--smoke);
         cursor: pointer; 
     }
 `;
