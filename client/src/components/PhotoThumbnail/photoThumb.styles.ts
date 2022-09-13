@@ -11,25 +11,11 @@ export const Wrapper = styled.div`
     }
 `;
 
-export const CheckboxContainer = styled.div`
-    position: relative;
-    max-width: 300px;
-
-    input {
-        position: absolute;
-        bottom: 0;
-        color: white;
-        text-align: left;
-    }
-`;
-
 export const Thumbnail = styled.img`
     height: 150px;
     width: auto;
-    //max-width: 400px;
     transition: all 0.3s; //transition on hover
     object-fit: cover; //center the image and make it fit into the thumbnails
-    //border-radius: 20px; //rounded corners 
     animation: animateThumb 0.5s;
 
         :hover {

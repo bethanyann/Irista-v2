@@ -1,7 +1,8 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { Suspense } from 'react';
 import { Photo } from '../../models/types';
-import { Wrapper, Thumbnail, CheckboxContainer } from './photoThumb.styles';
+import { Wrapper, Thumbnail } from './photoThumb.styles';
+import { Image } from 'antd';
+import LoadingImage from '../../images/fallback-img.png';
 
 interface IProps {
     photo: Photo,
@@ -11,11 +12,9 @@ interface IProps {
 const PhotoThumbnail = ({ photo } : IProps) => {
     return (
         <Wrapper>
-            {/* <CheckboxContainer>
-                <input type="checkbox"/> */}
-            
-            <Thumbnail src={photo.secure_url} alt='photo-thumbnail' />
-            {/* </CheckboxContainer> */}
+            <Suspense fallback={ <Image src="error" width={"auto"} height={"150px"} fallback={LoadingImage}/>}>
+                <Thumbnail src={photo.secure_url} alt='individual image thumbnail' />
+            </Suspense>
         </Wrapper>
     )
 }

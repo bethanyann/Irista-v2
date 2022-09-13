@@ -153,8 +153,8 @@ export const ThumbsContainer = styled.aside`
 
     .remove-checkbox-span {
         position: relative;
-        left: 50px;
-        top: -15px;
+        left: 44px;
+        top: -12px;
     }
 
     .checkbox {
@@ -169,7 +169,7 @@ export const ThumbsContainer = styled.aside`
 
     .checkbox:hover {
         cursor: pointer;
-        background-color: #bdbdbd;
+        background-color: #e5e5e5;
     }
 `;
 
