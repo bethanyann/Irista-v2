@@ -27,11 +27,16 @@ export const usePhotoFetch =  (user: User) => {
                 const photos = await fetch(`/api/getPhotos/${encodedUsername}`);
                 const results = await photos.json();
 
-                const sortedResults = groupBy(results,  (photo:any) => { 
+                //should have something like results.results and results.next_cursor or something like that 
+                const nextCursor = results.next_cursor ?? null;
+                const resources = results.resources ?? null; 
+                const totalCount = results.total_count ?? null; //idk if i will use this yet but here it is
+
+                const sortedResults = groupBy(resources,  (photo:any) => { 
                     let date = moment(photo.created_at);
                     return date.format("MM-DD-YYYY");
                 });
-                // debugger;
+              
                 setState(sortedResults);
             }
            
