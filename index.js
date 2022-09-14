@@ -25,7 +25,7 @@ app.get('/api/getPhotos/:username', async (req, res) => {
        let username = req.params.username;
        
        //SearchAPI using context
-       const { resources } = await cloudinary.search.expression(`context.username=${username}`).sort_by('created_at', 'desc').max_results(30).execute();
+       const { resources } = await cloudinary.search.expression(`context.username=${username}`).sort_by('created_at', 'desc').max_results(50).execute();
        res.send(resources);
     } catch(error) {
        // console.log(error);

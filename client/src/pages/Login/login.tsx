@@ -47,7 +47,6 @@ const Login = ( props:any ) => {
             navigate(`/photos`, {replace: true});
         }, 
         onError({graphQLErrors}) {
-            debugger;
             if(graphQLErrors.length > 0)
             {
                 var errors = graphQLErrors[0].extensions.errors as ErrorInterface;
@@ -108,7 +107,7 @@ const Login = ( props:any ) => {
                                         </p>
                                 </div>
                             </div>
-                            <Button className="accept-button" onClick={onSubmit} style={{width:'300px', margin:0, marginTop:'20px' }}>Log In</Button>
+                            <Button className="accept-button" onClick={onSubmit} style={{width:'300px', margin:0, marginTop:'20px' }} loading={loading}>Log In</Button>
                             <p className='p-link'>No account yet?  Sign up for a new one <Link to='/register' style={{textDecoration:'underline', color:'#CC0000'}}>here</Link>.</p>
                         </Form>
                     </FormStyle>

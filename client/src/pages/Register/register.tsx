@@ -137,7 +137,7 @@ const Register = ( props:any ) => {
                                 </p>
                             </div>
                         </div>
-                        <Button className="accept-button" onClick={onSubmit}>Create Account</Button>
+                        <Button className="accept-button" onClick={onSubmit} loading={loading}>Create Account</Button>
                         <p style={{marginTop:'50px'}}>Already have an account? Sign in <Link to='/login' style={{textDecoration:'underline', color:'#CC0000'}}>here</Link>.</p>
                     </Form>
                 </FormStyle>

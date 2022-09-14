@@ -10,6 +10,7 @@ import AlbumIcon from '../../images/icons/photo_album.png';
 import PhotoThumbnail from '../../components/PhotoThumbnail/photoThumb';
 import PhotoInfo from '../PhotoInfo/photoInfo';
 import LoadingSpinner from '../../components/LoadingSpinner/spinner';
+import { Button } from 'antd';
 
 
 const PhotoGrid = () => {
@@ -29,7 +30,7 @@ const PhotoGrid = () => {
         setIsOpen(false);
     }
 
-    if(false) {
+    if(error) {
         return(
             <FullPageContainer>
                 <h2> Error Fetching Content </h2>
@@ -82,7 +83,7 @@ const PhotoGrid = () => {
                     ) : null
                 }
                  <PhotoInfo visible={isOpen} photoId={activePhotoId} onClose={handleModalClose} /> 
-                
+                <Button type='text'>Load More</Button>
             </Content>
         </Wrapper>
     )
