@@ -33,13 +33,13 @@ export const usePhotoTimelineFetch =  (user: User) => {
                     return date.format("MM-DD-YYYY");
                 });
                 debugger;
-                ////console.log(sortedResults);
+                console.log(sortedResults);
 
                 //pass a function to setState because the function is guaranteed to be invoked with the 
                 //current & most up to date state obj
                 setState(current => {
                     const photos: Dictionary<Photo[]> = { ...current.sortedPhotos, ...sortedResults };
-                    
+
                     return {
                         //use spread syntax to make shallow copy of previous state object
                         ...current,
