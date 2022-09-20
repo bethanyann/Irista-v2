@@ -22,18 +22,12 @@ export const usePhotoTimelineFetch =  (user: User) => {
                 let encodedUsername = encodeURIComponent(user.username);
                 const photos = await fetch(`/api/getPhotos/${encodedUsername}`);
                 const results: Photos = await photos.json();
-
-                // //should have something like results.results and results.next_cursor or something like that 
-                // const nextCursor = results.next_cursor ?? null;
-                // const resources  = results.resources ?? null; 
-                // const totalCount = results.total_count ?? null; //idk if i will use this yet but here it is
-
+                
                 const sortedResults = groupBy(results.resources,  (photo:Photo) => { 
                     let date = moment(photo.created_at);
                     return date.format("MM-DD-YYYY");
                 });
-                debugger;
-                console.log(sortedResults);
+                //console.log(sortedResults);
 
                 //pass a function to setState because the function is guaranteed to be invoked with the 
                 //current & most up to date state obj
