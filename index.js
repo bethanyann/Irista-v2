@@ -22,17 +22,31 @@ app.use(express.json({limit: '50mb'}));
 // GET ALL USER PHOTOS FOR HOMEPAGE PHOTO TIMELINE GRID 
 app.get('/api/getPhotos/:username', async (req, res) => {
     try {
-       let username = req.params.username;
-       
-       //SearchAPI using context
-       const results = await cloudinary.search.expression(`context.username=${username}`).sort_by('created_at', 'desc').max_results(20).execute();
-       console.log(results);
-       res.send(results);
+        let username = req.params.username;
+        //SearchAPI using context
+        results = await cloudinary.search.expression(`context.username=${username}`).sort_by('created_at', 'desc').max_results(20).execute();
+
+        console.log(results);
+        res.send(results);
     } catch(error) {
        // console.log(error);
        res.send(500).json(error);
     }
-})
+});
+
+app.get('/api/getPhotos/:username/:nextCursor', async (req, res) => {
+    try {
+        let username = req.params.username;
+        let nextCursor = req.params.nextCursor;
+    
+        const results = await cloudinary.search.expression(`context.username=${username}`).next_cursor(nextCursor).sort_by('created_at', 'desc').max_results(20).execute();
+        console.log(results);
+        res.send(results);
+    } catch(error) {
+       // console.log(error);
+       res.send(500).json(error);
+    }
+});
 
 // GET SINGLE PHOTO DETAILS
 app.get('/api/getPhotoInfo/:encodedPhotoId', async (req,res) => {

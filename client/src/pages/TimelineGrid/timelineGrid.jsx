@@ -21,7 +21,6 @@ const PhotoGrid = () => {
     
     const { state, loading, error, setIsLoadingMore } =  usePhotoTimelineFetch(user); 
 
-    debugger;
     //see what the shape of state is, and how to get the date loop to work again
     //object.keys and all that 
     //state.sortedPhotos
@@ -34,8 +33,10 @@ const PhotoGrid = () => {
         setIsOpen(false);
     }
 
-    const handleLoadMorePhotos = () => {
-
+    const handleLoadMorePhotos = (e) => {
+    //     //TODO
+         e.preventDefault(); 
+         setIsLoadingMore(true);
     }
 
     if(error) {
@@ -73,7 +74,7 @@ const PhotoGrid = () => {
                         Object.keys(state.sortedPhotos).map(function(date) {
                             return (
                                 <>
-                                <div key={date} style={{width:'100%'}}>
+                                <div key={date + "_" + Math.random()} style={{width:'100%'}}>
                                     <h4 className="header-date"><Moment format="D MMMM YYYY">{date}</Moment></h4>
                                 </div>
                                   {
@@ -94,9 +95,8 @@ const PhotoGrid = () => {
             </Content>
             <div style={{textAlign:"center"}}>
                 {
-                   // state.next_cursor && !loading ? (
-                    !loading ? (
-                        <Button onClick={handleLoadMorePhotos} type='text' style={{backgroundColor:"#a30101", color:"white", padding:"4px 20px 10px 20px", borderRadius:"20px"}}>Load More</Button>
+                    state.next_cursor && !loading ? (
+                        <Button onClick={handleLoadMorePhotos()} type='text' style={{backgroundColor:"#a30101", color:"white", padding:"4px 20px 10px 20px", borderRadius:"20px"}}>Load More</Button>
                     ) : null
                 }
             </div>

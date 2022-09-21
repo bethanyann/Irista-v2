@@ -1,7 +1,6 @@
 import { useState, useEffect} from 'react';
 import { Photo, Photos, SortedPhotos, User  } from '../models/types';
 import { Dictionary, groupBy } from 'lodash';
-import { createSecureContext } from 'tls';
 const moment = require('moment');
 
 // TODO -need a way to store the next_cursor to determine if there are more photos to load
@@ -18,9 +17,14 @@ export const usePhotoTimelineFetch =  (user: User) => {
             setError(false);
 
             if(user.username)
-            {
+            {  
+                let nextCursor = state.next_cursor ? encodeURIComponent(state.next_cursor): "";
                 let encodedUsername = encodeURIComponent(user.username);
-                const photos = await fetch(`/api/getPhotos/${encodedUsername}`);
+                debugger;
+                let endpoint: string = nextCursor ? `/api/getPhotos/${encodedUsername}/${nextCursor}` : `/api/getPhotos/${encodedUsername}`
+                const photos = await fetch(endpoint);
+
+                debugger;
                 const results: Photos = await photos.json();
                 
                 const sortedResults = groupBy(results.resources,  (photo:Photo) => { 
@@ -54,10 +58,16 @@ export const usePhotoTimelineFetch =  (user: User) => {
     }
 
     useEffect(() => {
-       
+        debugger;
         fetchPhotos(user);
+    }, [ user, isLoadingMore] );
 
-    }, [user] );
+    // useEffect(() => {
+    //     if(!isLoadingMore) return;
+
+    //     //make a request with the next_cursor set
+    //     fetchPhotos()
+    // }, [setIsLoadingMore]);
 
     return { state, loading, error, setIsLoadingMore };
 };
