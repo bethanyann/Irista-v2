@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { AuthContext } from '../../context/authContext';
 import { Wrapper, Content, FullPageContainer, EmptyAlbum } from './timelineGrid.styles';
-import { usePhotoFetch } from '../../hooks/usePhotoFetch';
+import { usePhotoTimelineFetch } from '../../hooks/usePhotoTimelineFetch';
 import Moment from 'react-moment';
 //icon
 import AlbumIcon from '../../images/icons/photo_album.png';
@@ -19,8 +19,11 @@ const PhotoGrid = () => {
     const [ isOpen, setIsOpen ] = useState(false);
     const [ activePhotoId, setActivePhotoId ] = useState("");
     
-    const { state, loading, error, setIsLoadingMore } =  usePhotoFetch(user); 
+    const { state, loading, error, setIsLoadingMore } =  usePhotoTimelineFetch(user); 
 
+    //see what the shape of state is, and how to get the date loop to work again
+    //object.keys and all that 
+    //state.sortedPhotos
     const handleModalOpen = (photoId) => {
         setActivePhotoId(photoId);
         setIsOpen(true);
@@ -28,6 +31,13 @@ const PhotoGrid = () => {
 
     const handleModalClose = () => {
         setIsOpen(false);
+    }
+
+    const handleLoadMorePhotos = (e) => {
+    //     //TODO
+        debugger;
+         e.preventDefault(); 
+         setIsLoadingMore(true);
     }
 
     if(error) {
@@ -61,15 +71,15 @@ const PhotoGrid = () => {
             <div className='divider'></div>
             <Content>
                 {
-                    state && Object.keys(state).length > 0 ?  (
-                        Object.keys(state).map(function(date) {
+                    state.sortedPhotos && Object.keys(state.sortedPhotos).length > 0 ?  (
+                        Object.keys(state.sortedPhotos).map(function(date) {
                             return (
                                 <>
-                                <div key={date} style={{width:'100%'}}>
+                                <div key={date + "_" + Math.random()} style={{width:'100%'}}>
                                     <h4 className="header-date"><Moment format="D MMMM YYYY">{date}</Moment></h4>
                                 </div>
                                   {
-                                    state[date].map(photo => {
+                                    state.sortedPhotos[date].map(photo => {
                                         return (
                                             <div key={photo.asset_id} onClick={() => handleModalOpen(photo.public_id)}>
                                                 <PhotoThumbnail alt='photo-thumbnail' photo={photo}/>
@@ -78,13 +88,19 @@ const PhotoGrid = () => {
                                     })
                                   }
                                 </>
-                              )
+                            )
                         })
                     ) : null
                 }
-                 <PhotoInfo visible={isOpen} photoId={activePhotoId} onClose={handleModalClose} /> 
-                <Button type='text'>Load More</Button>
+                <PhotoInfo visible={isOpen} photoId={activePhotoId} onClose={handleModalClose} /> 
             </Content>
+            <div style={{textAlign:"center", marginTop:"20px"}}>
+                {
+                    state.next_cursor && !loading ? (
+                        <Button onClick={(e) => handleLoadMorePhotos(e)} type='text' style={{backgroundColor:"#a30101", color:"white", padding:"4px 20px 10px 20px", borderRadius:"20px"}}>Load More</Button>
+                    ) : null
+                }
+            </div>
         </Wrapper>
     )
  }

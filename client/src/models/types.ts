@@ -1,3 +1,4 @@
+import { Dictionary } from "lodash";
 
 export type User = {
     username: string;
@@ -9,6 +10,16 @@ export type User = {
 
 export type Photos = {
     resources: Photo[];
+    //maybe do this differently but this is the data
+    //structure that the lodash groupby does for the sorting
+    //by date needed for the timeline on the homepage
+    //sortedPhotos?: Dictionary<Photo[]>;
+    next_cursor?: string;
+    total_count?: number;
+}
+
+export type SortedPhotos = {
+    sortedPhotos?: Dictionary<Photo[]>;
     next_cursor?: string;
     total_count?: number;
 }
