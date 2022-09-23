@@ -58,8 +58,9 @@ export const usePhotoTimelineFetch =  (user: User) => {
     }
 
     useEffect(() => {
-        debugger;
         fetchPhotos(user);
+        //set back to false once the fetch has completed
+        setIsLoadingMore(false);
     }, [ user, isLoadingMore] );
 
     // useEffect(() => {
