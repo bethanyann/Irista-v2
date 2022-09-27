@@ -63,6 +63,8 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
             //TODO maybe do something here to at least upload the first 15 photos and then tell the user that the # of the rest of the photos couldn't be uploaded? 
             if(rejectedFiles[0].errors[0].code === "too-many-files") {
                 errorList.push("Files could not be uploaded. File upload is limited to 15 photos at a time.");
+                
+                //if I set accepted files here could I get it to still upload the first 15 files and display an error? 
                 setFileErrors(errorList);
             } else {
                 rejectedFiles.forEach(err => {
