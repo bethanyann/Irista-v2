@@ -54,19 +54,27 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
     }
 
     const handleDrop = (acceptedFiles, rejectedFiles) => {
+        debugger;
         setFileErrors([]);
         setError('');
         if(rejectedFiles.length > 0)
         {
             let errorList = [];
-
-            rejectedFiles.forEach(err => {
-                errorList.push([
-                    err.file.path,
-                    err.errors[0].message
-                ]);
-            });  
-            setFileErrors(errorList);
+            //TODO maybe do something here to at least upload the first 15 photos and then tell the user that the # of the rest of the photos couldn't be uploaded? 
+            if(rejectedFiles[0].errors[0].code === "too-many-files") {
+                errorList.push("Files could not be uploaded. File upload is limited to 15 photos at a time.");
+                
+                //if I set accepted files here could I get it to still upload the first 15 files and display an error? 
+                setFileErrors(errorList);
+            } else {
+                rejectedFiles.forEach(err => {
+                    errorList.push([
+                        err.file.path,
+                        err.errors[0].message
+                    ]);
+                });  
+                setFileErrors(errorList);
+           }
         }    
         if(acceptedFiles.length > 0) 
         {       
@@ -141,6 +149,7 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
                     return axios.post(url, {data: file.fileString}).then(response => {
                         uploadedPhotoList = [...uploadedPhotoList, response.data];
                         //after the photo is successfully uploaded to cloudinary, add photo info to db
+                        //TODO - add in all of the photo data and EXIF json string 
                         createPhotoCallback(response.data);
                     }).catch(error => {
                         setLoading(false);
@@ -206,7 +215,7 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
                 onDrop={(acceptedFiles, rejectedFiles) => handleDrop(acceptedFiles, rejectedFiles)} 
                 multiple={true}  
                 accept={{'image/*': ['.jpeg', '.png', '.tiff', '.gif', '.heic']}}
-                maxFiles={10}
+                maxFiles={15}
                 maxSize={10485760}
                 disabled={loading}
             >
@@ -246,11 +255,11 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
             <p className="error-list">
                 { fileErrors.length > 0 ? <span className="error-icon"><ExclamationCircleFilled /></span> : null}
                 {
-                    fileErrors && fileErrors.length > 0 ? 
-                        fileErrors.map(error => (
-                            `File ${error[0]} could not be uploaded. ${error[1]}.  `
-                        ))
-                    : null
+                    fileErrors && fileErrors.length > 1 ? 
+                    fileErrors.map(error => (
+                         `File ${error[0]} could not be uploaded. ${error[1]}.  `
+                     ))
+                    : fileErrors.length === 1 ? fileErrors[0] :null
                 } 
             </p>
             <div className="button-container">
