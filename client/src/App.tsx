@@ -18,6 +18,7 @@ import { WithNav, WithoutNav } from './components/Navbar/navbarDisplay';
 
 export default function App() {
   return (
+
         <AuthProvider>
             <Routes>
               <Route element={<WithNav />} >
