@@ -77,10 +77,10 @@ const AlbumPhotos = () => {
     }
 
     const handleDeletePhotos = async () => {
-        debugger;
         setIsLoading(true);
+        
         if(selectedPhotos.size > 0){
-            //console.log(selectedPhotos);
+  
             let selectedPhotoArr = Array.from(selectedPhotos);
 
             await fetch(`/api/deletePhotos`, {
