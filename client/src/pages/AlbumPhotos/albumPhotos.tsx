@@ -33,9 +33,6 @@ const AlbumPhotos = () => {
     const [ selectedPhotos, setSelectedPhotos] = useState(() => initialState);
     const [ isSelected, setIsSelected ] = useState(false);
     const [ isLoading, setIsLoading ] = useState(false);
-
-    const [ activePhotoId, setActivePhotoId ] = useState('');
-    const [ isPhotoModalOpen, setIsPhotoModalOpen ] = useState(false);
     const [ openDeleteAlert, setOpenDeleteAlert ] = useState(false);
 
 
@@ -43,7 +40,6 @@ const AlbumPhotos = () => {
     const { photos, setPhotos, loading, error } = useAlbumPhotoFetch(albumName!);
 
     const handleModalOpen = () => {
-       // setSelectedPhotos(initialState);
         setIsOpen(true);
     }
 
@@ -78,7 +74,7 @@ const AlbumPhotos = () => {
 
     const handleDeletePhotos = async () => {
         setIsLoading(true);
-        
+
         if(selectedPhotos.size > 0){
   
             let selectedPhotoArr = Array.from(selectedPhotos);
@@ -93,7 +89,6 @@ const AlbumPhotos = () => {
                 let newArray = { } as Photos;
                 newArray.resources = photos!.resources.filter(photo => !selectedPhotoArr.find(em => (em === photo.public_id)));
                 
-                //set photo state to new array 
                 setPhotos(newArray);
                 setSelectedPhotos(initialState);
                 setIsSelected(false);
@@ -106,7 +101,6 @@ const AlbumPhotos = () => {
           
         }
         else {
-            //return error that no photos are selected for deletion
             console.log(selectedPhotos);
         }
     }
@@ -150,7 +144,7 @@ const AlbumPhotos = () => {
            <PhotoGrid photos={photos} setSelectedPhotos={setSelectedPhotos} setIsSelected={setIsSelected} /> 
         </Wrapper>
 
-        <Modal className="ant-modal" title="" width={600} visible={openDeleteAlert} onCancel={() => setOpenDeleteAlert(false)} footer={null}>
+        <Modal className="ant-modal" title="Delete" width={600} visible={openDeleteAlert} onCancel={() => setOpenDeleteAlert(false)} footer={null}>
             <Result
                 status="warning"
                 title={`Delete ${selectedPhotos.size} photo${selectedPhotos.size > 1 ? 's' : ''} from your account?` }
@@ -167,10 +161,7 @@ const AlbumPhotos = () => {
                         onClick={handleDeletePhotos}
                     >{loading ? "Deleting..." : "Delete Photos"}</Button>
                 ]}
-           />
-{/* <Button className='accept-button' onClick={handlePhotoUpload} loading={loading}>{loading ? "Uploading..." : "Upload Photos"}</Button> */}
-
-            
+           />    
         </Modal>
         <Modal className="upload-modal"
             visible={isOpen} 
