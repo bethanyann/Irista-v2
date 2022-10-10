@@ -14,4 +14,4 @@ const WithNav = () => {
 
 const WithoutNav = () => <Outlet />
 
-export  {WithNav, WithoutNav };
+export  { WithNav, WithoutNav };

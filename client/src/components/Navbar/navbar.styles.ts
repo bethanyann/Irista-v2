@@ -40,13 +40,13 @@ export const Content = styled.div`
 
 export const LogoImg = styled.img`
     width: 100px;
+    
     .text {
         font-family: 'Gotham', sans-serif;
-       // color: black;
         padding-left: 20px;
         font-size: 500;
     }
-    //when the screen size is less than 720px
+
     @media screen and (max-width: 720px){
       width: 120px;   
     }
@@ -55,31 +55,37 @@ export const LogoImg = styled.img`
 export const NavLinks = styled.div`
     display: flex;
     align-items: center;
+
     /* menu links section */
     .nav-links {
         padding: 0 15px;
     }
+
     .nav-link {
         font-size: var(--fontSmedium);
         font-weight: 400;
     }
+
     .nav-link:hover {
         color: var(--slate);
         border-bottom: 2px solid var(--darkRed);
         padding-bottom: 19px;
     }
+
     .active {
         color: var(--slate);
         border-bottom: 4px solid var(--darkRed);
         padding-bottom: 18px;
         font-weight: 410;
     }
+
+    .divider {
+        padding-left: '25px';
+    }
   
 `;
 
 export const NavIcons = styled.div`
-    /* border-left: 2px solid var(--fog); */
-    /* padding-left: 20px;  */
     display:flex;
     height: 40px;
 
@@ -91,29 +97,25 @@ export const NavIcons = styled.div`
     .search-box {
         display:flex;
     }
+
     .search-box-active {
         display: flex;
     }
 
     .search-button {
-    /* min-width: 35px; */
         text-align: center;
         border-radius: 50%;
         background: none;
         border: 1px solid black;
-        /* padding: 3px; */
         padding-top: 9px;
         margin-right: 15px;
-        /* padding-bottom: 4px; */
         height: 37px;
-        //transition: 0.35s; 
         transition-delay: 0.36s;
     }
 
     .search-button-active {
         border: none;
         background:none;
-        /* display: none; */
         border-top: 1px solid black;
         border-bottom: 1px solid black;
         border-top-right-radius: 50%;
@@ -122,7 +124,6 @@ export const NavIcons = styled.div`
         border-top-left-radius: 0%;
         border-bottom-left-radius: 0%;
         padding-top: 9px;
-        /* padding-bottom: 4px; */
         margin-right: 15px;
         height: 37px;
         transition: 0.15s;
@@ -148,7 +149,6 @@ export const NavIcons = styled.div`
         border-bottom-right-radius: 0%;
 
         transition: width 0.4s ease-out, border-color 0.4s ease 0.1s;
-       // transition: width .75s, border-color .7s;
     }
 
     .search-text:focus {
@@ -168,12 +168,10 @@ export const NavIcons = styled.div`
     }
 
     .user-button {
-        /* min-width: 32px; */
         text-align: center;
         border-radius: 50%;
         background: none;
         border: 1px solid black;
-        /* padding: 3px; */
         padding-top: 9px;
         margin-right: 10px;
         height: 37px;
