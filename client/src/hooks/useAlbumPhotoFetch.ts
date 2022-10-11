@@ -1,11 +1,6 @@
 import { useState, useEffect} from 'react';
-import { Photo, Photos, User  } from '../models/types';
+import { Photos } from '../models/types';
 
-// type AlbumPhotos = {
-//     resources: Photo[],    
-// }
-
-//need a way to store the next_cursor to determine if there are more photos to load
 export const useAlbumPhotoFetch =  (albumName:string) => {
 
     const [ photos, setPhotos ] = useState<Photos>();
