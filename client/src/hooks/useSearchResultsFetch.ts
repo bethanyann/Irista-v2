@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { User, SearchResults } from '../models/types';
 
+import { isPersistedState } from '../utilities/helpers';
+
+
 export const useSearchResultsFetch = (searchText: string, user: User) => {
 
     const [ searchResults, setSearchResults ] = useState<SearchResults>();
@@ -21,6 +24,8 @@ export const useSearchResultsFetch = (searchText: string, user: User) => {
                 if(!searchResults) {
                     setErrorMessage( `No results were found that match the search term "${searchText}" `);
                 } else {
+                    //add search results to session storage 
+                    sessionStorage.setItem(`${searchText}`, JSON.stringify(searchResults)); 
                     setSearchResults(searchResults);
                 }
                 setIsLoading(false);
@@ -34,7 +39,16 @@ export const useSearchResultsFetch = (searchText: string, user: User) => {
 
         if(searchText)
         {
-            fetchSearchResults();
+            //see if the same search text results exist in session 
+            const sessionState = isPersistedState(`${searchText}`);
+
+            if(!sessionState){
+                fetchSearchResults();
+            } else {
+                console.log('grabbing from session storage');
+                setSearchResults(sessionState);
+                return;
+            }
         }
     }, [searchText, user]);
 
