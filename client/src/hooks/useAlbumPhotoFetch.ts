@@ -1,8 +1,9 @@
 import { useState, useEffect} from 'react';
 import { Photos } from '../models/types';
 
-export const useAlbumPhotoFetch =  (albumName:string) => {
+import { isPersistedState } from '../utilities/helpers';
 
+export const useAlbumPhotoFetch =  (albumName:string) => {
     const [ photos, setPhotos ] = useState<Photos>();
     const [ loading, setLoading ] = useState(false);
     const [ error, setError ] = useState(false);
@@ -30,7 +31,16 @@ export const useAlbumPhotoFetch =  (albumName:string) => {
     }
 
     useEffect(() => {
-        fetchPhotos(albumName);
+        const sessionState = isPersistedState(`${albumName}`);
+        if(!sessionState) {
+            console.log('grabbing from session storage');
+            fetchPhotos(albumName);
+        }
+        else {
+            console.log('grabbing from api');
+            setPhotos(sessionState);
+            return;
+        }
     }, [albumName, setPhotos] );
 
     return { photos, setPhotos, loading, error, setIsLoadingMore };
