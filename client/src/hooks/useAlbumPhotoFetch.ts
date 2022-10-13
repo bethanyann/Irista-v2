@@ -1,13 +1,9 @@
 import { useState, useEffect} from 'react';
-import { Photo, Photos, User  } from '../models/types';
+import { Photos } from '../models/types';
 
-// type AlbumPhotos = {
-//     resources: Photo[],    
-// }
+import { isPersistedState } from '../utilities/helpers';
 
-//need a way to store the next_cursor to determine if there are more photos to load
 export const useAlbumPhotoFetch =  (albumName:string) => {
-
     const [ photos, setPhotos ] = useState<Photos>();
     const [ loading, setLoading ] = useState(false);
     const [ error, setError ] = useState(false);
@@ -35,7 +31,16 @@ export const useAlbumPhotoFetch =  (albumName:string) => {
     }
 
     useEffect(() => {
-        fetchPhotos(albumName);
+        const sessionState = isPersistedState(`${albumName}`);
+        if(!sessionState) {
+            console.log('grabbing from session storage');
+            fetchPhotos(albumName);
+        }
+        else {
+            console.log('grabbing from api');
+            setPhotos(sessionState);
+            return;
+        }
     }, [albumName, setPhotos] );
 
     return { photos, setPhotos, loading, error, setIsLoadingMore };
