@@ -8,3 +8,6 @@ About a month after I signed up for Irista, Canon announced that it was closing 
 This site is a personal project meant to mimic the layout and functionality of the original Irista site using Cloudinary as the backend storage solution. 
 
 Work in Progress... readme will be updated when site is live. 
+
+
+![icons](https://user-images.githubusercontent.com/21211634/195912579-e85b1ce5-cac6-4e53-8378-23e78f6e0dcb.png)
