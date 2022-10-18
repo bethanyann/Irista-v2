@@ -64,6 +64,7 @@ export const NavLinks = styled.div`
     .nav-link {
         font-size: var(--fontSmedium);
         font-weight: 400;
+        margin-right: 15px;
     }
 
     .nav-link:hover {
