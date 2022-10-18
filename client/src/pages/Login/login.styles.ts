@@ -10,25 +10,25 @@ export const Wrapper = styled.div`
 export const Content = styled.div`
     //center on the page
     display: flex;
-    /* flex-direction: row; */
     justify-content: center;
     /* align-content: center; */
     height: 95vh;
 
     background-color: var(--fog);
 
-    -webkit-scrollbar {
+    /* -webkit-scrollbar {
         display:none;
-    }
+    } */
 `;
 
 export const FormStyle = styled.div`
-    //background-color: #f07122;
+    display: flex;
+    align-items: center;
+
     flex: 1;
     background-color: var(--snow);
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
-    /* margin:auto; */
     padding: 30px 30px 25px 30px;
 
     h2 {
@@ -47,27 +47,9 @@ export const FormStyle = styled.div`
         font-weight: 100;
     }
 
-    /* button {
-        display: block;
-        padding: 12px;
-        width: 300px;
-        margin: auto;
-        margin-top: 50px;
-        margin-bottom: 50px;
-        color: white;
-        background-color: var(--red);
-        border: none;
-        font-size: medium;
-        border-radius: 5px;
-        cursor: pointer;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    } */
-
-    /* button:hover {
-        color: black;
-        background-color: var(--lightRed);
-    } */
+    .ant-form-vertical .ant-form-item .ant-form-item-control {
+        height: 34px !important;
+    }
 
     input:focus{
         border: 1px solid var(--silver); //#b5b3b3 
@@ -76,16 +58,23 @@ export const FormStyle = styled.div`
     label {
         font-size: medium;
         margin: 10px 0 4px 25px;
-
-        /* @media screen and (max-width: 700px){
-            margin: 10px 0 4px 0;
-        } */
     }
 `;
 
-export const ImageContainer = styled.img`
-    flex: 2;
-    object-fit: cover;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
+export const ImageContainer = styled.div`
+    width: 80%;
+    max-width: 600px;
+    min-width: 350px;
+
+    img {
+        flex: 2;
+        object-fit: cover;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        width: 100%;
+    }
+
+    @media screen and (max-width: 950px){
+        display: none;
+    }
 `;

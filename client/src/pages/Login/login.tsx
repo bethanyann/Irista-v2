@@ -5,7 +5,7 @@ import { useMutation } from '@apollo/client';
 //styles
 import { Wrapper, Content, FormStyle, ImageContainer } from './login.styles';
 import { Form, Input, Button } from 'antd';
-import BckImage from '../../images/login_image1_copy.jpg';
+import LoginImage from '../../images/photo-camera-girl-logo.jpg';
 //authContext
 import { AuthContext } from '../../context/authContext';
 //hooks
@@ -66,14 +66,16 @@ const Login = ( props:any ) => {
     return (
         <Wrapper>
             <Content>
-                <div style={{display:'flex', margin:'auto', maxWidth:'52%', flexDirection:'row'}}>
+                <div style={{display:'flex', margin:'auto', flexDirection:'row', marginLeft:"30px", marginRight:"30px"}}>
+           
                     <FormStyle>
+                   
                         <Form
                             form={form}
                             layout="vertical"
-                            style={{textAlign:'center'}}
+                            style={{textAlign:'center', paddingBottom:'30px'}}
                         >
-                            <h2 style={{marginBottom:'40px'}}> Log in to your Account</h2>
+                             <h2 style={{marginBottom:'40px'}}> Log in to your Account</h2>
                             <div style={{display:'block', margin:'auto', width: '300px'}}>
                                 <Form.Item
                                     label="Username"
@@ -91,6 +93,7 @@ const Login = ( props:any ) => {
                                     label="Password"
                                     name="password"
                                     rules={[{ required: true, message: '' }]}
+                                   
                                 >
                                     <Input type='password' name='password' placeholder='' onChange={onChange}/>
                                 </Form.Item>
@@ -111,7 +114,9 @@ const Login = ( props:any ) => {
                             <p className='p-link'>No account yet?  Sign up for a new one <Link to='/register' style={{textDecoration:'underline', color:'#CC0000'}}>here</Link>.</p>
                         </Form>
                     </FormStyle>
-                    <ImageContainer src={BckImage} alt="image of person with canon camera"/>
+                    <ImageContainer>
+                        <img src={LoginImage} alt="person with canon camera" />
+                    </ImageContainer>
                 </div>
             </Content>
         </Wrapper>

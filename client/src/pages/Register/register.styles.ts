@@ -15,17 +15,21 @@ export const Content = styled.div`
     height: 95vh;
 
     background-color: var(--fog);
+
+    /* -webkit-scrollbar {
+        display:none;
+    } */
 `;
 
 export const FormStyle = styled.div`
-     //background-color: #f07122;
+    display: flex;
+    align-items: center;
+
     flex: 1;
     background-color: var(--snow);
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
-    /* margin:auto; */
-    padding: 30px 45px 25px 45px;
-
+    padding: 30px 70px 25px 70px;
 
     h2 {
         text-align: center;
@@ -43,26 +47,8 @@ export const FormStyle = styled.div`
         font-weight: 100;
     }
 
-    button {
-        display: block;
-        padding: 12px;
-        width: 300px;
-        margin: auto;
-        margin-top: 50px;
-        margin-bottom: 50px;
-        color: white;
-        background-color: var(--red);
-        border: none;
-        font-size: medium;
-        border-radius: 5px;
-        cursor: pointer;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-
-    button:hover {
-        color: var(--slate);
-        background-color: var(--lightRed);
+    .ant-form-vertical .ant-form-item .ant-form-item-control {
+        height: 34px !important;
     }
 
     input:focus{
@@ -71,17 +57,25 @@ export const FormStyle = styled.div`
 
     label {
         font-size: medium;
-        margin: 18px 0 7px 5px;
-
-        /* @media screen and (max-width: 700px){
-            margin: 10px 0 4px 0;
-        } */
+        margin: 10px 0 4px 25px;
     }
 `;
 
-export const ImageContainer = styled.img`
-    flex: 1;
-    object-fit: cover;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px; 
+export const ImageContainer = styled.div`
+    width: 80%;
+    max-width: 600px;
+    min-width: 350px;
+
+    img {
+        flex: 2;
+        object-fit: cover;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        width: 100%;
+        min-height: 700px;
+    }
+
+    @media screen and (max-width: 950px){
+        display: none;
+    }
 `;
