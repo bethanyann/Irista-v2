@@ -1,8 +1,5 @@
 # Irista - Photo Cloud Storage Site
 
-
-## Built using
-
 ![icons](https://user-images.githubusercontent.com/21211634/195915081-01c8f447-3fe9-4b7b-9e40-2fb46e1a3e56.png)
 
 ## About the Project: 
