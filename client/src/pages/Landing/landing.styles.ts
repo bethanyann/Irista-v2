@@ -66,6 +66,7 @@ export const Text = styled.div`
         font-weight: 400;
         line-height: 1.68;
         color: var(--snow);
+        margin-top: 150px;
 
         @media screen and (max-width: 1100px) {
             font-size: 1.1rem;

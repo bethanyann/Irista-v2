@@ -21,9 +21,6 @@ const PhotoGrid = () => {
     
     const { state, loading, error, setIsLoadingMore } =  usePhotoTimelineFetch(user); 
 
-    //see what the shape of state is, and how to get the date loop to work again
-    //object.keys and all that 
-    //state.sortedPhotos
     const handleModalOpen = (photoId) => {
         setActivePhotoId(photoId);
         setIsOpen(true);
@@ -34,8 +31,7 @@ const PhotoGrid = () => {
     }
 
     const handleLoadMorePhotos = (e) => {
-    //     //TODO
-        debugger;
+         debugger;
          e.preventDefault(); 
          setIsLoadingMore(true);
     }

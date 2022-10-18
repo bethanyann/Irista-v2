@@ -41,7 +41,7 @@ const Login = ( props:any ) => {
     const { onChange, onSubmit, values} = useForm(loginUserCallback, initialState);
 
     //mutation here
-    const [ loginUser, {error, loading} ] = useMutation(LOGIN_USER, {
+    const [ loginUser, { loading } ] = useMutation(LOGIN_USER, {
         update(proxy, { data: { loginUser: userData }}) {
             context.login(userData);
             navigate(`/photos`, {replace: true});
