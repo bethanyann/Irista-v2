@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 //styles
 import { Wrapper, Content, FormStyle, ImageContainer } from './register.styles';
 import { Button, Form, Input } from 'antd';
-import LoginImage from '../../images/photo-camera-girl-logo.jpg';
+import LoginImage from '../../images/login_image2_copy.jpg';
 //authContext
 import { AuthContext } from '../../context/authContext';
 //hooks

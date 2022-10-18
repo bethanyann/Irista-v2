@@ -73,7 +73,7 @@ const Login = ( props:any ) => {
                         <Form
                             form={form}
                             layout="vertical"
-                            style={{textAlign:'center'}}
+                            style={{textAlign:'center', paddingBottom:'30px'}}
                         >
                              <h2 style={{marginBottom:'40px'}}> Log in to your Account</h2>
                             <div style={{display:'block', margin:'auto', width: '300px'}}>
