@@ -5,11 +5,11 @@
 ## About the Project: 
 Canon (the camera brand) used to support a cloud photo storage service called 'Irista'.
 
-While it had its quirks, I loved the site and how simple and clean it was compared to other similar services like Google Photos.  Although Google Photos had cool features like facial recognition and auto album creation, it does not allow for nested folders which drove me bonkers, because I could not keep my photos organized by year and then month, which is how I have them stored locally. 
+While it had its quirks, I loved the site and how simple and clean it was compared to other similar services like Google Photos.  Although Google Photos has cool features like facial recognition and auto album creation, it does not allow for nested folders which drove me bonkers, because I could not keep my photos organized by year and then month, which is how I have them stored locally. 
 
-Anyway, bout a month after I signed up for Irista, Canon announced that it was closing down the site, and I've been wanting to rebuild it as a personal project ever since.
+About a month after I signed up for Irista, Canon announced that it was closing down the site, and I've been wanting to rebuild it as a personal project ever since.
 
-This site is a personal project meant to mimic the layout and functionality of the original Irista site using Cloudinary as the backend storage solution. 
+This site is a personal project meant to mimic the UI layout and functionality of the original Irista site using Cloudinary as the backend storage solution. 
 
 ## View the Project: 
 
