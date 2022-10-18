@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 //styles
 import { Wrapper, Content, FormStyle, ImageContainer } from './register.styles';
 import { Button, Form, Input } from 'antd';
-import BckImage from '../../images/login_image2_copy.jpg';
+import LoginImage from '../../images/photo-camera-girl-logo.jpg';
 //authContext
 import { AuthContext } from '../../context/authContext';
 //hooks
@@ -77,8 +77,72 @@ const Register = ( props:any ) => {
     return (
         <Wrapper>
             <Content>
-                <div style={{display:'flex', margin:'auto', flexDirection:'row'}}>
+                <div style={{display:'flex', margin:'auto', flexDirection:'row', marginLeft:"30px", marginRight:"30px"}}>
                 <FormStyle>
+                   
+                   <Form
+                       layout="vertical"
+                       style={{textAlign:'center'}}
+                   >
+                        <h2 style={{marginBottom:'40px'}}>Register your Account</h2>
+                       <div style={{display:'block', margin:'auto', width: '300px'}}>
+                       <Form.Item
+                                label="Username"
+                                name="username"
+                                rules={[{ required: true, message: '' }]}
+                            >
+                                <Input type='text' name='username' placeholder='' onChange={onChange}/>
+                            </Form.Item>
+                            <div className="error-wrap">
+                                <p className='p-error'>
+                                    { ('username' in errors) ?  errors['username'] : '' }
+                                </p>
+                            </div>
+                            <Form.Item
+                                label="Email"
+                                name="email"
+                                rules={[{ required: true, message: '' }]}
+                            >
+                                <Input type='email' name='email' placeholder='' onChange={onChange} />
+                            </Form.Item>
+                            <div className="error-wrap">
+                                <p className='p-error'>
+                                    { ('email' in errors) ?  errors['email'] : '' }
+                                </p>
+                            </div>
+                            <Form.Item
+                                label="Password"
+                                name="password"
+                                rules={[{ required: true, message: '' }]}
+                            >
+                                <Input type='password' name='password' placeholder='' onChange={onChange}/> 
+                            </Form.Item>
+                            <div className="error-wrap">
+                                <p className='p-error'>
+                                    { ('password' in errors) ?  errors['password'] : '' }
+                                </p>
+                            </div>
+                            <Form.Item
+                                label="Confirm Password"
+                                name="confirmPassword"
+                                rules={[{ required: true, message: '' }]}
+                            >
+                                <Input type='password' name='confirmPassword' placeholder='' onChange={onChange}/> 
+                            </Form.Item>
+                            <div className="error-wrap">
+                                <p className='p-error'>
+                                { ('confirmPassword' in errors) ?  errors['confirmPassword'] : '' }
+                                </p>
+                                <p className='p-error'>
+                                    { ('all' in errors) ?  errors['all'] : '' }
+                                </p>
+                            </div>
+                       </div>
+                       <Button className="accept-button" onClick={onSubmit} style={{width:'300px', margin:0, marginTop:'20px' }} loading={loading}>Register</Button>
+                       <p style={{marginTop:'50px', paddingLeft:'17px', paddingRight:'16px'}}>Already have an account? Sign in <Link to='/login' style={{textDecoration:'underline', color:'#CC0000'}}>here</Link>.</p>
+                   </Form>
+               </FormStyle>
+                {/* <FormStyle>
                     <Form
                         layout="vertical"
                         style={{textAlign:'center'}}
@@ -138,10 +202,12 @@ const Register = ( props:any ) => {
                             </div>
                         </div>
                         <Button className="accept-button" onClick={onSubmit} loading={loading}>Create Account</Button>
-                        <p style={{marginTop:'50px'}}>Already have an account? Sign in <Link to='/login' style={{textDecoration:'underline', color:'#CC0000'}}>here</Link>.</p>
+                        <p style={{marginTop:'50px', paddingLeft:'10px'}}>Already have an account? Sign in <Link to='/login' style={{textDecoration:'underline', color:'#CC0000'}}>here</Link>.</p>
                     </Form>
-                </FormStyle>
-                <ImageContainer src={BckImage} alt="image of person with canon camera"/>
+                </FormStyle> */}
+                <ImageContainer>
+                        <img src={LoginImage} alt="person with canon camera" />
+                </ImageContainer>
                 </div>
             </Content>
         </Wrapper>
