@@ -9,7 +9,7 @@ import AlbumIcon from '../../images/icons/photo_album.png';
 //components
 import PhotoThumbnail from '../../components/PhotoThumbnail/photoThumb';
 import PhotoInfo from '../PhotoInfo/photoInfo';
-import LoadingSpinner from '../../components/LoadingSpinner/spinner';
+import LoadingSpinner from '../../components/Loading/spinner';
 import { Button } from 'antd';
 
 
@@ -21,9 +21,10 @@ const PhotoGrid = () => {
     
     const { state, loading, error, setIsLoadingMore } =  usePhotoTimelineFetch(user); 
 
-    //see what the shape of state is, and how to get the date loop to work again
-    //object.keys and all that 
-    //state.sortedPhotos
+
+    //trying something here, going to use useQuery instead to switch this over
+    //actually no because i want to switch this over to getting data from the database so I am not going to fiddle with this for now.
+
     const handleModalOpen = (photoId) => {
         setActivePhotoId(photoId);
         setIsOpen(true);
@@ -34,8 +35,7 @@ const PhotoGrid = () => {
     }
 
     const handleLoadMorePhotos = (e) => {
-    //     //TODO
-        debugger;
+         debugger;
          e.preventDefault(); 
          setIsLoadingMore(true);
     }
@@ -47,13 +47,15 @@ const PhotoGrid = () => {
             </FullPageContainer>
         )
     };
-    if(loading) {
-        return (
-            <FullPageContainer>
-                <LoadingSpinner title="Loading Photos" />
-            </FullPageContainer>
-        )
-    } 
+
+    // if(loading) {
+    //     return (
+    //         <FullPageContainer>
+    //             <LoadingSpinner title="Loading Photos" />
+    //         </FullPageContainer>
+    //     )
+    // } 
+    
     if(!state) {
         return (
             <FullPageContainer>

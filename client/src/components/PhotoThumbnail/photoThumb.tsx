@@ -12,9 +12,9 @@ interface IProps {
 const PhotoThumbnail = ({ photo } : IProps) => {
     return (
         <Wrapper>
-            <Suspense fallback={ <Image src="error" width={"auto"} height={"150px"} fallback={LoadingImage}/>}>
+            {/* <Suspense fallback={ <Image src="error" width={"auto"} height={"150px"} fallback={LoadingImage}/>}> */}
                 <Thumbnail src={photo.secure_url} alt='individual image thumbnail' />
-            </Suspense>
+            {/* </Suspense> */}
         </Wrapper>
     )
 }
