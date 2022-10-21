@@ -89,6 +89,7 @@ export const NavLinks = styled.div`
 export const NavIcons = styled.div`
     display:flex;
     height: 40px;
+    color: black;
 
     .divider {
         border: 1px solid var(--fog);
@@ -104,11 +105,12 @@ export const NavIcons = styled.div`
     }
 
     .search-button {
+        color: black;
         text-align: center;
         border-radius: 50%;
         background: none;
         border: 1px solid black;
-        padding-top: 9px;
+        padding: 8px 9px;
         margin-right: 15px;
         height: 37px;
         transition-delay: 0.36s;
@@ -124,13 +126,14 @@ export const NavIcons = styled.div`
         border-right: 1px solid black;
         border-top-left-radius: 0%;
         border-bottom-left-radius: 0%;
-        padding-top: 9px;
+        padding: 9px;
         margin-right: 15px;
         height: 37px;
         transition: 0.15s;
     }
 
     .search-button:hover {
+        cursor: pointer;
         border: 1px solid #CC0000;
         color: #CC0000;
         transition-delay: color 0s;
@@ -169,11 +172,12 @@ export const NavIcons = styled.div`
     }
 
     .user-button {
+        color: black;
         text-align: center;
         border-radius: 50%;
         background: none;
         border: 1px solid black;
-        padding-top: 9px;
+        padding: 8px 9px;
         margin-right: 10px;
         height: 37px;
         transition: 0.5s;
@@ -182,5 +186,6 @@ export const NavIcons = styled.div`
     .user-button:hover {
         border: 1px solid #CC0000;
         color: #CC0000;
+        cursor: pointer;
     }
 `;

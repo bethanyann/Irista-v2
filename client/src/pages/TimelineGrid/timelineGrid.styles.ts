@@ -18,6 +18,20 @@ export const Wrapper = styled.div`
         border-bottom: 1px solid var(--steam);
         margin-bottom: 20px;
     }
+
+    .button-container {
+        text-align: center;
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .load-more-btn {
+        /* position: fixed;
+        bottom: 20px; */
+        padding: 4px 20px 10px 20px;
+        border-radius: 20px;
+    }
 `;
 
 
@@ -28,7 +42,7 @@ export const Content = styled.div`
     flex-direction: row;
     flex-wrap: wrap;
 
-    .header-date{
+    .header-date {
         font-size: 1.1em;
         color: #b0b0b0;
         /* letter-spacing: .4px; */

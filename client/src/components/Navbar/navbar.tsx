@@ -104,7 +104,7 @@ const Navbar = () => {
                                         onChange={handleInputChange}
                                         onPressEnter={handleInputSubmit}
                                     />
-                                    <button className={isSearching ? "search-button-active" : "search-button"} onClick={showSearchInput}>
+                                    <button className={isSearching ? "search-button-active" : "search-button"}  onClick={showSearchInput}>
                                         <SearchOutlined style={{fontSize:'1.3em'}}/>
                                     </button>
                                 </div>
