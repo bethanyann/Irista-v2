@@ -1,19 +1,20 @@
 import React from 'react';
 import { Photo } from '../../models/types';
-import { Wrapper, Thumbnail } from './photoThumb.styles';
+import { Wrapper } from './photoThumb.styles';
 import { Image } from 'antd';
-// import LoadingImage from '../../images/fallback-img.png';
+import LoadingImage from '../../images/fallback-img.png';
 import { buildUrl, extractPublicId } from 'cloudinary-build-url';
 
 
 interface IProps {
     photo: Photo,
-    //handleModalOpen: () => {}
 }
 
 const PhotoThumbnail = ({ photo } : IProps) => {
+    
 
-    const previewUrl = buildUrl(`${photo.public_id}`, {
+    const photo_publicId = extractPublicId(photo.secure_url);
+    const previewUrl = buildUrl(`${photo_publicId}`, {
         cloud: {
             cloudName: 'bethany',
            
@@ -22,26 +23,29 @@ const PhotoThumbnail = ({ photo } : IProps) => {
             effect: {
                 name: 'blur',
                 value: 1000
-            }
+            },
+            quality: 1
         }
     });
-   debugger;
-    //this works but the photo is public
-    //const previewUrl = "https://res.cloudinary.com/demo/image/upload/c_fill,e_pixelate/cld-sample-4";
+    debugger;
 
     return (
         <Wrapper>
-{/*                <Thumbnail src={photo.secure_url} alt='individual image thumbnail' /> */}
-
+        {/*  <Thumbnail src={photo.secure_url} alt='individual image thumbnail' /> */}
             <Image 
-                style={{height:"150px", width:"auto", transition:"all 0.3s", objectFit:"cover"}}
+                className="image-thumbnail"
+                style={{height:"150px", width:"auto", transition:"all 1s", objectFit:"cover"}}
                 src={photo.secure_url}
+                loading="eager"
                 preview={false}
+                fallback={LoadingImage}
                 placeholder={
                     <Image 
                         preview={false}
                         src={previewUrl}
-                        style={{height:"150px", width:"auto", transition:"all 0.3s", objectFit:"cover"}}
+                        style={{height:"150px", width:"auto", transition:"all 1s", objectFit:"cover"}}
+                        placeholder={LoadingImage}
+                        fallback={LoadingImage}
                     />
                 }
             />
