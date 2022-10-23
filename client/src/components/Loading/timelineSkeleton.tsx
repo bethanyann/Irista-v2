@@ -15,6 +15,8 @@ const TimelineLoadingSkeleton = () => {
                 </div>
                 <div key={photo.asset_id} onClick={() => handleModalOpen(photo.public_id)}>
                                                 <PhotoThumbnail alt='photo-thumbnail' photo={photo}/>
+
+                                                
                 </div> */}
             </Content>
         </Wrapper>
