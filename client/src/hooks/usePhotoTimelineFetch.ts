@@ -17,8 +17,7 @@ export const usePhotoTimelineFetch =  (user: User) => {
             setLoading(true);
             setError(false);
 
-            if(user.username)
-            {  
+            if(user.username) {
                 let nextCursor = state.next_cursor ? encodeURIComponent(state.next_cursor): "";
                 let encodedUsername = encodeURIComponent(user.username);
               
@@ -26,6 +25,7 @@ export const usePhotoTimelineFetch =  (user: User) => {
                 const photos = await fetch(endpoint);
                 const results: Photos = await photos.json();
                 
+                debugger;
                 const sortedResults = groupBy(results.resources,  (photo:Photo) => { 
                     let date = moment(photo.created_at);
                     return date.format("MM-DD-YYYY");
@@ -45,6 +45,7 @@ export const usePhotoTimelineFetch =  (user: User) => {
                     }
                 });
             }
+           
             
         } catch(error) {
             setLoading(false);
@@ -59,11 +60,11 @@ export const usePhotoTimelineFetch =  (user: User) => {
     useEffect(() => {
         const sessionState = isPersistedState('timelineState');
 
-        if(sessionState) {
-            console.log('grabbing from session storage');
-            setState(sessionState);
-            return;
-        }
+        // if(sessionState) {
+        //     console.log('grabbing from session storage');
+        //     setState(sessionState);
+        //     return;
+        // }
        
         console.log('grabbing from api');
         //TODO create an initial state to use here? 
@@ -76,7 +77,6 @@ export const usePhotoTimelineFetch =  (user: User) => {
 
     //I think only run this one if its loading more and not just on any render? and then have a separate one that runs on initial render to check for session storage?
     useEffect(() => {
-
         fetchPhotos(user);
         //set back to false once the fetch has completed
         setIsLoadingMore(false);

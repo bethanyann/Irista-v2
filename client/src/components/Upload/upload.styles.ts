@@ -154,7 +154,7 @@ export const ThumbsContainer = styled.aside`
     .remove-checkbox-span {
         position: relative;
         left: 44px;
-        top: -12px;
+        top: -15px;
     }
 
     .checkbox {
@@ -162,7 +162,7 @@ export const ThumbsContainer = styled.aside`
         background-color: var(--snow);
         border-radius: 20px;
         border: 1px solid #eaeaea;
-        padding: 1px 6px;
+        padding: 1px 6px 0px 6px;
         font-size: smaller;
         color: var(--steel);
     }

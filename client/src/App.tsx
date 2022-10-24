@@ -23,7 +23,6 @@ const AlbumGrid = lazy(() => import('./pages/AlbumGrid/albumGrid'));
 
 export default function App() {
   return (
-
         <AuthProvider>
           <Suspense fallback={<h1> Loading route... </h1>}>
             <Routes>

@@ -10,6 +10,7 @@ import AlbumIcon from '../../images/icons/photo_album.png';
 import PhotoThumbnail from '../../components/PhotoThumbnail/photoThumb';
 import PhotoInfo from '../PhotoInfo/photoInfo';
 import LoadingSpinner from '../../components/Loading/spinner';
+import TimelineLoadingSkeleton from '../../components/Loading/timelineSkeleton';
 import { Button } from 'antd';
 
 
@@ -48,13 +49,13 @@ const PhotoGrid = () => {
         )
     };
 
-    // if(loading) {
-    //     return (
-    //         <FullPageContainer>
-    //             <LoadingSpinner title="Loading Photos" />
-    //         </FullPageContainer>
-    //     )
-    // } 
+    if(true) {
+        return (
+            <FullPageContainer>
+                <TimelineLoadingSkeleton />
+            </FullPageContainer>
+        )
+    } 
     
     if(!state) {
         return (
@@ -96,10 +97,10 @@ const PhotoGrid = () => {
                 }
                 <PhotoInfo visible={isOpen} photoId={activePhotoId} onClose={handleModalClose} /> 
             </Content>
-            <div style={{textAlign:"center", marginTop:"20px"}}>
+            <div className="button-container">
                 {
                     state.next_cursor && !loading ? (
-                        <Button onClick={(e) => handleLoadMorePhotos(e)} type='text' style={{backgroundColor:"#a30101", color:"white", padding:"4px 20px 10px 20px", borderRadius:"20px"}}>Load More</Button>
+                        <Button className="load-more-btn" onClick={(e) => handleLoadMorePhotos(e)} type='text' style={{backgroundColor:"#a30101", color:"white"}}>Load More</Button>
                     ) : null
                 }
             </div>

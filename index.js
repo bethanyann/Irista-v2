@@ -26,7 +26,7 @@ app.get('/api/getPhotos/:username', async (req, res) => {
         //SearchAPI using context
         results = await cloudinary.search.expression(`context.username=${username}`).sort_by('created_at', 'desc').max_results(20).execute();
 
-        console.log(results);
+        //console.log(results);
         res.send(results);
     } catch(error) {
        // console.log(error);
@@ -40,7 +40,7 @@ app.get('/api/getPhotos/:username/:nextCursor', async (req, res) => {
         let nextCursor = req.params.nextCursor;
     
         const results = await cloudinary.search.expression(`context.username=${username}`).next_cursor(nextCursor).sort_by('created_at', 'desc').max_results(20).execute();
-        console.log(results);
+        //console.log(results);
         res.send(results);
     } catch(error) {
        // console.log(error);
@@ -66,12 +66,21 @@ app.post('/api/uploadPhotos/:username/:filename', async (req,res) => {
         let filename = req.params.filename;
         let fileString = req.body.data;
 
-        const uploadResponse = await cloudinary.uploader.upload(fileString, {
-            upload_preset: 'canon_irista',
+        //changed the upload to an unsigned response so that I can perform on the fly transformations 10/21/22
+
+        // const uploadResponse = await cloudinary.uploader.upload(fileString, {
+        //     upload_preset: 'canon_irista',
+        //     timestamp: (Date.now()/1000).toString(),
+        //     public_id: filename,
+        //     context: `username=${username}`,
+        // });
+
+        const uploadResponse = await cloudinary.uploader.unsigned_upload(fileString, 'canon_irista', {
             timestamp: (Date.now()/1000).toString(),
             public_id: filename,
-            context: `username=${username}`,
-        });
+            context: `username=${username}`
+        })
+        console.log(uploadResponse);
         res.send(uploadResponse);
 
     } catch(error) {
