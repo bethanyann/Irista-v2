@@ -1,23 +1,76 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Skeleton } from 'antd';
 import { Wrapper, Content } from '../../pages/TimelineGrid/timelineGrid.styles';
 
-const TimelineLoadingSkeleton = () => {
 
+
+const TimelineLoadingSkeleton = () => {
+    const active = true;
 
     return (
         <Wrapper>
             <h3>Timeline</h3>
             <div className='divider'></div>
             <Content>
-                {/* <div key={date + "_" + Math.random()} style={{width:'100%'}}>
-                                        <h4 className="header-date"><Moment format="D MMMM YYYY">{date}</Moment></h4>
+                 <div  style={{width:'100%'}}>
+                    <h4 className="header-date">Photo Date Heading</h4>
                 </div>
-                <div key={photo.asset_id} onClick={() => handleModalOpen(photo.public_id)}>
-                                                <PhotoThumbnail alt='photo-thumbnail' photo={photo}/>
+                <div>
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                </div> 
 
-                                                
-                </div> */}
+                <div  style={{width:'100%'}}>
+                    <h4 className="header-date">Photo Date Heading</h4>
+                </div>
+                <div>
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                </div> 
+                <div  style={{width:'100%'}}>
+                    <h4 className="header-date">Photo Date Heading</h4>
+                </div>
+                <div>
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                    <Skeleton.Image active={active} />
+                </div> 
+
             </Content>
         </Wrapper>
     );

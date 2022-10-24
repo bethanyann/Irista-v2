@@ -10,6 +10,7 @@ import AlbumIcon from '../../images/icons/photo_album.png';
 import PhotoThumbnail from '../../components/PhotoThumbnail/photoThumb';
 import PhotoInfo from '../PhotoInfo/photoInfo';
 import LoadingSpinner from '../../components/Loading/spinner';
+import TimelineLoadingSkeleton from '../../components/Loading/timelineSkeleton';
 import { Button } from 'antd';
 
 
@@ -48,13 +49,13 @@ const PhotoGrid = () => {
         )
     };
 
-    // if(loading) {
-    //     return (
-    //         <FullPageContainer>
-    //             <LoadingSpinner title="Loading Photos" />
-    //         </FullPageContainer>
-    //     )
-    // } 
+    if(true) {
+        return (
+            <FullPageContainer>
+                <TimelineLoadingSkeleton />
+            </FullPageContainer>
+        )
+    } 
     
     if(!state) {
         return (
