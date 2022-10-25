@@ -20,7 +20,7 @@ const PhotoGrid = () => {
     const [ activePhotoId, setActivePhotoId ] = useState("");
     
     const { state, loading, error, setIsLoadingMore } =  usePhotoTimelineFetch(user); 
-
+    console.log(JSON.stringify(state) + " state on timeline page");
     //see what the shape of state is, and how to get the date loop to work again
     //object.keys and all that 
     //state.sortedPhotos
@@ -34,7 +34,6 @@ const PhotoGrid = () => {
     }
 
     const handleLoadMorePhotos = (e) => {
-    //     //TODO
         debugger;
          e.preventDefault(); 
          setIsLoadingMore(true);
@@ -47,13 +46,13 @@ const PhotoGrid = () => {
             </FullPageContainer>
         )
     };
-    if(loading) {
-        return (
-            <FullPageContainer>
-                <LoadingSpinner title="Loading Photos" />
-            </FullPageContainer>
-        )
-    } 
+    // if(loading) {
+    //     return (
+    //         <FullPageContainer>
+    //             <LoadingSpinner title="Loading Photos" />
+    //         </FullPageContainer>
+    //     )
+    // } 
     if(!state) {
         return (
             <FullPageContainer>
@@ -92,6 +91,7 @@ const PhotoGrid = () => {
                         })
                     ) : null
                 }
+                {/* TODO - generate the preview url and src url and pass them in here, oooo or cache the preview URL?! and then I can use the preview url to quickly load the modal image */}
                 <PhotoInfo visible={isOpen} photoId={activePhotoId} onClose={handleModalClose} /> 
             </Content>
             <div style={{textAlign:"center", marginTop:"20px"}}>
