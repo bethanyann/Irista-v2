@@ -28,7 +28,8 @@ interface Props {
     photoId: string;
     onClose: () => void;
 }
-
+// TODO - put the image preview in here as well as the skeleton to load before the images come in
+// is there a way to do a component will render with hooks? like, put in the skeleton before the images are fetched? 
 const PhotoInfo = ({visible, photoId, onClose} : Props) => {
 
     const { photo, setPhoto, loading, error} = usePhotoInfoFetch(photoId!);
