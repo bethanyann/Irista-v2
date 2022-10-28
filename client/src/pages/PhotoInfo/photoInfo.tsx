@@ -53,7 +53,6 @@ const PhotoInfo = ({visible, photoId, onClose} : Props) => {
     }
 
     return (
-        
             <Modal
             className='ant-modal-large'
             onCancel={() => onClose()}
