@@ -5,7 +5,7 @@ import { AuthContext } from '../../context/authContext';
 import { Wrapper, Content, NewAlbumButton, AlbumThumbnail, FullPageContainer } from './albumGrid.styles';
 //components
 import NewAlbumModal from '../../components/NewAlbumModal/newAlbumModal';
-import LoadingSpinner from '../../components/LoadingSpinner/spinner';
+import LoadingSpinner from '../../components/Loading/spinner';
 //hooks
 import { useAlbumFetch } from '../../hooks/useAlbumFetch';
 import { useNavigate } from 'react-router-dom';
@@ -37,13 +37,13 @@ const Album = () => {
         )
     }
 
-    if(loading) {
-        return (
-            <FullPageContainer>
-                <LoadingSpinner title="Loading Albums" />
-            </FullPageContainer>
-        )
-    } 
+    // if(loading) {
+    //     return (
+    //         <FullPageContainer>
+    //             <LoadingSpinner title="Loading Albums" />
+    //         </FullPageContainer>
+    //     )
+    // } 
 
     return (
         <Wrapper>

@@ -17,8 +17,7 @@ export const usePhotoTimelineFetch =  (user: User) => {
             setLoading(true);
             setError(false);
 
-            if(user.username)
-            {  
+            if(user.username) {
                 let nextCursor = state.next_cursor ? encodeURIComponent(state.next_cursor): "";
                 let encodedUsername = encodeURIComponent(user.username);
               
@@ -61,6 +60,7 @@ export const usePhotoTimelineFetch =  (user: User) => {
                 });
               
             }
+           
             
         } catch(error) {
             setLoading(false);
@@ -72,6 +72,12 @@ export const usePhotoTimelineFetch =  (user: User) => {
     }
 
     useEffect(() => {
+        // const sessionState = isPersistedState('timelineState');
+        // if(sessionState) {
+        //     console.log('grabbing from session storage');
+        //     setState(sessionState);
+        //     return;
+        // }
        
         console.log('grabbing from api');
         //wipe out state before loading 

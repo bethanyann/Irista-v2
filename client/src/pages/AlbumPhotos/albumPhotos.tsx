@@ -14,7 +14,7 @@ import './uploadModal.css';
 //components
 import Upload from '../../components/Upload/upload';
 import PhotoGrid from '../../components/PhotoGrid/photoGrid';
-import LoadingSpinner from '../../components/LoadingSpinner/spinner';
+import LoadingSpinner from '../../components/Loading/spinner';
 //types
 import { Photos } from '../../models/types';
 

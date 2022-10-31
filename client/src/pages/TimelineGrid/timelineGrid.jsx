@@ -9,7 +9,8 @@ import AlbumIcon from '../../images/icons/photo_album.png';
 //components
 import PhotoThumbnail from '../../components/PhotoThumbnail/photoThumb';
 import PhotoInfo from '../PhotoInfo/photoInfo';
-import LoadingSpinner from '../../components/LoadingSpinner/spinner';
+import LoadingSpinner from '../../components/Loading/spinner';
+import TimelineLoadingSkeleton from '../../components/Loading/timelineSkeleton';
 import { Button } from 'antd';
 
 
@@ -20,10 +21,11 @@ const PhotoGrid = () => {
     const [ activePhotoId, setActivePhotoId ] = useState("");
     
     const { state, loading, error, setIsLoadingMore } =  usePhotoTimelineFetch(user); 
-    console.log(JSON.stringify(state) + " state on timeline page");
-    //see what the shape of state is, and how to get the date loop to work again
-    //object.keys and all that 
-    //state.sortedPhotos
+
+
+    //trying something here, going to use useQuery instead to switch this over
+    //actually no because i want to switch this over to getting data from the database so I am not going to fiddle with this for now.
+
     const handleModalOpen = (photoId) => {
         setActivePhotoId(photoId);
         setIsOpen(true);
@@ -34,7 +36,7 @@ const PhotoGrid = () => {
     }
 
     const handleLoadMorePhotos = (e) => {
-        debugger;
+         debugger;
          e.preventDefault(); 
          setIsLoadingMore(true);
     }
@@ -46,13 +48,15 @@ const PhotoGrid = () => {
             </FullPageContainer>
         )
     };
-    // if(loading) {
-    //     return (
-    //         <FullPageContainer>
-    //             <LoadingSpinner title="Loading Photos" />
-    //         </FullPageContainer>
-    //     )
-    // } 
+
+    if(true) {
+        return (
+            <FullPageContainer>
+                <TimelineLoadingSkeleton />
+            </FullPageContainer>
+        )
+    } 
+    
     if(!state) {
         return (
             <FullPageContainer>
@@ -94,10 +98,10 @@ const PhotoGrid = () => {
                 {/* TODO - generate the preview url and src url and pass them in here, oooo or cache the preview URL?! and then I can use the preview url to quickly load the modal image */}
                 <PhotoInfo visible={isOpen} photoId={activePhotoId} onClose={handleModalClose} /> 
             </Content>
-            <div style={{textAlign:"center", marginTop:"20px"}}>
+            <div className="button-container">
                 {
                     state.next_cursor && !loading ? (
-                        <Button onClick={(e) => handleLoadMorePhotos(e)} type='text' style={{backgroundColor:"#a30101", color:"white", padding:"4px 20px 10px 20px", borderRadius:"20px"}}>Load More</Button>
+                        <Button className="load-more-btn" onClick={(e) => handleLoadMorePhotos(e)} type='text' style={{backgroundColor:"#a30101", color:"white"}}>Load More</Button>
                     ) : null
                 }
             </div>

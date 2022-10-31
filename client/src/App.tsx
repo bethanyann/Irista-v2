@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { AuthProvider, AuthContext } from  './context/authContext';
 import { isEmpty } from 'lodash';
@@ -8,18 +8,23 @@ import RequireAuth from './context/requireAuth';
 //components
 import Register from './pages/Register/register';
 import Login from './pages/Login/login';
-import AlbumGrid from './pages/AlbumGrid/albumGrid';
+// import AlbumGrid from './pages/AlbumGrid/albumGrid';
 import PhotoGrid from './pages/TimelineGrid/timelineGrid';
-import UploadPage from './pages/Upload/uploadPage';
+// import UploadPage from './pages/Upload/uploadPage';
 import Landing from './pages/Landing/landing';
 import AlbumPhotos from './pages/AlbumPhotos/albumPhotos';
-import SearchResults from './pages/SearchResults/searchResults';
+// import SearchResults from './pages/SearchResults/searchResults';
 import { WithNav, WithoutNav } from './components/Navbar/navbarDisplay';
+
+
+const UploadPage = lazy(() => import('./pages/Upload/uploadPage'));
+const SearchResults = lazy(() => import('./pages/SearchResults/searchResults'));
+const AlbumGrid = lazy(() => import('./pages/AlbumGrid/albumGrid'));
 
 export default function App() {
   return (
-
         <AuthProvider>
+          <Suspense fallback={<h1> Loading route... </h1>}>
             <Routes>
               <Route element={<WithNav />} >
                 <Route path='/login' element={<Login/>}/> 
@@ -35,6 +40,7 @@ export default function App() {
               </Route>
             </Routes>
           <GlobalStyle />
+          </Suspense>
         </AuthProvider>
   );
 }

@@ -13,9 +13,7 @@ This site is a personal project meant to mimic the UI layout and functionality o
 
 ## View the Project: 
 
-It is currently hosted on Heroku to support a full-stack React/Node application, but since Heroku will be discontinuing their free tier, this site will be moving in the near future.  Feel free to check it out here: 
-
-> https://irista-app.herokuapp.com/
+It is currently hosted on Heroku to support a full-stack React/Node application, but since Heroku will be discontinuing their free tier, this site will be moving in the near future.  
 
 It is login-protected because I wanted practice with how to set it up, but don't feel like you have to create a login for it. 
 I'll add some short gifs of the functionality below (soon) to demonstrate the site without needing to log in for it. 
