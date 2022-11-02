@@ -29,7 +29,7 @@ export const usePhotoTimelineFetch =  (user: User) => {
                     let date = moment(photo.created_at);
                     return date.format("MM-DD-YYYY");
                 });
-
+                debugger;
                 //if loading more photos, need to merge the existing state with new photos
                 if(isLoadingMore) {
                     //make deep copy of current state photo object

@@ -27,8 +27,6 @@ const PhotoThumbnail = ({ photo } : IProps) => {
             quality: 1
         }
     });
-    debugger;
-
     return (
         <Wrapper>
         {/*  <Thumbnail src={photo.secure_url} alt='individual image thumbnail' /> */}
@@ -39,15 +37,15 @@ const PhotoThumbnail = ({ photo } : IProps) => {
                 loading="eager"
                 preview={false}
                 fallback={LoadingImage}
-                placeholder={
-                    <Image 
-                        preview={false}
-                        src={previewUrl}
-                        style={{height:"150px", width:"auto", transition:"all 1s", objectFit:"cover"}}
-                        placeholder={LoadingImage}
-                        fallback={LoadingImage}
-                    />
-                }
+                // placeholder={
+                //     <Image 
+                //         preview={false}
+                //         src={previewUrl}
+                //         style={{height:"150px", width:"auto", transition:"all 1s", objectFit:"cover"}}
+                //         placeholder={LoadingImage}
+                //         fallback={LoadingImage}
+                //     />
+                // }
             />
         </Wrapper>
     )
