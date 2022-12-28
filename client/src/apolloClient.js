@@ -3,8 +3,8 @@ import { setContext } from '@apollo/client/link/context';
 
 //create a link to the apollo server in the backend
 const httpLink = createHttpLink({
-    //uri: "https://irista-app.herokuapp.com"
-    uri: "http://localhost:5000"
+    uri: "https://irista-app.onrender.com"
+    //uri: "http://localhost:5000"
 });
 
 //create authorization link that allows us to pass in auth via a header 
