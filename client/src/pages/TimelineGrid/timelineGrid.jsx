@@ -32,6 +32,8 @@ const PhotoGrid = () => {
     }
 
     const handleModalClose = () => {
+        //clear out photo id so that the prev photo does not show on modal load
+        setActivePhotoId("");
         setIsOpen(false);
     }
 

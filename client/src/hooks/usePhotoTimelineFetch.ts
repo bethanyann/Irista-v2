@@ -29,26 +29,52 @@ export const usePhotoTimelineFetch =  (user: User) => {
                     let date = moment(photo.created_at);
                     return date.format("MM-DD-YYYY");
                 });
-                debugger;
                 //if loading more photos, need to merge the existing state with new photos
                 if(isLoadingMore) {
                     //make deep copy of current state photo object
                     let existingPhotos = JSON.parse(JSON.stringify(state.sortedPhotos));
 
-                    Object.keys(existingPhotos).forEach(key => 
-                    {
-                       //see if key in existing photos is in the new returned 
-                        if(key in sortedResults)
-                        {
-                            //if the key already exists, append the sorted results to the existingPhotos array
-                            sortedResults[key].forEach((photo) => {
-                                existingPhotos[key].push(photo);
-                            })
-                        } 
+                    //sortedResults is prev, existingPhotos is current
+                    let combinedPhotos = [sortedResults, existingPhotos].reduce((prev, current) => {
+                        Object.keys(current).forEach((key) => {
+                            
+                            // does this combine keys or just overwrite? it just overwrites hoookay
+                            if(key in sortedResults)
+                            {// this feels super gross but lets see if it works. 
+                                current[key].forEach((photo: Photo) => {
+                                    prev[key].push(photo);
+                                });
+                            }
+                            else {
+                                prev[key] = current[key];
+                            }
+                            debugger;
+                        });
+                    })
+                    // Object.keys(existingPhotos).forEach(key => 
+                    // {
+                    //    // see if key in existing photos is in the new returned 
+                    //     if(key in sortedResults)
+                    //     {
+                    //         //if the key already exists, append the sorted results to the existingPhotos array
+                    //         sortedResults[key].forEach((photo) => {
+                    //             existingPhotos[key].push(photo);
+                    //         })
+                    //     } 
+                    // });
+
+                    setState((prevData) => {
+                        return {
+                            // ...prevData, 
+                            sortedPhotos: existingPhotos,
+                            next_cursor: results.next_cursor,
+                            total_count: results.total_count
+                        }
                     });
-                    sortedResults = existingPhotos;
+
                     setIsLoadingMore(false);
                 } 
+
                 //see if sortedResults has the aggregated "load more" data here 
                 setState((prevData) => {
                     return {
@@ -58,9 +84,7 @@ export const usePhotoTimelineFetch =  (user: User) => {
                         total_count: results.total_count
                     }
                 });
-              
             }
-           
             
         } catch(error) {
             setLoading(false);

@@ -39,7 +39,7 @@ app.get('/api/getPhotos/:username/:nextCursor', async (req, res) => {
         let username = req.params.username;
         let nextCursor = req.params.nextCursor;
     
-        const results = await cloudinary.search.expression(`context.username=${username}`).next_cursor(nextCursor).sort_by('created_at', 'desc').max_results(20).execute();
+        const results = await cloudinary.search.expression(`context.username=${username}`).next_cursor(nextCursor).sort_by('created_at', 'desc').max_results(10).execute();
         //console.log(results);
         res.send(results);
     } catch(error) {

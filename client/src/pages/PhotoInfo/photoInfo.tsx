@@ -58,8 +58,10 @@ const PhotoInfo = ({visible, photoId, onClose} : Props) => {
             onCancel={() => onClose()}
             visible={visible}
             >
-            { loading ? <div> loading. .. . . .. </div> : 
+            {/* TODO: Show skeleton of the page but not the values until they've loaded  */}
+            {/* { loading ? <div> loading. .. . . .. </div> :  */}
                 <Content>
+                    {/* TODO: Try to eagerly load this image or give it a placeholder so it isn't just blank on initial load */}
                     <div className={photo.height > photo.width ? "photo-vertical" : "photo-horizontal"}>
                         <img className={photo.height > photo.width ? "img-vertical" : "img-horizontal"} alt={photo.public_id} src={photo.secure_url}/>
                     </div>
@@ -179,7 +181,7 @@ const PhotoInfo = ({visible, photoId, onClose} : Props) => {
                     </Scrollbar> 
                     </Metadata>
                 </Content>
-                }
+                {/* } */}
             </Modal> 
     )
 }
