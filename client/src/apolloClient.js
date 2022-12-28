@@ -1,8 +1,8 @@
-import { ApolloClient, createHttpLink, InMemoryCache} from '@apollo/client';
+import { ApolloClient, createHttpLink, InMemoryCache, HttpLink, ApolloLink} from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
 //create a link to the apollo server in the backend
-const httpLink = createHttpLink({
+const httpLink = new HttpLink({
     uri: "https://irista-app.onrender.com"
     //uri: "http://localhost:5000"
 });
@@ -22,7 +22,7 @@ const authLink = setContext((_, { headers }) => {
 
 //now create the actual client
 const client = new ApolloClient({
-    link: authLink.concat(httpLink),
+    link: ApolloLink.from([httpLink, authLink]),
     cache: new InMemoryCache()
 })
 
