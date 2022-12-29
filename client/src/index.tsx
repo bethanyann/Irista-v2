@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 //import apollo client 
 import client from './apolloClient';
-import { ApolloProvider } from '@apollo/react-hooks';
+import { ApolloProvider } from '@apollo/client';
 import { BrowserRouter as Router } from 'react-router-dom';
 import 'antd/dist/antd.css'; 
 import { QueryClient, QueryClientProvider } from 'react-query';
