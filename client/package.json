@@ -59,7 +59,7 @@
     ]
   },
   "proxy": "http://localhost:5000",
-  "homepage": "https://irista-app.onrender.com",
+  "homepage": "https://irista-app.onrender.com/",
   "devDependencies": {
     "@types/jwt-decode": "^3.1.0"
   }

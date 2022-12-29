@@ -3,7 +3,7 @@ import { setContext } from '@apollo/client/link/context';
 
 //create a link to the apollo server in the backend
 const httpLink = new HttpLink({
-    uri: "https://irista-app.onrender.com"
+    uri: "https://irista-app.onrender.com/"
     //uri: "http://localhost:5000"
 });
 

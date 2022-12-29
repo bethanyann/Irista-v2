@@ -43,12 +43,14 @@ const Login = ( props:any ) => {
     //mutation here
     const [ loginUser, { loading } ] = useMutation(LOGIN_USER, {
         update(proxy, { data: { loginUser: userData }}) {
+            console.log(userData);
             context.login(userData);
             navigate(`/photos`, {replace: true});
         }, 
         onError({graphQLErrors}) {
             if(graphQLErrors.length > 0)
             {
+                console.log(graphQLErrors);
                 var errors = graphQLErrors[0].extensions.errors as ErrorInterface;
                 setErrors(errors);
             }
