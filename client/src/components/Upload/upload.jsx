@@ -136,7 +136,7 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
         else {
             setLoading(true);
 
-            const uploadedData = files.map(async(file) => {
+            const uploadedData = files.map( async (file) => {
                 try{
                     //encode variables in case any of them have weird characters
                     let username = encodeURIComponent(user.username);
@@ -175,11 +175,11 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
             }).catch(error => {
                 console.log(error);
                 console.log('axios error');
-            })
+            });
         }
     }
 
-    const [ createPhoto, {errors, loadingData}] = useMutation(CREATE_PHOTO, {
+    const [ createPhoto, {errors, loadingData} ] = useMutation(CREATE_PHOTO, {
         update(proxy, {data: {creatPhoto: photoData}}){
             console.log(photoData);
         },
@@ -191,11 +191,11 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
                 console.log(apolloErrors);
             }
         },
-        variables: { photoInput: photoInputData }
-        
-    })
+        variables: { photoInput: photoInputData }     
+    });
 
     function createPhotoCallback(file) {
+        //make the preview url here
         let photoData = {
             photoId: file.public_id,
             photoName: file.public_id,
