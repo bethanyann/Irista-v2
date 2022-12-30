@@ -8,7 +8,8 @@ const photoSchema = new Schema({
     photoLongitude: Number,
     isFavorite: Boolean,
     createdAt: Date,
-    photoSecureUrl: String //storing the cloudinary url in case I want it later
-})
+    photoSecureUrl: String, //storing the cloudinary url in case I want it later
+    //photoPreviewUrl: String
+});
 
 module.exports = model('Photo', photoSchema);
