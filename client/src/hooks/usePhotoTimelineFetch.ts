@@ -22,7 +22,9 @@ export const usePhotoTimelineFetch =  (user: User) => {
                 let encodedUsername = encodeURIComponent(user.username);
               
                 let endpoint: string = nextCursor ? `/api/getPhotos/${encodedUsername}/${nextCursor}` : `/api/getPhotos/${encodedUsername}`
+                console.log("endpoint: " + endpoint);
                 const photos = await fetch(endpoint);
+                console.log("photo results:" + photos);
                 const results: Photos = await photos.json();
                 
                 let sortedResults = groupBy(results.resources,  (photo:Photo) => { 
