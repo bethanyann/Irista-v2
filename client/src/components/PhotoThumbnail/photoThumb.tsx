@@ -44,7 +44,6 @@ const PhotoThumbnail = ({ photo } : IProps) => {
                         preview={false}
                         src={previewUrl}
                         style={{height:"150px", width:"auto", transition:"all 1s", objectFit:"cover"}}
-                        placeholder={LoadingImage}
                         fallback={LoadingImage}
                     />
                 }
