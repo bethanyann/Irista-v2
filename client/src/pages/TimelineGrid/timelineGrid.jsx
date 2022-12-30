@@ -49,13 +49,13 @@ const PhotoGrid = () => {
         )
     };
 
-    if(true) {
-        return (
-            <FullPageContainer>
-                <TimelineLoadingSkeleton />
-            </FullPageContainer>
-        )
-    } 
+    // if(true) {
+    //     return (
+    //         <FullPageContainer>
+    //             <TimelineLoadingSkeleton />
+    //         </FullPageContainer>
+    //     )
+    // } 
     
     if(!state) {
         return (
