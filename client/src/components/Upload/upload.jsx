@@ -209,14 +209,14 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
         //move this into a helper function
         let photoData = {
             photoId: file.public_id,
-            name: file.public_id,
+            filename: file.public_id,
             albumId: file.folder ?? "",
             latitude: 0,
             longitude: 0,
             secureUrl: file.secure_url,
             previewUrl: previewUrl,
-            isFavorite: false, //might not need this
-            userName: user.username,
+            //isFavorite: false, //might not need this
+            username: user.username,
             format: file.format,
             bytes: file.bytes,
             width: file.width,
