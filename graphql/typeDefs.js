@@ -12,7 +12,6 @@ module.exports = gql`
         createdAt: String
         photoSecureUrl: String
         previewUrl: String
-        #need to add the new fields here
     }
 
     input NewPhotoInput {
@@ -23,8 +22,6 @@ module.exports = gql`
         longitude: Float
         secureUrl: String!
         previewUrl: String!
-        #isFavorite: Boolean
-        #recently added fields to convert from cloudinary to mongodb
         username: String! #username of user who owns the photo
         format: String #file format (jpg png etc)
         bytes: Int
