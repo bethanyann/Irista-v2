@@ -14,15 +14,24 @@ module.exports = gql`
     }
 
     input PhotoInput {
-        #id: ID!
         photoId: String! #this will be the immutable filename and will not change
         photoName: String! #this will be the original filename on first upload but can change 
         albumId: String! #this is not meant to be a fk, just a way to pull out what photos are in an album
         photoLatitude: Float
         photoLongitude: Float
         photoSecureUrl: String!
-        #photoPreviewUrl: String!
+        photoPreviewUrl: String!
         isFavorite: Boolean
+        #recently added fields to convert from cloudinary to mongodb
+        photoUserName: String! #username of user who owns the photo
+        format: String
+        createdAt: String!
+        bytes: Int;
+        width: Int;
+        height: Int;
+        filename: String!
+        imageMetadata: [PhotoImageMetadata]
+
     }
 
     input UpdatePhotoInput {

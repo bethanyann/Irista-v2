@@ -5,3 +5,7 @@ export const isPersistedState = (stateName: string) : any => {
     const sessionState = sessionStorage.getItem(stateName.toString());
     return sessionState && JSON.parse(sessionState);
 }
+
+export const mapCloudinaryDataToGraphQLModel = (photo: any) => {
+
+}

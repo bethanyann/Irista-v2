@@ -38,6 +38,27 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
         return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
     }, [files]);
 
+// GRAPHQL Mutation
+    const [ createPhoto, { data, loadingData, errors } ] = useMutation(CREATE_PHOTO, {
+        // update(proxy, {data: {creatPhoto: photoData}}){
+        //     debugger;
+        //     console.log(photoData);
+        // },
+        onCompleted(data) {
+            //called when a mutation successfully completes with no errors & returns result data
+            console.log(data);
+        },
+        onError({graphQLErrors}) {
+            if(graphQLErrors.length > 0 || errors )
+            {
+                let apolloErrors = graphQLErrors[0].extensions;
+                setError(apolloErrors);
+                console.log(apolloErrors);
+            }
+        },
+        variables: { photoInput: photoInputData }     
+    });
+
     const handleDeletePhoto = (filename) => { 
         setFiles(files.filter(f => f.path !== filename));
     }
@@ -47,10 +68,7 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
         setLoading(false);
         setError('');
         setFileErrors([]);
-        if(setOpenModal)
-        {
-            setOpenModal(false);
-        }
+        if(setOpenModal)  setOpenModal(false);
     }
 
     const handleDrop = (acceptedFiles, rejectedFiles) => {
@@ -132,8 +150,9 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
 
         if(files.length === 0) {
             setError('No photos were selected for upload');
+            return;
         }
-        else {
+        else { //take this out so its not so nested - unneeded with the return statement 
             setLoading(true);
 
             const uploadedData = files.map( async (file) => {
@@ -179,20 +198,7 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
         }
     }
 
-    const [ createPhoto, {errors, loadingData} ] = useMutation(CREATE_PHOTO, {
-        update(proxy, {data: {creatPhoto: photoData}}){
-            console.log(photoData);
-        },
-        onError({graphQLErrors}) {
-            if(graphQLErrors.length > 0 || errors )
-            {
-                let apolloErrors = graphQLErrors[0].extensions;
-                setError(apolloErrors);
-                console.log(apolloErrors);
-            }
-        },
-        variables: { photoInput: photoInputData }     
-    });
+ 
 
     function createPhotoCallback(file) {
         //make the preview url here
