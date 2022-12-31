@@ -5,12 +5,15 @@ import axios from 'axios';
 import { gql } from 'graphql-tag';
 import { useMutation } from '@apollo/client';
 // import EXIF from 'exif-js';
-//context
+// context
 import { AuthContext } from '../../context/authContext';
-//styles
+// styles
 import {Wrapper, Content, UploadImage, ThumbsContainer } from './upload.styles';
 import DropzoneImage from '../../images/upload.png';
 import { ExclamationCircleFilled } from '@ant-design/icons';
+// helpers
+import { generatePhotoPreviewURL } from '../../utilities/helpers';
+
 
 const CREATE_PHOTO = gql`
     mutation create($photoInput: PhotoInput) {
@@ -202,13 +205,25 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
 
     function createPhotoCallback(file) {
         //make the preview url here
+        let previewUrl = generatePhotoPreviewURL(file.secure_url);
+        //move this into a helper function
         let photoData = {
             photoId: file.public_id,
-            photoName: file.public_id,
+            name: file.public_id,
             albumId: file.folder ?? "",
-            photoLatitude: 0,
-            photoLongitude: 0,
-            photoSecureUrl: file.secure_url
+            latitude: 0,
+            longitude: 0,
+            secureUrl: file.secure_url,
+            previewUrl: previewUrl,
+            isFavorite: false, //might not need this
+            userName: user.username,
+            format: file.format,
+            bytes: file.bytes,
+            width: file.width,
+            height: file.height,
+            imageMetadata: file.image_metadata,
+            colors: file.colors,
+            tags: file.tags         
         }
 
         setPhotoInputData(photoData);
