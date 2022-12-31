@@ -27,7 +27,6 @@ const PhotoThumbnail = ({ photo } : IProps) => {
             quality: 1
         }
     });
-    debugger;
 
     return (
         <Wrapper>
