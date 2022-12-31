@@ -16,7 +16,6 @@ export const usePhotoTimelineFetch =  (user: User) => {
         try {
             setLoading(true);
             setError(false);
-
             if(user.username) {
                 let nextCursor = state.next_cursor ? encodeURIComponent(state.next_cursor): "";
                 let encodedUsername = encodeURIComponent(user.username);

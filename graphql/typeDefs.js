@@ -15,25 +15,30 @@ module.exports = gql`
         #need to add the new fields here
     }
 
-    #this is the input type for a new photo
-    input PhotoInput {
+    input NewPhotoInput {
         photoId: String! #this will be the immutable filename and will not change
-        Name: String! #this will be the original filename on first upload but can change 
+        filename: String! #this will be the original filename on first upload but can change 
         albumId: String! #this is not meant to be a fk, just a way to pull out what photos are in an album
         latitude: Float
         longitude: Float
         secureUrl: String!
         previewUrl: String!
-        isFavorite: Boolean
+        #isFavorite: Boolean
         #recently added fields to convert from cloudinary to mongodb
-        userName: String! #username of user who owns the photo
+        username: String! #username of user who owns the photo
         format: String #file format (jpg png etc)
-        bytes: Int;
-        width: Int;
-        height: Int;
-        imageMetadata: [PhotoImageMetadata]
+        bytes: Int
+        width: Int
+        height: Int
+        imageMetadata: [ImageMetadata]
         colors: [] # unsure of the shape of this, it's just an array in types.ts
         tags: [String]
+    }
+
+    input ImageMetadata {
+        createDate: String
+        dateTimeOriginal: String
+
     }
 
     input UpdatePhotoInput {
@@ -95,7 +100,7 @@ module.exports = gql`
         registerUser(registerInput: RegisterInput): User!
         loginUser(loginInput: LoginInput): User!
 
-        createPhoto(photoInput: PhotoInput): Photo
+        createPhoto(newPhotoInput: NewPhotoInput): Photo
         updatePhotoName(updatePhotoInput: UpdatePhotoInput): String! #return new name of photo
         updatePhotoFavorite(photoId: String!): Boolean!  #return true/false
         #updatePhotoAlbum(albumId: String, photoIds: String[], newAlbumName: String): [Photo] #unsure of what to return atm
