@@ -195,7 +195,9 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
     });
 
     function createPhotoCallback(file) {
-        //make the preview url here
+        // make the preview url here
+
+        // TODO - add the new properties here and see if they save to MongoDB
         let photoData = {
             photoId: file.public_id,
             photoName: file.public_id,
