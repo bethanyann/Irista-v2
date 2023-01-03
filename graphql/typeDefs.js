@@ -14,15 +14,43 @@ module.exports = gql`
     }
 
     input PhotoInput {
-        #id: ID!
         photoId: String! #this will be the immutable filename and will not change
-        photoName: String! #this will be the original filename on first upload but can change 
+        filename: String! #this will be the original filename on first upload but can change 
         albumId: String! #this is not meant to be a fk, just a way to pull out what photos are in an album
-        photoLatitude: Float
-        photoLongitude: Float
-        photoSecureUrl: String!
-        #photoPreviewUrl: String!
-        isFavorite: Boolean
+        latitude: Float
+        longitude: Float
+        secureUrl: String!
+        previewUrl: String!
+        username: String! #username of user who owns the photo
+        format: String #file format (jpg png etc)
+        bytes: Int
+        width: Int
+        height: Int
+        imageMetadata: [ImageMetadata]
+        colors: [String] # unsure of the shape of this, it's just an array in types.ts
+        tags: [String]
+    }
+
+    input ImageMetadata {
+        createDate: String
+        dateTimeOriginal: String
+        make: String
+        model: String 
+        orientation: String 
+        exposureProgram: String 
+        iso: String 
+        shutterSpeedValue: String 
+        apertureValue: String 
+        brightnessValue: String 
+        exposureCompensation: String 
+        meteringMode: String 
+        flash: String 
+        focalLength: String 
+        exposureMode: String 
+        whiteBalance: String 
+        lensInfo: String 
+        lensMake: String 
+        dateCreated: String
     }
 
     input UpdatePhotoInput {

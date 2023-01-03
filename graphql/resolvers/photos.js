@@ -2,17 +2,42 @@ const Photo = require('../../models/Photo');
 
 module.exports = {
     Mutation: {
-        async createPhoto(_, {photoInput: { photoName, albumId, photoLatitude, photoLongitude, photoSecureUrl}}) {
+        async createPhoto(_, { newPhotoInput: { 
+            filename, 
+            albumId, 
+            latitude, 
+            longitude,
+            secureUrl,
+            previewUrl,
+            username,
+            format,
+            bytes,
+            width,
+            height,
+            imageMetadata,
+            colors,
+            tags
+            }}) {
+            
             //create new mongoose Photo model object to send to db
             const newPhoto = new Photo({
-                photoId: photoName,
-                photoName: photoName,
+                photoId: filename,
+                filename: filename,
                 albumId: albumId ?? "",
-                photoLatitude: photoLatitude ?? 0,
-                photoLongitude: photoLongitude ?? 0,
-                isFavorite: false,
+                latitude: latitude ?? 0,
+                longitude: longitude ?? 0,
                 createdAt: new Date().toUTCString(),
-                photoSecureUrl: photoSecureUrl ?? ""
+                secureUrl: secureUrl ?? "",
+                previewUrl: previewUrl ?? "",
+                isFavorite: false, 
+                username: username,
+                format: format,
+                bytes: bytes,
+                width: width,
+                height: height,
+                imageMetadata: imageMetadata,
+                colors: colors,
+                tags: tags,
             });
 
             //console.log(newPhoto);

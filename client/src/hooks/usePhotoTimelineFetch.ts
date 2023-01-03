@@ -25,7 +25,6 @@ export const usePhotoTimelineFetch =  (user: User) => {
                 const photos = await fetch(endpoint);
                 const results: Photos = await photos.json();
                 
-                debugger;
                 const sortedResults = groupBy(results.resources,  (photo:Photo) => { 
                     let date = moment(photo.created_at);
                     return date.format("MM-DD-YYYY");
