@@ -15,9 +15,9 @@ import { ExclamationCircleFilled } from '@ant-design/icons';
 const CREATE_PHOTO = gql`
     mutation create($photoInput: PhotoInput) {
         createPhoto(photoInput: $photoInput) {
-            photoName
-            photoLongitude
-            photoLatitude
+            filename
+            longitude
+            latitude
             isFavorite
         }
     }
@@ -37,6 +37,23 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
         // Make sure to revoke the data uris to avoid memory leaks
         return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
     }, [files]);
+
+    const [ createPhoto, {errors, loadingData} ] = useMutation(CREATE_PHOTO, {
+        update(proxy, {data: {creatPhoto: photoData}}){
+            console.log(photoData);
+        },
+        onError({graphQLErrors}) {
+            debugger;
+            if(graphQLErrors.length > 0 || errors )
+            {
+                let apolloErrors = graphQLErrors[0].extensions;
+                setError(apolloErrors);
+                console.log(apolloErrors);
+            }
+        },
+        variables: { photoInput: photoInputData }     
+    });
+
 
     const handleDeletePhoto = (filename) => { 
         setFiles(files.filter(f => f.path !== filename));
@@ -179,32 +196,28 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
         }
     }
 
-    const [ createPhoto, {errors, loadingData} ] = useMutation(CREATE_PHOTO, {
-        update(proxy, {data: {creatPhoto: photoData}}){
-            console.log(photoData);
-        },
-        onError({graphQLErrors}) {
-            if(graphQLErrors.length > 0 || errors )
-            {
-                let apolloErrors = graphQLErrors[0].extensions;
-                setError(apolloErrors);
-                console.log(apolloErrors);
-            }
-        },
-        variables: { photoInput: photoInputData }     
-    });
-
     function createPhotoCallback(file) {
         // make the preview url here
-
+        debugger;
         // TODO - add the new properties here and see if they save to MongoDB
         let photoData = {
             photoId: file.public_id,
-            photoName: file.public_id,
+            filename: file.public_id,
             albumId: file.folder ?? "",
-            photoLatitude: 0,
-            photoLongitude: 0,
-            photoSecureUrl: file.secure_url
+            latitude: 0,
+            longitude: 0,
+            secureUrl: file.secure_url,
+            previewUrl: "",
+            username: user.username,
+            format: file.format,
+            bytes: file.bytes,
+            width: file.width,
+            height: file.height,
+            imageMetadata: {
+                
+            },
+            colors: file.colors,
+            tags: file.tags,
         }
 
         setPhotoInputData(photoData);
