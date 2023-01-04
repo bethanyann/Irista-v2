@@ -17,8 +17,8 @@ module.exports = {
             imageMetadata,
             colors,
             tags
-            }}) {
-            
+        }}) {
+            debugger;
             //create new mongoose Photo model object to send to db
             const newPhoto = new Photo({
                 photoId: filename,

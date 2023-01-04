@@ -5,12 +5,12 @@ module.exports = gql`
     type Photo {
         id: ID!
         photoId: String #this will be the photo's original filename in cloudinary
-        photoName: String #this will be the photo's display name to user
-        photoLatitude: Float #should this be Int? float? 
-        photoLongitude: Float #same here.. is float ok? 
+        filename: String #this will be the photo's display name to user
+        latitude: Float #should this be Int? float? 
+        longitude: Float #same here.. is float ok? 
         isFavorite: Boolean
         createdAt: String
-        photoSecureUrl: String
+        secureUrl: String
     }
 
     input PhotoInput {
