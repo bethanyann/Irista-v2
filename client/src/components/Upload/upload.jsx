@@ -11,6 +11,7 @@ import { AuthContext } from '../../context/authContext';
 import {Wrapper, Content, UploadImage, ThumbsContainer } from './upload.styles';
 import DropzoneImage from '../../images/upload.png';
 import { ExclamationCircleFilled, FileUnknownFilled } from '@ant-design/icons';
+import { mapPhotoData } from '../../utilities/helpers';
 
 const CREATE_PHOTO = gql`
     mutation create($photoInput: PhotoInput) {
@@ -196,47 +197,12 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
         }
     }
 
-    function createPhotoCallback(file) {
+    function createPhotoCallback(uploadedPhoto) {
         // make the preview url here
         debugger;
         // TODO - add the new properties here and see if they save to MongoDB
-        let photoData = {
-            photoId: file.public_id,
-            filename: file.public_id,
-            albumId: file.folder ?? "",
-            latitude: 0,
-            longitude: 0,
-            secureUrl: file.secure_url,
-            previewUrl: "",
-            username: user.username,
-            format: file.format,
-            bytes: file.bytes,
-            width: file.width,
-            height: file.height,
-            imageMetadata: {
-                createDate: file.image_metadata.CreateDate,
-                dateTimeOriginal: file.image_metadata.DateTimeOriginal,
-                make: file.image_metadata.Make,
-                model: file.image_metadata.Model,
-                orientation: file.image_metadata.Orientation,
-                exposureProgram: file.image_metadata.ExposureProgram,
-                iso: file.image_metadata.ISO,
-                shutterSpeedValue: file.image_metadata.ShutterSpeedValue,
-                apertureValue: file.image_metadata.ApertureValue,
-                brightnessValue: file.image_metadata.BrightnessValue,
-                exposureCompensation: file.image_metadata.ExposureCompensation,
-                meteringMode: file.image_metadata.MeteringMode,
-                flash: file.image_metadata.Flash,
-                focalLength: file.image_metadata.FocalLength,
-                exposureMode: file.image_metadata.ExposureMode,
-                whiteBalance: file.image_metadata.WhiteBalance,
-                lensInfo: file.image_metadata.LensInfo,
-                lensMake: file.image_metadata.LensMake,
-                dateCreated: file.image_metadata.DateTimeOriginal
-            },
-            colors: file.colors,
-            tags: file.tags,
-        }
+        let photoData = mapPhotoData(uploadedPhoto, user.username);
+            
 
         setPhotoInputData(photoData);
         createPhoto();
