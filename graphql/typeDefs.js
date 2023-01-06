@@ -26,7 +26,7 @@ module.exports = gql`
         bytes: Int
         width: Int
         height: Int
-        imageMetadata: [ImageMetadata]
+        imageMetadata: ImageMetadata
         colors: [String] # unsure of the shape of this, it's just an array in types.ts
         tags: [String]
     }

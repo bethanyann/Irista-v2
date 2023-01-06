@@ -202,7 +202,7 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
         debugger;
         // TODO - add the new properties here and see if they save to MongoDB
         let photoData = mapPhotoData(uploadedPhoto, user.username);
-            
+        
 
         setPhotoInputData(photoData);
         createPhoto();

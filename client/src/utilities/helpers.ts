@@ -44,7 +44,9 @@ export const mapPhotoData = ( photo: Photo, username: string) => {
             lensMake: photo.image_metadata.LensMake,
             dateCreated: photo.image_metadata.DateTimeOriginal
         },
-        colors: photo.colors,
+        colors: photo.colors.map(color => {
+            return color[0];
+        }),
         tags: photo.tags,
     }
 }
