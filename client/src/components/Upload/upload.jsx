@@ -40,7 +40,7 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
     }, [files]);
 
     const [ createPhoto, {errors, loadingData} ] = useMutation(CREATE_PHOTO, {
-        update(proxy, {data: {creatPhoto: photoData}}){
+        update(proxy, {data: {createPhoto: photoData}}){
             console.log(photoData);
         },
         onError({graphQLErrors}) {
