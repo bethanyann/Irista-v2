@@ -10,14 +10,15 @@ import { AuthContext } from '../../context/authContext';
 //styles
 import {Wrapper, Content, UploadImage, ThumbsContainer } from './upload.styles';
 import DropzoneImage from '../../images/upload.png';
-import { ExclamationCircleFilled } from '@ant-design/icons';
+import { ExclamationCircleFilled, FileUnknownFilled } from '@ant-design/icons';
+import { mapPhotoData } from '../../utilities/helpers';
 
 const CREATE_PHOTO = gql`
     mutation create($photoInput: PhotoInput) {
         createPhoto(photoInput: $photoInput) {
-            photoName
-            photoLongitude
-            photoLatitude
+            filename
+            longitude
+            latitude
             isFavorite
         }
     }
@@ -37,6 +38,23 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
         // Make sure to revoke the data uris to avoid memory leaks
         return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
     }, [files]);
+
+    const [ createPhoto, {errors, loadingData} ] = useMutation(CREATE_PHOTO, {
+        update(proxy, {data: {createPhoto: photoData}}){
+            console.log(photoData);
+        },
+        onError({graphQLErrors}) {
+            debugger;
+            if(graphQLErrors.length > 0 || errors )
+            {
+                let apolloErrors = graphQLErrors[0].extensions;
+                setError(apolloErrors);
+                console.log(apolloErrors);
+            }
+        },
+        variables: { photoInput: photoInputData }     
+    });
+
 
     const handleDeletePhoto = (filename) => { 
         setFiles(files.filter(f => f.path !== filename));
@@ -136,7 +154,7 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
         else {
             setLoading(true);
 
-            const uploadedData = files.map(async(file) => {
+            const uploadedData = files.map( async (file) => {
                 try{
                     //encode variables in case any of them have weird characters
                     let username = encodeURIComponent(user.username);
@@ -175,35 +193,16 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
             }).catch(error => {
                 console.log(error);
                 console.log('axios error');
-            })
+            });
         }
     }
 
-    const [ createPhoto, {errors, loadingData}] = useMutation(CREATE_PHOTO, {
-        update(proxy, {data: {creatPhoto: photoData}}){
-            console.log(photoData);
-        },
-        onError({graphQLErrors}) {
-            if(graphQLErrors.length > 0 || errors )
-            {
-                let apolloErrors = graphQLErrors[0].extensions;
-                setError(apolloErrors);
-                console.log(apolloErrors);
-            }
-        },
-        variables: { photoInput: photoInputData }
+    function createPhotoCallback(uploadedPhoto) {
+        // make the preview url here
+        debugger;
+        // TODO - add the new properties here and see if they save to MongoDB
+        let photoData = mapPhotoData(uploadedPhoto, user.username);
         
-    })
-
-    function createPhotoCallback(file) {
-        let photoData = {
-            photoId: file.public_id,
-            photoName: file.public_id,
-            albumId: file.folder ?? "",
-            photoLatitude: 0,
-            photoLongitude: 0,
-            photoSecureUrl: file.secure_url
-        }
 
         setPhotoInputData(photoData);
         createPhoto();
