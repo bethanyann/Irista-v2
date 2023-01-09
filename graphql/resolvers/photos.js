@@ -2,7 +2,7 @@ const Photo = require('../../models/Photo');
 
 module.exports = {
     Mutation: {
-        async createPhoto(_, { newPhotoInput: {
+        async createPhoto(_, { photoInput: {
             photoId,
             filename, 
             albumId, 
@@ -19,7 +19,6 @@ module.exports = {
             colors,
             tags
         }}) {
-            debugger;
             //create new mongoose Photo model object to send to db
             const newPhoto = new Photo({
                 photoId: photoId,
