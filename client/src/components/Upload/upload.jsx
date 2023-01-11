@@ -16,10 +16,13 @@ import { mapPhotoData } from '../../utilities/helpers';
 const CREATE_PHOTO = gql`
     mutation create($photoInput: PhotoInput) {
         createPhoto(photoInput: $photoInput) {
+            id
+            photoId
             filename
-            longitude
-            latitude
             isFavorite
+            createdAt
+            secureUrl
+            username
         }
     }
 `;
