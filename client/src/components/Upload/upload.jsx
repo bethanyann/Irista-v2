@@ -38,6 +38,36 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
         return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
     }, [files]);
 
+    const [ createPhoto, {errors, loadingData}] = useMutation(CREATE_PHOTO, {
+        update(proxy, {data: {creatPhoto: photoData}}){
+            console.log(photoData);
+        },
+        onError({graphQLErrors}) {
+            if(graphQLErrors.length > 0 || errors )
+            {
+                let apolloErrors = graphQLErrors[0].extensions;
+                setError(apolloErrors);
+                console.log(apolloErrors);
+            }
+        },
+        variables: { photoInput: photoInputData }
+        
+    })
+
+    function createPhotoCallback(file) {
+        let photoData = {
+            photoId: file.public_id,
+            photoName: file.public_id,
+            albumId: file.folder ?? "",
+            photoLatitude: 0,
+            photoLongitude: 0,
+            photoSecureUrl: file.secure_url
+        }
+
+        setPhotoInputData(photoData);
+        createPhoto();
+    }
+
     const handleDeletePhoto = (filename) => { 
         setFiles(files.filter(f => f.path !== filename));
     }
@@ -177,36 +207,6 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
                 console.log('axios error');
             })
         }
-    }
-
-    const [ createPhoto, {errors, loadingData}] = useMutation(CREATE_PHOTO, {
-        update(proxy, {data: {creatPhoto: photoData}}){
-            console.log(photoData);
-        },
-        onError({graphQLErrors}) {
-            if(graphQLErrors.length > 0 || errors )
-            {
-                let apolloErrors = graphQLErrors[0].extensions;
-                setError(apolloErrors);
-                console.log(apolloErrors);
-            }
-        },
-        variables: { photoInput: photoInputData }
-        
-    })
-
-    function createPhotoCallback(file) {
-        let photoData = {
-            photoId: file.public_id,
-            photoName: file.public_id,
-            albumId: file.folder ?? "",
-            photoLatitude: 0,
-            photoLongitude: 0,
-            photoSecureUrl: file.secure_url
-        }
-
-        setPhotoInputData(photoData);
-        createPhoto();
     }
 
     return(
