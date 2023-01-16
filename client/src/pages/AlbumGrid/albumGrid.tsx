@@ -1,4 +1,6 @@
-import React, { useState, useContext } from 'react';
+import { useState, useContext } from 'react';
+import { gql } from 'graphql-tag';
+import { useMutation } from '@apollo/client';
 //context
 import { AuthContext } from '../../context/authContext';
 //styles
@@ -12,12 +14,44 @@ import { useNavigate } from 'react-router-dom';
 //image
 import NoImage from '../../images/no-image.png';
 
+const CREATE_ALBUM  = gql`
+    mutation create($albumInput: AlbumInput) {
+        createAlbum(albumInput: $albumInput) {
+            id,
+            albumId,
+            albumName,
+            createdAt,
+            createdBy
+        }
+    }
+`
+
+
 const Album = () => {
     let navigate = useNavigate();
     const { user } = useContext(AuthContext); 
     const [ albumModalIsOpen, setAlbumModalIsOpen ] = useState(false);
-    
-    const { albums, loading, errors } = useAlbumFetch(user!);
+    const [ errors, setErrors ] = useState('');
+    const [ albumInputData, setAlbumInputData ] = useState({});
+    //this will get replaced
+    const { albums } = useAlbumFetch(user!);
+
+    const [ createAlbum, { error, loading} ] = useMutation(CREATE_ALBUM, {
+        update(proxy, {data: { createAlbum: albumData}}) {
+            console.log(albumData);
+        }, 
+        onError({graphQLErrors}) {
+            debugger;
+            if(graphQLErrors.length > 0 || errors )
+            {
+                let apolloErrors = graphQLErrors[0].extensions;
+               // setErrors(apolloErrors);
+                console.log(apolloErrors);
+            }
+        },
+        variables: { albumInput: albumInputData }
+    })
+
 
     const handleModalClose = () => {
         setAlbumModalIsOpen(false);
@@ -29,13 +63,13 @@ const Album = () => {
         navigate(`/album/${albumName}`, {replace: true});
     }
 
-    if(errors) {
-        return(
-            <FullPageContainer>
-                <h2> Error Fetching Content </h2>
-            </FullPageContainer>
-        )
-    }
+    // if(errors) {
+    //     return(
+    //         <FullPageContainer>
+    //             <h2> Error Fetching Content </h2>
+    //         </FullPageContainer>
+    //     )
+    // }
 
     // if(loading) {
     //     return (

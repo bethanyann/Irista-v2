@@ -13,7 +13,6 @@ import LoadingSpinner from '../../components/Loading/spinner';
 import TimelineLoadingSkeleton from '../../components/Loading/timelineSkeleton';
 import { Button } from 'antd';
 
-
 const PhotoGrid = () => {
     const { user } = useContext(AuthContext); 
    
@@ -21,7 +20,6 @@ const PhotoGrid = () => {
     const [ activePhotoId, setActivePhotoId ] = useState("");
     
     const { state, loading, error, setIsLoadingMore } =  usePhotoTimelineFetch(user); 
-
 
     //trying something here, going to use useQuery instead to switch this over
     //actually no because i want to switch this over to getting data from the database so I am not going to fiddle with this for now.

@@ -78,8 +78,8 @@ module.exports = gql`
         id: ID!
         albumId: String! #this will be the album's name in cloudinary
         albumName: String! #this will be the album's display name to user
-        createdAt: String!
-        createdBy: String!
+        createdAt: String
+        createdBy: String
     }
 
     input AlbumInput {
