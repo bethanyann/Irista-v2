@@ -1,4 +1,6 @@
 import React, {useState, useContext} from 'react';
+import { gql } from 'graphql-tag';
+import { useMutation } from '@apollo/client';
 //context
 import { AuthContext } from '../../context/authContext';
 import { User } from '../../models/types';
@@ -7,6 +9,17 @@ import { Modal, Input, Alert } from 'antd';
 import { PictureOutlined } from '@ant-design/icons';
 import './albumModal.css';
 
+const CREATE_ALBUM  = gql`
+    mutation create($albumInput: AlbumInput) {
+        createAlbum(albumInput: $albumInput) {
+            id,
+            albumId,
+            albumName,
+            createdAt,
+            createdBy
+        }
+    }
+`
 
 interface Props {
     visible: boolean;
@@ -16,15 +29,33 @@ interface Props {
 const NewAlbumModal = ({visible, onClose} : Props) => {
     const { user } = useContext(AuthContext); 
     const [ albumName, setAlbumName ] = useState('');
-    const [ error, setError ] = useState('');
+    const [ errors, setErrors ] = useState('');
+    const [ albumInputData, setAlbumInputData ] = useState({});
+
+
+    
+    const [ createAlbum, { error, loading} ] = useMutation(CREATE_ALBUM, {
+        update(proxy, {data: { createAlbum: albumData}}) {
+            console.log(albumData);
+        }, 
+        onError({graphQLErrors}) {
+            debugger;
+            if(graphQLErrors.length > 0 || error )
+            {
+                let apolloErrors = graphQLErrors[0].extensions;
+                // TODO - why is this an error when it works for the photos? 
+                // setErrors(apolloErrors);
+                console.log(apolloErrors);
+            }
+        },
+        variables: { albumInput: albumInputData }
+    })
 
     const handleConfirmModal = () => {
-        //make fetch call here to create album 
-        if(albumName === "")
-        {
-            setError("Please choose an album name.");
+        if(albumName === "") {
+           setErrors("Please choose an album name.");
         } else {
-           createAlbum(user!);
+           createAlbumCallback(user!);
         }
     }
 
@@ -33,18 +64,15 @@ const NewAlbumModal = ({visible, onClose} : Props) => {
         setAlbumName(event.target.value);
     }
 
-    const createAlbum = async (user : User) => {
-        try {
-            const album = await fetch(`/api/createAlbum/${user.username}/${albumName}`);
-            //confirm that new album was created
-
-            //close modal
-            
-        } catch(error:any) {
-            setError(error);
+    function createAlbumCallback(user: User) {
+        let albumInput = {
+            username: user.username,
+            albumName: albumName
         }
-    }
 
+        setAlbumInputData(albumInput);
+        createAlbum();
+    }
 
     return (
         <Modal
