@@ -14,19 +14,6 @@ import { useNavigate } from 'react-router-dom';
 //image
 import NoImage from '../../images/no-image.png';
 
-const CREATE_ALBUM  = gql`
-    mutation create($albumInput: AlbumInput) {
-        createAlbum(albumInput: $albumInput) {
-            id,
-            albumId,
-            albumName,
-            createdAt,
-            createdBy
-        }
-    }
-`
-
-
 const Album = () => {
     let navigate = useNavigate();
     const { user } = useContext(AuthContext); 
@@ -35,23 +22,6 @@ const Album = () => {
     const [ albumInputData, setAlbumInputData ] = useState({});
     //this will get replaced
     const { albums } = useAlbumFetch(user!);
-
-    const [ createAlbum, { error, loading} ] = useMutation(CREATE_ALBUM, {
-        update(proxy, {data: { createAlbum: albumData}}) {
-            console.log(albumData);
-        }, 
-        onError({graphQLErrors}) {
-            debugger;
-            if(graphQLErrors.length > 0 || errors )
-            {
-                let apolloErrors = graphQLErrors[0].extensions;
-               // setErrors(apolloErrors);
-                console.log(apolloErrors);
-            }
-        },
-        variables: { albumInput: albumInputData }
-    })
-
 
     const handleModalClose = () => {
         setAlbumModalIsOpen(false);
