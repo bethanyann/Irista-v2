@@ -5,11 +5,11 @@ const Album = require('../../models/Album');
 module.exports = {
     
     Mutation: {
-        async createAlbum(_, {albumInput: {albumName, username}}) {
+        async createAlbum(_, { albumInput: { albumName, username }}) {
             //create new mongoose Album model object to send to the db
             const newAlbum = new Album({
-                albumId: albumName,
-                albumName: albumName, //this will be the album name to start
+                albumId: Math.random().toString.slice(2,11), //gets a random 9 digit number
+                albumName: albumName, 
                 albumCreatedAt: new Date().toUTCString(),
                 albumCreatedBy: username
             });
