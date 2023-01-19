@@ -169,8 +169,6 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
 
                     return axios.post(url, {data: file.fileString}).then(response => {
                         uploadedPhotoList = [...uploadedPhotoList, response.data];
-                        //after the photo is successfully uploaded to cloudinary, add photo info to db
-                        //TODO - add in all of the photo data and EXIF json string 
                         createPhotoCallback(response.data);
                     }).catch(error => {
                         setLoading(false);
@@ -201,12 +199,7 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
     }
 
     function createPhotoCallback(uploadedPhoto) {
-        // make the preview url here
-        debugger;
-        // TODO - add the new properties here and see if they save to MongoDB
         let photoData = mapPhotoData(uploadedPhoto, user.username);
-        
-
         setPhotoInputData(photoData);
         createPhoto();
     }

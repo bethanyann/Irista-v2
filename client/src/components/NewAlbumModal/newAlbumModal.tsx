@@ -31,8 +31,6 @@ const NewAlbumModal = ({visible, onClose} : Props) => {
     const [ albumName, setAlbumName ] = useState('');
     const [ errors, setErrors ] = useState('');
     const [ albumInputData, setAlbumInputData ] = useState({});
-
-
     
     const [ createAlbum, { error, loading} ] = useMutation(CREATE_ALBUM, {
         update(proxy, {data: { createAlbum: albumData}}) {
@@ -65,9 +63,10 @@ const NewAlbumModal = ({visible, onClose} : Props) => {
     }
 
     function createAlbumCallback(user: User) {
+        debugger;
         let albumInput = {
             username: user.username,
-            albumName: albumName
+            albumName: albumName,
         }
 
         setAlbumInputData(albumInput);
