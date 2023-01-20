@@ -9,14 +9,10 @@ import { Modal, Input, Alert } from 'antd';
 import { PictureOutlined } from '@ant-design/icons';
 import './albumModal.css';
 
-const CREATE_ALBUM  = gql`
+const CREATE_ALBUM = gql`
     mutation create($albumInput: AlbumInput) {
         createAlbum(albumInput: $albumInput) {
             id,
-            albumId,
-            albumName,
-            createdAt,
-            createdBy
         }
     }
 `
@@ -33,7 +29,7 @@ const NewAlbumModal = ({visible, onClose} : Props) => {
     const [ albumInputData, setAlbumInputData ] = useState({});
     
     const [ createAlbum, { error, loading} ] = useMutation(CREATE_ALBUM, {
-        update(proxy, {data: { createAlbum: albumData}}) {
+        update(proxy, {data: { createAlbum: albumData }}) {
             console.log(albumData);
         }, 
         onError({graphQLErrors}) {
@@ -47,7 +43,7 @@ const NewAlbumModal = ({visible, onClose} : Props) => {
             }
         },
         variables: { albumInput: albumInputData }
-    })
+    });
 
     const handleConfirmModal = () => {
         if(albumName === "") {
@@ -64,12 +60,12 @@ const NewAlbumModal = ({visible, onClose} : Props) => {
 
     function createAlbumCallback(user: User) {
         debugger;
-        let albumInput = {
+        let albumData = {
             username: user.username,
             albumName: albumName,
         }
 
-        setAlbumInputData(albumInput);
+        setAlbumInputData(albumData);
         createAlbum();
     }
 

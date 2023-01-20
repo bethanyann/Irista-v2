@@ -3,26 +3,32 @@ const Album = require('../../models/Album');
 
 // //best practice is to separate mutations and queries into different sections:
 module.exports = {
-    
     Mutation: {
-        async createAlbum(_, { albumInput: { albumName, username }}) {
+        async createAlbum(_, { albumInput: { username, albumName }}) {
             //create new mongoose Album model object to send to the db
-            const newAlbum = new Album({
-                albumId: Math.random().toString.slice(2,11), //gets a random 9 digit number
-                albumName: albumName, 
-                albumCreatedAt: new Date().toUTCString(),
-                albumCreatedBy: username
-            });
-
-            //save to the db
-            //mutations are async so await this call
-            const result = await newAlbum.save();
-
-            //now return graphQL result:
-            return {
-                id: result.id,
-                ...result._doc
+            try {
+                const newAlbum = new Album({
+                    albumId: Math.random().toString().slice(2,11), //gets a random 9 digit number
+                    albumName: albumName,   
+                    albumCreatedAt: new Date().toUTCString(),
+                    albumCreatedBy: username
+                });
+    
+                console.log(newAlbum);
+                //save to the db
+                //mutations are async so await this call
+                const result = await newAlbum.save();
+                console.log(result);
+                //now return graphQL result:
+                return {
+                    id: result.id,
+                    ...result._doc
+                }
+            } catch(error) {
+                console.log("this is an error: " + error);
+                return (error.message + "album input: " + albumInput);
             }
+           
         },
         async updateAlbum(_, {updateAlbumInput: { albumId, newAlbumName } }) {
 

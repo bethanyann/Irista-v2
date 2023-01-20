@@ -76,15 +76,15 @@ module.exports = gql`
 
     type Album {
         id: ID!
-        albumId: String! #this will be the album's name in cloudinary
+        albumId: Float! #this will be the album's name in cloudinary
         albumName: String! #this will be the album's display name to user
         createdAt: String
         createdBy: String
     }
 
     input AlbumInput {
-        albumName: String!
         username: String!
+        albumName: String!
     }
 
     input UpdateAlbumInput {
@@ -133,7 +133,7 @@ module.exports = gql`
         updatePhotoFavorite(photoId: String!): Boolean!  #return true/false
         #updatePhotoAlbum(albumId: String, photoIds: String[], newAlbumName: String): [Photo] #unsure of what to return atm
 
-        createAlbum(albumInput: AlbumInput): Album!
+        createAlbum(albumInput: AlbumInput): Album
         updateAlbum(updateAlbumInput: UpdateAlbumInput): String! #return new name of album
     }
 `;
