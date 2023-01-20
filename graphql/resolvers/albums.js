@@ -18,7 +18,7 @@ module.exports = {
                 //save to the db
                 //mutations are async so await this call
                 const result = await newAlbum.save();
-                console.log(result);
+            
                 //now return graphQL result:
                 return {
                     id: result.id,
@@ -28,7 +28,7 @@ module.exports = {
                 console.log("this is an error: " + error);
                 return (error.message + "album input: " + albumInput);
             }
-           
+ 
         },
         async updateAlbum(_, {updateAlbumInput: { albumId, newAlbumName } }) {
 

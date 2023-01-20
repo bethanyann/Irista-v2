@@ -33,7 +33,6 @@ const NewAlbumModal = ({visible, onClose} : Props) => {
             console.log(albumData);
         }, 
         onError({graphQLErrors}) {
-            debugger;
             if(graphQLErrors.length > 0 || error )
             {
                 let apolloErrors = graphQLErrors[0].extensions;
