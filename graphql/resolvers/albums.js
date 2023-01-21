@@ -10,8 +10,8 @@ module.exports = {
                 const newAlbum = new Album({
                     albumId: Math.random().toString().slice(2,11), //gets a random 9 digit number
                     albumName: albumName,   
-                    albumCreatedAt: new Date().toUTCString(),
-                    albumCreatedBy: username
+                    createdAt: new Date().toUTCString(),
+                    createdBy: username
                 });
     
                 console.log(newAlbum);
@@ -26,6 +26,7 @@ module.exports = {
                 }
             } catch(error) {
                 console.log("this is an error: " + error);
+                console.log("this is another error: " + error.networkError.result.errors );
                 return (error.message + "album input: " + albumInput);
             }
  

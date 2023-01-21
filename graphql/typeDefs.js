@@ -6,7 +6,7 @@ module.exports = gql`
         id: ID!
         photoId: String! #this will be the immutable filename and will not change
         filename: String! #this will be the original filename on first upload but can change 
-        albumId: String! #this is not meant to be a fk, just a way to pull out what photos are in an album
+        albumId: Float! #this is not meant to be a fk, just a way to pull out what photos are in an album
         latitude: Float
         longitude: Float
         #I don't know how to handle dates yet here 
@@ -76,7 +76,7 @@ module.exports = gql`
 
     type Album {
         id: ID!
-        albumId: Float! #this will be the album's name in cloudinary
+        albumId: Float! #randomly generated number
         albumName: String! #this will be the album's display name to user
         createdAt: String
         createdBy: String

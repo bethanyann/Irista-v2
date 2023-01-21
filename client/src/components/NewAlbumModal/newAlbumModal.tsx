@@ -5,40 +5,48 @@ import { useMutation } from '@apollo/client';
 import { AuthContext } from '../../context/authContext';
 import { User } from '../../models/types';
 //styles
-import { Modal, Input, Alert } from 'antd';
+import { Modal, Input, Alert, Button } from 'antd';
 import { PictureOutlined } from '@ant-design/icons';
 import './albumModal.css';
 
 const CREATE_ALBUM = gql`
-    mutation create($albumInput: AlbumInput) {
-        createAlbum(albumInput: $albumInput) {
+    mutation create( $albumInput: AlbumInput ) {
+        createAlbum( albumInput: $albumInput ) {
             id,
+            albumName
         }
     }
 `
-
 interface Props {
     visible: boolean;
     onClose: () => void;
+}
+
+const initialState = {
+    username: "",
+    albumName: ""
 }
 
 const NewAlbumModal = ({visible, onClose} : Props) => {
     const { user } = useContext(AuthContext); 
     const [ albumName, setAlbumName ] = useState('');
     const [ errors, setErrors ] = useState('');
-    const [ albumInputData, setAlbumInputData ] = useState({});
+    const [ albumInputData, setAlbumInputData ] = useState(initialState);
     
-    const [ createAlbum, { error, loading} ] = useMutation(CREATE_ALBUM, {
-        update(proxy, {data: { createAlbum: albumData }}) {
-            console.log(albumData);
+    const [ createAlbum, { error, loading } ] = useMutation(CREATE_ALBUM, {
+        update(_, { data }) {
+            console.log(data);
         }, 
+        onCompleted(data){
+            console.log(data);
+        },
         onError({graphQLErrors}) {
             if(graphQLErrors.length > 0 || error )
             {
                 let apolloErrors = graphQLErrors[0].extensions;
                 // TODO - why is this an error when it works for the photos? 
                 // setErrors(apolloErrors);
-                console.log(apolloErrors);
+                console.log("apollo errors: " + apolloErrors);
             }
         },
         variables: { albumInput: albumInputData }
@@ -58,13 +66,14 @@ const NewAlbumModal = ({visible, onClose} : Props) => {
     }
 
     function createAlbumCallback(user: User) {
-        debugger;
         let albumData = {
-            username: user.username,
-            albumName: albumName,
+            "username": user.username,
+            "albumName": albumName,
         }
 
-        setAlbumInputData(albumData);
+        setAlbumInputData({ username: user.username, albumName: albumName });
+        debugger;
+        console.log(albumInputData);
         createAlbum();
     }
 
@@ -74,8 +83,9 @@ const NewAlbumModal = ({visible, onClose} : Props) => {
             onCancel={() => onClose()}
             visible={visible}
             footer={[
-                <button key={"somethingelse"} className="cancel-button" onClick={onClose}>Cancel</button>,
-                <button key={"something"} className="accept-button" onClick={handleConfirmModal}>Create</button>
+                <button key={"CancelButton"} className="cancel-button" onClick={onClose}>Cancel</button>,
+                <Button key={"CreateButton"} className="accept-button" onClick={handleConfirmModal} loading={loading}>Create</Button>
+
             ]}
         >    
          <Input placeholder="Album Name" prefix={<PictureOutlined/>} value={albumName} onChange={e => handleInput(e)}/>

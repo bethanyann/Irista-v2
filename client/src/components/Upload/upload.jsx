@@ -252,7 +252,7 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
                 {
                     fileErrors && fileErrors.length > 1 ? 
                     fileErrors.map(error => (
-                         `File ${error[0]} could not be uploaded. ${error[1]}.  `
+                         `File ${error[0]} could not be uploaded. ${error[1]}.`
                      ))
                     : fileErrors.length === 1 ? fileErrors[0] :null
                 } 
