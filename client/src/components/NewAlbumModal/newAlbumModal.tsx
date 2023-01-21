@@ -34,15 +34,13 @@ const NewAlbumModal = ({visible, onClose} : Props) => {
     const [ albumInputData, setAlbumInputData ] = useState(initialState);
     
     const [ createAlbum, { error, loading } ] = useMutation(CREATE_ALBUM, {
-        update(_, { data }) {
-            console.log(data);
-        }, 
         onCompleted(data){
             console.log(data);
         },
         onError({graphQLErrors}) {
             if(graphQLErrors.length > 0 || error )
             {
+                debugger;
                 let apolloErrors = graphQLErrors[0].extensions;
                 // TODO - why is this an error when it works for the photos? 
                 // setErrors(apolloErrors);
@@ -53,6 +51,7 @@ const NewAlbumModal = ({visible, onClose} : Props) => {
     });
 
     const handleConfirmModal = () => {
+        debugger;
         if(albumName === "") {
            setErrors("Please choose an album name.");
         } else {
@@ -66,13 +65,12 @@ const NewAlbumModal = ({visible, onClose} : Props) => {
     }
 
     function createAlbumCallback(user: User) {
-        let albumData = {
-            "username": user.username,
-            "albumName": albumName,
-        }
+        // let albumData = {
+        //     username: user.username,
+        //     albumName: albumName,
+        // }
 
         setAlbumInputData({ username: user.username, albumName: albumName });
-        debugger;
         console.log(albumInputData);
         createAlbum();
     }
@@ -83,13 +81,12 @@ const NewAlbumModal = ({visible, onClose} : Props) => {
             onCancel={() => onClose()}
             visible={visible}
             footer={[
-                <button key={"CancelButton"} className="cancel-button" onClick={onClose}>Cancel</button>,
+                <Button key={"CancelButton"} className="cancel-button" onClick={onClose}>Cancel</Button>,
                 <Button key={"CreateButton"} className="accept-button" onClick={handleConfirmModal} loading={loading}>Create</Button>
-
             ]}
         >    
-         <Input placeholder="Album Name" prefix={<PictureOutlined/>} value={albumName} onChange={e => handleInput(e)}/>
-         { error ?  <Alert message={error} type="error"/> : null}
+         <Input placeholder="Album Name" min={1} max={25} maxLength={25} prefix={<PictureOutlined/>} value={albumName} onChange={e => handleInput(e)}/>
+         { error || errors ?  <Alert message={error ?? errors} type="error"/> : null}
         </Modal>
     );
 
