@@ -23,25 +23,6 @@ export const Wrapper = styled.div`
         letter-spacing: 1px;
     }
 
-    .cancel-button {
-        background-color: var(--smoke);
-        color: var(--snow);
-        margin-right: 20px;
-    }
-
-    .cancel-button:hover {
-        background-color: var(--slate);
-    }
-
-    .accept-button {
-        background-color: var(--darkRed);
-        color: var(--snow);
-    }
-
-    .accept-button:hover {
-        background-color: var(--red);
-    }
-
     .thumb-wrapper{
         padding: 15px 0 8px 10px;
         min-height: 40px;

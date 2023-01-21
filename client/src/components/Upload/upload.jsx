@@ -47,7 +47,6 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
             console.log(photoData);
         },
         onError({graphQLErrors}) {
-            debugger;
             if(graphQLErrors.length > 0 || errors )
             {
                 let apolloErrors = graphQLErrors[0].extensions;

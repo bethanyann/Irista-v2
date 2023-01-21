@@ -1,25 +1,49 @@
 //get the actual album object from the models 
+const { UserInputError } = require('apollo-server-errors');
 const Album = require('../../models/Album');
 
-// //best practice is to separate mutations and queries into different sections:
+// best practice is to separate mutations and queries into different sections:
 module.exports = {
     Mutation: {
         async createAlbum(_, { albumInput: { username, albumName }}) {
-            //create new mongoose Album model object to send to the db
+
+            const albumNameExists = await Album.findOne({ albumName, username });
+            if(albumNameExists){
+                throw new UserInputError('ALBUM_ALREADY_EXISTS', {
+                    errors: {
+                        albumName: `An album with the name ${albumName} already exists.`
+                    }
+                })
+            }
+            if(albumName === "") {
+                throw new UserInputError('ALBUM_NAME_EMPTY', {
+                    errors: {
+                        albumName: `Album name cannot be blank.`
+                    }
+                })
+            }
+            if(username === "") {
+                throw new UserInputError("USERNAME_EMPTY", {
+                    errors: {
+                        username: `There was an error saving the album. Please try again.`
+                    }
+                })
+            }
+
             try {
                 const newAlbum = new Album({
-                    albumId: Math.random().toString().slice(2,11), //gets a random 9 digit number
+                    albumId: Math.random().toString().slice(2,11), // gets a random 9 digit number
                     albumName: albumName,   
                     createdAt: new Date().toUTCString(),
                     createdBy: username
                 });
     
                 console.log(newAlbum);
-                //save to the db
-                //mutations are async so await this call
+
+                // mutations are async so await this call
                 const result = await newAlbum.save();
             
-                //now return graphQL result:
+                // return graphQL result:
                 return {
                     id: result.id,
                     ...result._doc
