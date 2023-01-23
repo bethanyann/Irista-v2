@@ -10,7 +10,7 @@ import { AuthContext } from '../../context/authContext';
 //styles
 import {Wrapper, Content, UploadImage, ThumbsContainer } from './upload.styles';
 import DropzoneImage from '../../images/upload.png';
-import { ExclamationCircleFilled, FileUnknownFilled } from '@ant-design/icons';
+import { ExclamationCircleFilled } from '@ant-design/icons';
 import { mapPhotoData } from '../../utilities/helpers';
 
 const CREATE_PHOTO = gql`

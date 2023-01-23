@@ -98,6 +98,7 @@ module.exports = gql`
     input AlbumInput {
         username: String!
         albumName: String!
+        #coverPhotoUrl: String
     }
 
     type Album {
@@ -106,11 +107,13 @@ module.exports = gql`
         albumName: String #this will be the album's display name to user
         createdAt: String
         createdBy: String
+        coverPhotoUrl: String
     }
 
     input UpdateAlbumInput {
         albumId: String!
         newAlbumName: String!
+        coverPhotoUrl: String
     }
 
     type Query {

@@ -6,14 +6,16 @@ module.exports = {
     Mutation: {
         async createAlbum(_, {albumInput: {
             username, 
-            albumName
+            albumName,
+           // coverPhotoUrl
         }}) {
             //create new mongoose Album model object to send to the db
             const newAlbum = new Album({
                 albumId: Math.random().toString().slice(2,11),
                 albumName: albumName, //this will be the album name to start
                 createdAt: new Date().toUTCString(),
-                createdBy: username
+                createdBy: username,
+               // coverPhotoUrl: coverPhotoUrl ?? ""
             });
 
             //save to the db

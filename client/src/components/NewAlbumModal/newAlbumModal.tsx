@@ -39,6 +39,7 @@ const NewAlbumModal = ({ visible, onClose } : Props) => {
             albumInput: {
                 username: username ,
                 albumName: albumName,
+                //coverPhotoUrl: ""
             }
         },
         update: (cache, {data: { createAlbum }}) => {
