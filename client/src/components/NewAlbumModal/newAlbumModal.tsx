@@ -4,10 +4,9 @@ import { useMutation, gql } from '@apollo/client';
 import { AuthContext } from '../../context/authContext';
 import { User } from '../../models/types';
 //styles
-import { Modal, Input, Alert } from 'antd';
+import { Modal, Input, Alert, Button } from 'antd';
 import { PictureOutlined } from '@ant-design/icons';
 import './albumModal.css';
-import { isPersistedState } from './../../utilities/helpers';
 
 
 interface Props {
@@ -29,11 +28,8 @@ const NewAlbumModal = ({ visible, onClose } : Props) => {
     const { user } = useContext(AuthContext); 
     const [ albumName, setAlbumName ] = useState('');
     const [ errors, setErrors ] = useState('');
-    const [ albumInfo, setAlbumInfo ] = useState({
-        username: '',
-        albumName: ''
-    });
-    
+
+    // TODO - really need to fix the AuthContext to not send back a null user so I don't have to do mess like this
     const _user = user as unknown as User;
     const username = _user.username ?? "";
     
@@ -50,9 +46,9 @@ const NewAlbumModal = ({ visible, onClose } : Props) => {
         },
         onCompleted: () => {
             console.log("succcessss!");
-
-            // setAlbumName('');
-            // onClose();
+            
+            setAlbumName('');
+            onClose();
         },
         onError: (error) => {
             debugger;
@@ -60,9 +56,8 @@ const NewAlbumModal = ({ visible, onClose } : Props) => {
         }
     })
 
-    const handleConfirmModal = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const handleConfirmModal = () => {
         //make fetch call here to create album 
-        e.preventDefault();
         if(albumName === "") {
             setErrors("Please choose an album name.");
         } else {
@@ -80,8 +75,9 @@ const NewAlbumModal = ({ visible, onClose } : Props) => {
             //const album = await fetch(`/api/createAlbum/${user.username}/${albumName}`);
             //confirm that new album was created
             console.log(user.username, albumName);
-            //close modal
             createAlbum();
+
+            //does the code come back here to close everything out? 
             
         } catch(error:any) {
             setErrors(error);
@@ -95,8 +91,8 @@ const NewAlbumModal = ({ visible, onClose } : Props) => {
             onCancel={() => onClose()}
             visible={visible}
             footer={[
-                <button key={"somethingelse"} className="cancel-button" onClick={onClose}>Cancel</button>,
-                <button key={"something"} className="accept-button" onClick={(e) => handleConfirmModal(e)}>Create</button>
+                <Button key={"somethingelse"} className="cancel-button" onClick={onClose}>Cancel</Button>,
+                <Button key={"something"} className="accept-button" onClick={handleConfirmModal}>Create</Button>
             ]}
         >    
          <Input placeholder="Album Name" prefix={<PictureOutlined/>} value={albumName} onChange={e => handleInput(e)}/>
