@@ -1,4 +1,5 @@
 import React, {useState, useContext} from 'react';
+import { useMutation, gql } from '@apollo/client';
 //context
 import { AuthContext } from '../../context/authContext';
 import { User } from '../../models/types';
@@ -6,6 +7,7 @@ import { User } from '../../models/types';
 import { Modal, Input, Alert } from 'antd';
 import { PictureOutlined } from '@ant-design/icons';
 import './albumModal.css';
+import { isPersistedState } from './../../utilities/helpers';
 
 
 interface Props {
@@ -13,7 +15,17 @@ interface Props {
     onClose: () => void;
 }
 
-const NewAlbumModal = ({visible, onClose} : Props) => {
+const CREATE_ALBUM = gql`
+    mutation create($username: String!, $albumName: String!) {
+        createAlbum(username: $username, albumName: $albumName) {
+            id,
+            albumId,
+            albumName
+        }
+    }
+`;
+
+const NewAlbumModal = ({ visible, onClose } : Props) => {
     const { user } = useContext(AuthContext); 
     const [ albumName, setAlbumName ] = useState('');
     const [ error, setError ] = useState('');
