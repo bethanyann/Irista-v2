@@ -16,8 +16,8 @@ interface Props {
 }
 
 const CREATE_ALBUM = gql`
-    mutation create($username: String!, $albumName: String!) {
-        createAlbum(username: $username, albumName: $albumName) {
+    mutation create($albumInput: AlbumInput) {
+        createAlbum(albumInput: $albumInput) {
             id,
             albumId,
             albumName
@@ -28,15 +28,45 @@ const CREATE_ALBUM = gql`
 const NewAlbumModal = ({ visible, onClose } : Props) => {
     const { user } = useContext(AuthContext); 
     const [ albumName, setAlbumName ] = useState('');
-    const [ error, setError ] = useState('');
+    const [ errors, setErrors ] = useState('');
+    const [ albumInfo, setAlbumInfo ] = useState({
+        username: '',
+        albumName: ''
+    });
+    
+    const _user = user as unknown as User;
+    const username = _user.username ?? "";
+    
 
-    const handleConfirmModal = () => {
+    const [ createAlbum, {error, loading} ] = useMutation(CREATE_ALBUM, {
+        variables: {
+            albumInput: {
+                username: username ,
+                albumName: albumName,
+            }
+        },
+        update: (cache, {data: { createAlbum }}) => {
+
+        },
+        onCompleted: () => {
+            console.log("succcessss!");
+
+            // setAlbumName('');
+            // onClose();
+        },
+        onError: (error) => {
+            debugger;
+            console.log(error);
+        }
+    })
+
+    const handleConfirmModal = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         //make fetch call here to create album 
-        if(albumName === "")
-        {
-            setError("Please choose an album name.");
+        e.preventDefault();
+        if(albumName === "") {
+            setErrors("Please choose an album name.");
         } else {
-           createAlbum(user!);
+           createAlbumCallback(user!);
         }
     }
 
@@ -45,15 +75,16 @@ const NewAlbumModal = ({ visible, onClose } : Props) => {
         setAlbumName(event.target.value);
     }
 
-    const createAlbum = async (user : User) => {
+    const createAlbumCallback = async (user : User) => {
         try {
-            const album = await fetch(`/api/createAlbum/${user.username}/${albumName}`);
+            //const album = await fetch(`/api/createAlbum/${user.username}/${albumName}`);
             //confirm that new album was created
-
+            console.log(user.username, albumName);
             //close modal
+            createAlbum();
             
         } catch(error:any) {
-            setError(error);
+            setErrors(error);
         }
     }
 
@@ -65,11 +96,11 @@ const NewAlbumModal = ({ visible, onClose } : Props) => {
             visible={visible}
             footer={[
                 <button key={"somethingelse"} className="cancel-button" onClick={onClose}>Cancel</button>,
-                <button key={"something"} className="accept-button" onClick={handleConfirmModal}>Create</button>
+                <button key={"something"} className="accept-button" onClick={(e) => handleConfirmModal(e)}>Create</button>
             ]}
         >    
          <Input placeholder="Album Name" prefix={<PictureOutlined/>} value={albumName} onChange={e => handleInput(e)}/>
-         { error ?  <Alert message={error} type="error"/> : null}
+         { errors ?  <Alert message={errors} type="error"/> : null}
         </Modal>
     );
 
