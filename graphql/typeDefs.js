@@ -74,24 +74,6 @@ module.exports = gql`
         isFavorite: Boolean
     }
 
-    type Album {
-        id: ID!
-        albumId: String! #this will be the album's name in cloudinary
-        albumName: String! #this will be the album's display name to user
-        createdAt: String!
-        createdBy: String!
-    }
-
-    input AlbumInput {
-        albumName: String!
-        username: String!
-    }
-
-    input UpdateAlbumInput {
-        albumId: String!
-        newAlbumName: String!
-    }
-
     type User {
         id: ID!
         username: String!
@@ -111,6 +93,24 @@ module.exports = gql`
     input LoginInput {
         username: String!
         password: String! 
+    }
+
+    input AlbumInput {
+        username: String!
+        albumName: String!
+    }
+
+    type Album {
+        id: ID
+        albumId: Float! #this will be the album's name in cloudinary
+        albumName: String #this will be the album's display name to user
+        createdAt: String
+        createdBy: String
+    }
+
+    input UpdateAlbumInput {
+        albumId: String!
+        newAlbumName: String!
     }
 
     type Query {
@@ -133,7 +133,7 @@ module.exports = gql`
         updatePhotoFavorite(photoId: String!): Boolean!  #return true/false
         #updatePhotoAlbum(albumId: String, photoIds: String[], newAlbumName: String): [Photo] #unsure of what to return atm
 
-        createAlbum(albumInput: AlbumInput): Album!
+        createAlbum(albumInput: AlbumInput): Album
         updateAlbum(updateAlbumInput: UpdateAlbumInput): String! #return new name of album
     }
 `;

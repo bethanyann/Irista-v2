@@ -3,15 +3,17 @@ const Album = require('../../models/Album');
 
 // //best practice is to separate mutations and queries into different sections:
 module.exports = {
-    
     Mutation: {
-        async createAlbum(_, {albumInput: {albumName, username}}) {
+        async createAlbum(_, {albumInput: {
+            username, 
+            albumName
+        }}) {
             //create new mongoose Album model object to send to the db
             const newAlbum = new Album({
-                albumId: albumName,
+                albumId: Math.random().toString().slice(2,11),
                 albumName: albumName, //this will be the album name to start
-                albumCreatedAt: new Date().toUTCString(),
-                albumCreatedBy: username
+                createdAt: new Date().toUTCString(),
+                createdBy: username
             });
 
             //save to the db

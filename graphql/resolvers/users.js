@@ -65,7 +65,7 @@ module.exports = {
                 ...result._doc,
             }
         },
-        async loginUser(_, {loginInput: {username, password}}) {
+        async loginUser(_, {loginInput: { username, password }}) {
             //validate input
             const {valid, errors} = validateLoginInput(username, password);
 
