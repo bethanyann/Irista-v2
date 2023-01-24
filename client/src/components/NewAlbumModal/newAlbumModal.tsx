@@ -54,11 +54,13 @@ const NewAlbumModal = ({ visible, onClose } : Props) => {
         onError: (error) => {
             debugger;
             console.log(error);
+            if(error.message) {
+                setErrors(error.message);
+            }
         }
     })
 
     const handleConfirmModal = () => {
-        //make fetch call here to create album 
         if(albumName === "") {
             setErrors("Please choose an album name.");
         } else {
@@ -73,13 +75,10 @@ const NewAlbumModal = ({ visible, onClose } : Props) => {
 
     const createAlbumCallback = async (user : User) => {
         try {
-            //const album = await fetch(`/api/createAlbum/${user.username}/${albumName}`);
-            //confirm that new album was created
             console.log(user.username, albumName);
             createAlbum();
-
             //does the code come back here to close everything out? 
-            
+          
         } catch(error:any) {
             setErrors(error);
         }
@@ -92,11 +91,11 @@ const NewAlbumModal = ({ visible, onClose } : Props) => {
             onCancel={() => onClose()}
             visible={visible}
             footer={[
-                <Button key={"somethingelse"} className="cancel-button" onClick={onClose}>Cancel</Button>,
-                <Button key={"something"} className="accept-button" onClick={handleConfirmModal}>Create</Button>
+                <Button key={"somethingelse"} className="cancel-button" onClick={onClose} disabled={loading}> Cancel </Button>,
+                <Button key={"something"} className="accept-button" onClick={handleConfirmModal} loading={loading}> Create </Button>
             ]}
         >    
-         <Input placeholder="Album Name" prefix={<PictureOutlined/>} value={albumName} onChange={e => handleInput(e)}/>
+         <Input placeholder="Album Name" prefix={<PictureOutlined/>} value={albumName} onChange={e => handleInput(e)} />
          { errors ?  <Alert message={errors} type="error"/> : null}
         </Modal>
     );

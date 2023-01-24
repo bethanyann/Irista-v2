@@ -9,24 +9,27 @@ module.exports = {
             albumName,
            // coverPhotoUrl
         }}) {
-            //create new mongoose Album model object to send to the db
+            const albumExists = await Album.findOne({ username, albumName });
+
+            if(albumExists) {
+                throw new Error(`Album name ${albumName} already exists.`);
+            }
+           
             const newAlbum = new Album({
                 albumId: Math.random().toString().slice(2,11),
                 albumName: albumName, //this will be the album name to start
                 createdAt: new Date().toUTCString(),
                 createdBy: username,
-               // coverPhotoUrl: coverPhotoUrl ?? ""
+                // coverPhotoUrl: coverPhotoUrl ?? ""
             });
 
-            //save to the db
-            //mutations are async so await this call
             const result = await newAlbum.save();
 
-            //now return graphQL result:
             return {
                 id: result.id,
                 ...result._doc
             }
+            
         },
         async updateAlbum(_, {updateAlbumInput: { albumId, newAlbumName } }) {
 
