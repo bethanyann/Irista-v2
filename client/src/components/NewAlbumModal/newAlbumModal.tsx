@@ -34,7 +34,7 @@ const NewAlbumModal = ({ visible, onClose } : Props) => {
     const username = _user.username ?? "";
     
 
-    const [ createAlbum, {error, loading} ] = useMutation(CREATE_ALBUM, {
+    const [ createAlbum, { loading } ] = useMutation(CREATE_ALBUM, {
         variables: {
             albumInput: {
                 username: username ,
@@ -43,7 +43,7 @@ const NewAlbumModal = ({ visible, onClose } : Props) => {
             }
         },
         update: (cache, {data: { createAlbum }}) => {
-
+            // TODO implement caching? 
         },
         onCompleted: () => {
             console.log("succcessss!");
@@ -52,7 +52,6 @@ const NewAlbumModal = ({ visible, onClose } : Props) => {
             onClose();
         },
         onError: (error) => {
-            debugger;
             console.log(error);
             if(error.message) {
                 setErrors(error.message);
@@ -64,7 +63,7 @@ const NewAlbumModal = ({ visible, onClose } : Props) => {
         if(albumName === "") {
             setErrors("Please choose an album name.");
         } else {
-           createAlbumCallback(user!);
+            createAlbumCallback(user!);
         }
     }
 
