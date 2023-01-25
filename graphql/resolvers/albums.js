@@ -20,7 +20,7 @@ module.exports = {
                 albumName: albumName, //this will be the album name to start
                 createdAt: new Date().toUTCString(),
                 createdBy: username,
-                // coverPhotoUrl: coverPhotoUrl ?? ""
+                coverPhotoUrl: coverPhotoUrl ?? ""
             });
 
             const result = await newAlbum.save();
