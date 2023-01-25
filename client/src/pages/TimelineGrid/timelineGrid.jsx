@@ -36,7 +36,6 @@ const PhotoGrid = () => {
     }
 
     const handleLoadMorePhotos = (e) => {
-         debugger;
          e.preventDefault(); 
          setIsLoadingMore(true);
     }

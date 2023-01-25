@@ -3,26 +3,33 @@ const Album = require('../../models/Album');
 
 // //best practice is to separate mutations and queries into different sections:
 module.exports = {
-    
     Mutation: {
-        async createAlbum(_, {albumInput: {albumName, username}}) {
-            //create new mongoose Album model object to send to the db
+        async createAlbum(_, {albumInput: {
+            username, 
+            albumName,
+           // coverPhotoUrl
+        }}) {
+            const albumExists = await Album.findOne({ username, albumName });
+
+            if(albumExists) {
+                throw new Error(`Album name ${albumName} already exists.`);
+            }
+           
             const newAlbum = new Album({
-                albumId: albumName,
+                albumId: Math.random().toString().slice(2,11),
                 albumName: albumName, //this will be the album name to start
-                albumCreatedAt: new Date().toUTCString(),
-                albumCreatedBy: username
+                createdAt: new Date().toUTCString(),
+                createdBy: username,
+                // coverPhotoUrl: coverPhotoUrl ?? ""
             });
 
-            //save to the db
-            //mutations are async so await this call
             const result = await newAlbum.save();
 
-            //now return graphQL result:
             return {
                 id: result.id,
                 ...result._doc
             }
+            
         },
         async updateAlbum(_, {updateAlbumInput: { albumId, newAlbumName } }) {
 

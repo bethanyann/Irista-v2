@@ -1,9 +1,10 @@
 import React, {useState, useContext} from 'react';
+import { useMutation, gql } from '@apollo/client';
 //context
 import { AuthContext } from '../../context/authContext';
 import { User } from '../../models/types';
 //styles
-import { Modal, Input, Alert } from 'antd';
+import { Modal, Input, Alert, Button } from 'antd';
 import { PictureOutlined } from '@ant-design/icons';
 import './albumModal.css';
 
@@ -13,18 +14,56 @@ interface Props {
     onClose: () => void;
 }
 
-const NewAlbumModal = ({visible, onClose} : Props) => {
+const CREATE_ALBUM = gql`
+    mutation create($albumInput: AlbumInput) {
+        createAlbum(albumInput: $albumInput) {
+            id,
+            albumId,
+            albumName
+        }
+    }
+`;
+
+const NewAlbumModal = ({ visible, onClose } : Props) => {
     const { user } = useContext(AuthContext); 
     const [ albumName, setAlbumName ] = useState('');
-    const [ error, setError ] = useState('');
+    const [ errors, setErrors ] = useState('');
+
+    // TODO - really need to fix the AuthContext to not send back a null user so I don't have to do mess like this
+    const _user = user as unknown as User;
+    const username = _user.username ?? "";
+    
+
+    const [ createAlbum, { loading } ] = useMutation(CREATE_ALBUM, {
+        variables: {
+            albumInput: {
+                username: username ,
+                albumName: albumName,
+                //coverPhotoUrl: ""
+            }
+        },
+        update: (cache, {data: { createAlbum }}) => {
+            // TODO implement caching? 
+        },
+        onCompleted: () => {
+            console.log("succcessss!");
+            
+            setAlbumName('');
+            onClose();
+        },
+        onError: (error) => {
+            console.log(error);
+            if(error.message) {
+                setErrors(error.message);
+            }
+        }
+    })
 
     const handleConfirmModal = () => {
-        //make fetch call here to create album 
-        if(albumName === "")
-        {
-            setError("Please choose an album name.");
+        if(albumName === "") {
+            setErrors("Please choose an album name.");
         } else {
-           createAlbum(user!);
+            createAlbumCallback(user!);
         }
     }
 
@@ -33,15 +72,14 @@ const NewAlbumModal = ({visible, onClose} : Props) => {
         setAlbumName(event.target.value);
     }
 
-    const createAlbum = async (user : User) => {
+    const createAlbumCallback = async (user : User) => {
         try {
-            const album = await fetch(`/api/createAlbum/${user.username}/${albumName}`);
-            //confirm that new album was created
-
-            //close modal
-            
+            console.log(user.username, albumName);
+            createAlbum();
+            //does the code come back here to close everything out? 
+          
         } catch(error:any) {
-            setError(error);
+            setErrors(error);
         }
     }
 
@@ -52,12 +90,12 @@ const NewAlbumModal = ({visible, onClose} : Props) => {
             onCancel={() => onClose()}
             visible={visible}
             footer={[
-                <button key={"somethingelse"} className="cancel-button" onClick={onClose}>Cancel</button>,
-                <button key={"something"} className="accept-button" onClick={handleConfirmModal}>Create</button>
+                <Button key={"somethingelse"} className="cancel-button" onClick={onClose} disabled={loading}> Cancel </Button>,
+                <Button key={"something"} className="accept-button" onClick={handleConfirmModal} loading={loading}> Create </Button>
             ]}
         >    
-         <Input placeholder="Album Name" prefix={<PictureOutlined/>} value={albumName} onChange={e => handleInput(e)}/>
-         { error ?  <Alert message={error} type="error"/> : null}
+         <Input placeholder="Album Name" prefix={<PictureOutlined/>} value={albumName} onChange={e => handleInput(e)} />
+         { errors ?  <Alert message={errors} type="error"/> : null}
         </Modal>
     );
 

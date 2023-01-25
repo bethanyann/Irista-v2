@@ -10,7 +10,7 @@ import { AuthContext } from '../../context/authContext';
 //styles
 import {Wrapper, Content, UploadImage, ThumbsContainer } from './upload.styles';
 import DropzoneImage from '../../images/upload.png';
-import { ExclamationCircleFilled, FileUnknownFilled } from '@ant-design/icons';
+import { ExclamationCircleFilled } from '@ant-design/icons';
 import { mapPhotoData } from '../../utilities/helpers';
 
 const CREATE_PHOTO = gql`
@@ -43,7 +43,7 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
     }, [files]);
 
     const [ createPhoto, {errors, loadingData} ] = useMutation(CREATE_PHOTO, {
-        update(proxy, {data: {createPhoto: photoData}}){
+        update(_, {data: {createPhoto: photoData}}){
             console.log(photoData);
         },
         onError({graphQLErrors}) {
@@ -201,12 +201,7 @@ const Upload = ({setOpenModal, setOpenAlertModal, setTotalFiles, albumName }) =>
     }
 
     function createPhotoCallback(uploadedPhoto) {
-        // make the preview url here
-        debugger;
-        // TODO - add the new properties here and see if they save to MongoDB
         let photoData = mapPhotoData(uploadedPhoto, user.username);
-        
-
         setPhotoInputData(photoData);
         createPhoto();
     }
