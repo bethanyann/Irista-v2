@@ -15,7 +15,6 @@ import NoImage from '../../images/no-image.png';
 const GET_ALBUMS = gql`
     query getAlbumsQuery($username: String!) {
         getAlbums(username: $username) {
-            // I have no idea how to write this
         }
     }
 `
