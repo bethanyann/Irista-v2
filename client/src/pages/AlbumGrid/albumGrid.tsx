@@ -21,8 +21,8 @@ const Album = () => {
 
     const handleModalClose = () => {
         setAlbumModalIsOpen(false);
-
         //need to refresh album list to display new album 
+        
     }
 
     const handleOpenAlbum = (path : string) => {
