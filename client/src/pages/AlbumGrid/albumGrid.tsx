@@ -1,16 +1,26 @@
 import React, { useState, useContext } from 'react';
-//context
+// context 
 import { AuthContext } from '../../context/authContext';
-//styles
+// styles
 import { Wrapper, Content, NewAlbumButton, AlbumThumbnail, FullPageContainer } from './albumGrid.styles';
-//components
+// components
 import NewAlbumModal from '../../components/NewAlbumModal/newAlbumModal';
-import LoadingSpinner from '../../components/Loading/spinner';
-//hooks
+// hooks
 import { useAlbumFetch } from '../../hooks/useAlbumFetch';
 import { useNavigate } from 'react-router-dom';
-//image
+import { useQuery, gql } from '@apollo/client';
+// image
 import NoImage from '../../images/no-image.png';
+
+const GET_ALBUMS = gql`
+    query getAlbumsQuery($username: String!) {
+        getAlbums(username: $username) {
+            // I have no idea how to write this
+        }
+    }
+`
+
+
 
 const Album = () => {
     let navigate = useNavigate();
@@ -22,7 +32,6 @@ const Album = () => {
     const handleModalClose = () => {
         setAlbumModalIsOpen(false);
         //need to refresh album list to display new album 
-        
     }
 
     const handleOpenAlbum = (path : string) => {
