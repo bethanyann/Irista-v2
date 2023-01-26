@@ -12,12 +12,12 @@ import { useQuery, gql } from '@apollo/client';
 // image
 import NoImage from '../../images/no-image.png';
 
-const GET_ALBUMS = gql`
-    query getAlbumsQuery($username: String!) {
-        getAlbums(username: $username) {
-        }
-    }
-`
+// const GET_ALBUMS = gql`
+//     query getAlbumsQuery($username: String!) {
+//         getAlbums(username: $username) {
+//         }
+//     }
+// `
 
 
 
