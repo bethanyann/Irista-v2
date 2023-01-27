@@ -11,35 +11,56 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery, gql } from '@apollo/client';
 // image
 import NoImage from '../../images/no-image.png';
+import { User, Album } from '../../models/types';
 
-// const GET_ALBUMS = gql`
-//     query getAlbumsQuery($username: String!) {
-//         getAlbums(username: $username) {
-//         }
-//     }
-// `
+const GET_ALBUMS = gql`
+    query getAlbumsQuery($username: String!) {
+        getAlbums(username: $username) {
+            albumId,
+            albumName,
+            createdBy,
+            coverPhotoUrl
+        }
+    }
+`
 
+interface Albums {
+    getAlbums: Album[];
+}
 
+interface AlbumVars {
+    username: string;
+}
 
-const Album = () => {
+const AlbumGrid = () => {
     let navigate = useNavigate();
     const { user } = useContext(AuthContext); 
     const [ albumModalIsOpen, setAlbumModalIsOpen ] = useState(false);
     
-    const { albums, loading, errors } = useAlbumFetch(user!);
+    // TODO - really need to fix the AuthContext to not send back a null user so I don't have to do mess like this
+    const _user = user as unknown as User;
+    const username = _user.username ?? "";
+    
+    //const { albums,  errors } = useAlbumFetch(user!);
+
+    const { data, loading, error} = useQuery<Albums, AlbumVars>(GET_ALBUMS, {
+        variables: { username },
+    });
+  
+    debugger;
 
     const handleModalClose = () => {
         setAlbumModalIsOpen(false);
         //need to refresh album list to display new album 
     }
 
-    const handleOpenAlbum = (path : string) => {
+    const handleOpenAlbum = (albumName: string) => {
         //take album path and redirect to an album/photo page
-        const albumName = encodeURIComponent(path);
-        navigate(`/album/${albumName}`, {replace: true});
+        const albumNameEncoded = encodeURIComponent(albumName);
+        navigate(`/album/${albumNameEncoded}`, {replace: true});
     }
 
-    if(errors) {
+    if(error) {
         return(
             <FullPageContainer>
                 <h2> Error Fetching Content </h2>
@@ -61,17 +82,23 @@ const Album = () => {
             <div className='divider'></div>
             <Content>
                 <NewAlbumButton onClick={() => setAlbumModalIsOpen(true)}>New Album<span className='red-plus'>+</span></NewAlbumButton>
-                {
+                {/* {
                     albums && albums.length > 0 ? albums.map((album) => (
                         <AlbumThumbnail key={album[0].path} image={album[1].secure_url ?? NoImage} onClick={() => handleOpenAlbum(album[0].path)}>{album[0].name}</AlbumThumbnail>
                     )) : null
-                } 
+                }  */}
+                {
+                     !loading && data ?
+                         data.getAlbums.map((album) => (
+                            <AlbumThumbnail key={album.albumName} image={album.coverPhotoUrl ?? NoImage } onClick={() => handleOpenAlbum(album.albumName)}>{album.albumName}</AlbumThumbnail>
+                         ))
+                     : null
+                }
             </Content>
-
             <NewAlbumModal visible={albumModalIsOpen} onClose={handleModalClose} />
         </Wrapper>
     )
 
 }
 
-export default Album;
+export default AlbumGrid;

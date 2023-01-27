@@ -70,14 +70,20 @@ export type PhotoMetadata = {
 }
 
 export type Album = {
-    [0]: {
-        name: string;
-        path: string;
-    };
-    [1]: { 
-        secure_url: string;
-    };
-    coverPhoto: Photo;
+    id: string;
+    albumId: number;
+    albumName: string;
+    createdAt: string;
+    createdBy: string;
+    coverPhotoUrl: string;
+    // [0]: {
+    //     name: string;
+    //     path: string;
+    // };
+    // [1]: { 
+    //     secure_url: string;
+    // };
+    // coverPhoto: Photo;
 }
 
 export type SearchResults = {
