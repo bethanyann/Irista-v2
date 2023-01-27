@@ -105,6 +105,7 @@ const NewAlbumModal = ({ visible, onClose } : Props) => {
          <Input placeholder="Album Name" prefix={<PictureOutlined/>} value={albumName} onChange={e => handleInput(e)} />
          {/* { errors ?  <Alert message={errors} type="error"/> : null} */}
          <p className="error">{errors ?? ""}</p>
+         {/* <Input status="error" prefix={<ClockCircleOutlined />} placeholder="Error with prefix" /> */}
         </Modal>
     );
 
