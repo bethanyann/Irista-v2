@@ -41,8 +41,6 @@ const AlbumGrid = () => {
     const _user = user as unknown as User;
     const username = _user.username ?? "";
     
-    //const { albums,  errors } = useAlbumFetch(user!);
-
     const { data, loading, error} = useQuery<Albums, AlbumVars>(GET_ALBUMS, {
         variables: { username },
     });
@@ -82,11 +80,6 @@ const AlbumGrid = () => {
             <div className='divider'></div>
             <Content>
                 <NewAlbumButton onClick={() => setAlbumModalIsOpen(true)}>New Album<span className='red-plus'>+</span></NewAlbumButton>
-                {/* {
-                    albums && albums.length > 0 ? albums.map((album) => (
-                        <AlbumThumbnail key={album[0].path} image={album[1].secure_url ?? NoImage} onClick={() => handleOpenAlbum(album[0].path)}>{album[0].name}</AlbumThumbnail>
-                    )) : null
-                }  */}
                 {
                      !loading && data ?
                          data.getAlbums.map((album) => (
