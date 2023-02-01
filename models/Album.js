@@ -5,7 +5,7 @@ const albumSchema = new Schema({
     albumName: String, //this will be mutable
     createdAt: Date,
     createdBy: String, //this will be the users username
-    //coverPhotoUrl: String
+    coverPhotoUrl: String
 });
 
 module.exports = model('Album', albumSchema);

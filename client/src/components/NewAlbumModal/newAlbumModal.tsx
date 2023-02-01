@@ -67,6 +67,14 @@ const NewAlbumModal = ({ visible, onClose } : Props) => {
         }
     }
 
+    const handleCloseModal = () => {
+        //set error message and inner text to null
+        setErrors("");
+        setAlbumName("");
+        //close modal
+        onClose();
+    }
+
     const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         event.preventDefault();
         setAlbumName(event.target.value);
@@ -90,12 +98,14 @@ const NewAlbumModal = ({ visible, onClose } : Props) => {
             onCancel={() => onClose()}
             visible={visible}
             footer={[
-                <Button key={"somethingelse"} className="cancel-button" onClick={onClose} disabled={loading}> Cancel </Button>,
+                <Button key={"somethingelse"} className="cancel-button" onClick={handleCloseModal} disabled={loading}> Cancel </Button>,
                 <Button key={"something"} className="accept-button" onClick={handleConfirmModal} loading={loading}> Create </Button>
             ]}
         >    
          <Input placeholder="Album Name" prefix={<PictureOutlined/>} value={albumName} onChange={e => handleInput(e)} />
-         { errors ?  <Alert message={errors} type="error"/> : null}
+         {/* { errors ?  <Alert message={errors} type="error"/> : null} */}
+         <p className="error">{errors ?? ""}</p>
+         {/* <Input status="error" prefix={<ClockCircleOutlined />} placeholder="Error with prefix" /> */}
         </Modal>
     );
 

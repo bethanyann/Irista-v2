@@ -21,7 +21,7 @@ button {
 .cancel-button {
     background-color: var(--smoke);
     color: var(--snow);
-    margin-right: 20px;
+    /* margin-right: 20px; */
 }
 
 .cancel-button:hover {
@@ -35,5 +35,19 @@ button {
 
 .accept-button:hover {
     background-color: var(--red);
+}
+
+.error {
+   height: 28px;
+   margin-bottom: 0 !important;
+   margin-top: 4px;
+   padding-left: 2px;
+   padding-top: 4px;
+   padding-bottom: 26px;
+   color: var(--darkRed);
+}
+
+.ant-modal-body {
+    padding-bottom: 9px !important;
 }
 
