@@ -6,7 +6,6 @@ import { Wrapper, Content, NewAlbumButton, AlbumThumbnail, FullPageContainer } f
 // components
 import NewAlbumModal from '../../components/NewAlbumModal/newAlbumModal';
 // hooks
-import { useAlbumFetch } from '../../hooks/useAlbumFetch';
 import { useNavigate } from 'react-router-dom';
 import { useQuery, gql } from '@apollo/client';
 // image
@@ -23,11 +22,9 @@ const GET_ALBUMS = gql`
         }
     }
 `
-
 interface Albums {
     getAlbums: Album[];
 }
-
 interface AlbumVars {
     username: string;
 }
@@ -49,12 +46,14 @@ const AlbumGrid = () => {
 
     const handleModalClose = () => {
         setAlbumModalIsOpen(false);
-        //need to refresh album list to display new album 
+        // TODO - need to refresh album list to display new album 
     }
 
     const handleOpenAlbum = (albumName: string) => {
-        //take album path and redirect to an album/photo page
+        // takes album path and redirect to an album/photo page
         const albumNameEncoded = encodeURIComponent(albumName);
+
+        // TODO - This doesn't allow you to go "back" to the albums page - check on this
         navigate(`/album/${albumNameEncoded}`, {replace: true});
     }
 
