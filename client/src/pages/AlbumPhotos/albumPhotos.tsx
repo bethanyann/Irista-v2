@@ -18,11 +18,14 @@ import LoadingSpinner from '../../components/Loading/spinner';
 //types
 import { Photos } from '../../models/types';
 
-//TODO - this component is getting cluttered - turn some of the modals into their own components 
-
+// TODO - this component is getting cluttered - turn some of the modals into their own components 
+// what is this set for? 
 const initialState = new Set<string>();
 
+
+// TODO - make sure the albumId is set on init - maybe put in a useEffect hook 
 const AlbumPhotos = () => {
+    // TODO - this needs to be passing in the albumId, not the name
     const { albumName } = useParams();   
     const formattedAlbumName = albumName!.substring(albumName!.indexOf("/") + 1);
     const [ isOpen, setIsOpen ] = useState(false);
@@ -30,13 +33,15 @@ const AlbumPhotos = () => {
     const [ openAlertModal, setOpenAlertModal ] = useState(false);
     const [ totalFiles, setTotalFiles ] = useState([]);
 
-    const [ selectedPhotos, setSelectedPhotos] = useState(() => initialState);
-    const [ isSelected, setIsSelected ] = useState(false);
+    const [ selectedPhotos, setSelectedPhotos] = useState(() => initialState); // why did i write it like this ? :\
+    const [ isSelected, setIsSelected ] = useState(false); // TODO - is what selected? - change this to say photo
     const [ isLoading, setIsLoading ] = useState(false);
     const [ openDeleteAlert, setOpenDeleteAlert ] = useState(false);
 
+    // TODO - convert this useAlbumPhotoFetch to pull from MongoDB Uploads
+    // need to make sure to query photos based on associated albumId 
 
-    //results from hook
+    // results from hook
     const { photos, setPhotos, loading, error } = useAlbumPhotoFetch(albumName!);
 
     const handleModalOpen = () => {
@@ -118,25 +123,23 @@ const AlbumPhotos = () => {
                 <h3>{formattedAlbumName}</h3>
                 <div>
                     <Space>
-                        {
-                            <>
-                                <Tooltip title="Add to folder" placement="bottomRight">
-                                    <Button className="album-button" disabled={true} icon={<FolderAddOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
-                                </Tooltip>
-                                <Tooltip title="Toggle Favorite" placement="bottomRight">
-                                    <Button className="album-button" disabled={true} icon={<HeartOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
-                                </Tooltip>
-                                <Tooltip title="Upload Images" placement="bottomRight">
-                                    <Button className="album-button"  onClick={() => handleModalOpen()} icon={<CloudUploadOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
-                                </Tooltip>
-                                <Tooltip title="Download" placement="bottomRight">
-                                    <Button className="album-button" disabled={true} icon={<DownloadOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
-                                </Tooltip>
-                                <Tooltip title="Delete" placement="bottom">
-                                    <Button className="album-button" disabled={!isSelected} onClick={() => setOpenDeleteAlert(true)} icon={<DeleteOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
-                                </Tooltip>
-                            </>
-                        }     
+                    {<>
+                        <Tooltip title="Add to folder" placement="bottomRight">
+                            <Button className="album-button" disabled={true} icon={<FolderAddOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
+                        </Tooltip>
+                        <Tooltip title="Toggle Favorite" placement="bottomRight">
+                            <Button className="album-button" disabled={true} icon={<HeartOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
+                        </Tooltip>
+                        <Tooltip title="Upload Images" placement="bottomRight">
+                            <Button className="album-button"  onClick={() => handleModalOpen()} icon={<CloudUploadOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
+                        </Tooltip>
+                        <Tooltip title="Download" placement="bottomRight">
+                            <Button className="album-button" disabled={true} icon={<DownloadOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
+                        </Tooltip>
+                        <Tooltip title="Delete" placement="bottom">
+                            <Button className="album-button" disabled={!isSelected} onClick={() => setOpenDeleteAlert(true)} icon={<DeleteOutlined className="album-button" style={{fontSize:'1.3em'}}/>} size="large"/>
+                        </Tooltip>
+                    </>}     
                     </Space>
                 </div>
             </Header>
@@ -170,7 +173,7 @@ const AlbumPhotos = () => {
             width={1000}
             style={{top: 50}}
         >
-           <Upload setOpenModal={setIsOpen} setOpenAlertModal={setOpenAlertModal}  setTotalFiles={setTotalFiles} albumName={albumName}/>
+           <Upload setOpenModal={setIsOpen} setOpenAlertModal={setOpenAlertModal} setTotalFiles={setTotalFiles} albumName={albumName}/>
         </Modal>
     {/* TODO - turn these success and failure modals into their own component  */}
         <Modal className="ant-modal" title="" visible={openAlertModal} onCancel={handleCancelModal} footer={null}>

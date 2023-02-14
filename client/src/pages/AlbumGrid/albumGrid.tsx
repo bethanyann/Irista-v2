@@ -49,12 +49,12 @@ const AlbumGrid = () => {
         // TODO - need to refresh album list to display new album 
     }
 
-    const handleOpenAlbum = (albumName: string) => {
+    const handleOpenAlbum = (albumId: number) => {
         // takes album path and redirect to an album/photo page
-        const albumNameEncoded = encodeURIComponent(albumName);
+        const albumIdEncoded = encodeURIComponent(albumId);
 
         // TODO - This doesn't allow you to go "back" to the albums page - check on this
-        navigate(`/album/${albumNameEncoded}`, {replace: true});
+        navigate(`/album/${albumIdEncoded}`, {replace: true});
     }
 
     if(error) {
@@ -82,7 +82,7 @@ const AlbumGrid = () => {
                 {
                      !loading && data ?
                          data.getAlbums.map((album) => (
-                            <AlbumThumbnail key={album.albumName} image={album.coverPhotoUrl ?? NoImage } onClick={() => handleOpenAlbum(album.albumName)}>{album.albumName}</AlbumThumbnail>
+                            <AlbumThumbnail key={album.albumId} image={album.coverPhotoUrl ?? NoImage } onClick={() => handleOpenAlbum(album.albumId)}>{album.albumName}</AlbumThumbnail>
                          ))
                      : null
                 }
