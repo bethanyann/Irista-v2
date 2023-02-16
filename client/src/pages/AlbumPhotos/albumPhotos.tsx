@@ -23,8 +23,7 @@ import { Photos } from '../../models/types';
 const initialState = new Set<string>();
 
 const AlbumPhotos = () => {
-    const { albumName } = useParams();   
-    const formattedAlbumName = albumName!.substring(albumName!.indexOf("/") + 1);
+    const { albumId } = useParams();   
     const [ isOpen, setIsOpen ] = useState(false);
 
     const [ openAlertModal, setOpenAlertModal ] = useState(false);
@@ -37,7 +36,7 @@ const AlbumPhotos = () => {
 
 
     //results from hook
-    const { photos, setPhotos, loading, error } = useAlbumPhotoFetch(albumName!);
+    const { photos, setPhotos, loading, error } = useAlbumPhotoFetch(albumId!);
 
     const handleModalOpen = () => {
         setIsOpen(true);
@@ -115,7 +114,7 @@ const AlbumPhotos = () => {
         <>
         <Wrapper>
             <Header>
-                <h3>{formattedAlbumName}</h3>
+                <h3>{albumId}</h3>
                 <div>
                     <Space>
                         {
@@ -170,7 +169,7 @@ const AlbumPhotos = () => {
             width={1000}
             style={{top: 50}}
         >
-           <Upload setOpenModal={setIsOpen} setOpenAlertModal={setOpenAlertModal}  setTotalFiles={setTotalFiles} albumName={albumName}/>
+           <Upload setOpenModal={setIsOpen} setOpenAlertModal={setOpenAlertModal}  setTotalFiles={setTotalFiles} albumName={albumId}/>
         </Modal>
     {/* TODO - turn these success and failure modals into their own component  */}
         <Modal className="ant-modal" title="" visible={openAlertModal} onCancel={handleCancelModal} footer={null}>
