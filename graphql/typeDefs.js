@@ -102,8 +102,8 @@ module.exports = gql`
     }
 
     type Album {
-        id: ID
-        albumId: Float! #this will be the album's name in cloudinary
+        id: ID  #make sure this is the id that's being used for an album and not the albumId below - could probs delete that field 
+        albumId: Float! #this will be the album's name in cloudinary - oh this won't be from cloudinary anymore
         albumName: String #this will be the album's display name to user
         createdAt: String
         createdBy: String
@@ -120,11 +120,12 @@ module.exports = gql`
         user(id: ID!): User!
         photo(id: ID!): Photo!
         
-        getAlbum(albumId: String!): Album
+        getAlbum(albumId: String!): Album #this is a string and its working? 
         getAlbums(username: String!): [Album]
+        getAlbumPhotos(albumId: String! ): [Photo] #are the ids strings? 
 
         getPhoto(photoId: String!): Photo
-        getPhotos(albumId: String!): [Photo]
+        # getPhotos(albumId: String!): [Photo]
     }
     
     type Mutation {
@@ -138,5 +139,8 @@ module.exports = gql`
 
         createAlbum(albumInput: AlbumInput): Album
         updateAlbum(updateAlbumInput: UpdateAlbumInput): String! #return new name of album
+
+        #todo
+        #movePhotoToAlbum
     }
 `;

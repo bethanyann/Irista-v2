@@ -1,5 +1,6 @@
 //get the actual album object from the models 
 const Album = require('../../models/Album');
+const Photo = require('../../models/Photo');
 
 // //best practice is to separate mutations and queries into different sections:
 module.exports = {
@@ -68,6 +69,16 @@ module.exports = {
                 //handle this differently? 
                 throw new Error(error);
             }
-        }
+        },
+        async getAlbumPhotos(_, { albumId }) {
+            try {
+                const filter = { albumId: albumId };
+                const photos = await Photo.find(filter).exec();
+
+                return photos;
+            } catch(error) {
+                throw new Error(error);
+            }
+        },
     }
  };

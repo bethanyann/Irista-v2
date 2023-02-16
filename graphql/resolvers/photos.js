@@ -57,15 +57,16 @@ module.exports = {
         }
     },
     Query: {
+        //I think this should be moved into Albums and this query should be a "get all photos for user id" for the homepage grid
         async getPhotos(_, { albumId }) {
-            try {
-                const filter = { albumId: albumId };
-                const photos = await Photo.find(filter).exec();
+            // try {
+            //     const filter = { albumId: albumId };
+            //     const photos = await Photo.find(filter).exec();
 
-                return photos;
-            } catch(error) {
-                throw new Error(error);
-            }
+            //     return photos;
+            // } catch(error) {
+            //     throw new Error(error);
+            // }
         },
         async getPhoto(_, { photoId }) {
             try {
