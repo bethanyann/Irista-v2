@@ -125,7 +125,7 @@ module.exports = gql`
         getAlbumPhotos(albumId: String! ): [Photo] #are the ids strings? 
 
         getPhoto(photoId: String!): Photo
-        # getPhotos(albumId: String!): [Photo]
+        getPhotos(albumId: String!): [Photo]
     }
     
     type Mutation {
@@ -142,5 +142,6 @@ module.exports = gql`
 
         #todo
         #movePhotoToAlbum
+        
     }
 `;
