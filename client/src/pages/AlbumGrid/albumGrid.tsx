@@ -51,10 +51,11 @@ const AlbumGrid = () => {
 
     const handleOpenAlbum = (albumId: number) => {
         // takes album path and redirect to an album/photo page
-        const albumIdEncoded = encodeURIComponent(albumId);
+        debugger;
+        
 
         // TODO - This doesn't allow you to go "back" to the albums page - check on this
-        navigate(`/album/${albumIdEncoded}`, {replace: true});
+        navigate(`/album/${albumId}`, {replace: true});
     }
 
     if(error) {

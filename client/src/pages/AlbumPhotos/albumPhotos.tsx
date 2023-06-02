@@ -22,12 +22,8 @@ import { Photos } from '../../models/types';
 // what is this set for? 
 const initialState = new Set<string>();
 
-
-// TODO - make sure the albumId is set on init - maybe put in a useEffect hook 
 const AlbumPhotos = () => {
-    // TODO - this needs to be passing in the albumId, not the name
-    const { albumName } = useParams();   
-    const formattedAlbumName = albumName!.substring(albumName!.indexOf("/") + 1);
+    const { albumId } = useParams();   
     const [ isOpen, setIsOpen ] = useState(false);
 
     const [ openAlertModal, setOpenAlertModal ] = useState(false);
@@ -41,8 +37,8 @@ const AlbumPhotos = () => {
     // TODO - convert this useAlbumPhotoFetch to pull from MongoDB Uploads
     // need to make sure to query photos based on associated albumId 
 
-    // results from hook
-    const { photos, setPhotos, loading, error } = useAlbumPhotoFetch(albumName!);
+    // results from hook - have this return the album name as well? 
+    const { photos, setPhotos, loading, error } = useAlbumPhotoFetch(albumId!);
 
     const handleModalOpen = () => {
         setIsOpen(true);
@@ -120,7 +116,8 @@ const AlbumPhotos = () => {
         <>
         <Wrapper>
             <Header>
-                <h3>{formattedAlbumName}</h3>
+                {/* <h3>{formattedAlbumName}</h3> */}
+                <h3>Album Name will go here</h3>
                 <div>
                     <Space>
                     {<>
@@ -173,7 +170,8 @@ const AlbumPhotos = () => {
             width={1000}
             style={{top: 50}}
         >
-           <Upload setOpenModal={setIsOpen} setOpenAlertModal={setOpenAlertModal} setTotalFiles={setTotalFiles} albumName={albumName}/>
+            {/* TODO - might have broken this by changing it to albumId, make sure the modal still works */}
+           <Upload setOpenModal={setIsOpen} setOpenAlertModal={setOpenAlertModal} setTotalFiles={setTotalFiles} albumName={albumId}/>
         </Modal>
     {/* TODO - turn these success and failure modals into their own component  */}
         <Modal className="ant-modal" title="" visible={openAlertModal} onCancel={handleCancelModal} footer={null}>
