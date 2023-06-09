@@ -9,6 +9,9 @@ export const useAlbumPhotoFetch =  (albumName:string) => {
     const [ error, setError ] = useState(false);
     const [ isLoadingMore, setIsLoadingMore ] = useState(false);
 
+
+    
+    //TODO - Start switching this over to using the albumId and graphQL api instead of cloudinary
     const fetchPhotos = async (albumName: string) => {
         try { 
             setLoading(true);
